@@ -225,9 +225,6 @@ app.get("/home", async (req, res) => {
 
     //------search update kinjal------------------
 
-    //  console.log("sample called hgjhgdjkashjkhjkgkgh");
-    // const data=req.query.data;
-
 
     const result = await getdata(`SELECT follow.f_id FROM twitter_clone.follow where flag = '1'`);
     // const user=result[0];
@@ -598,7 +595,6 @@ app.get("/logout", (req, res) => {
 
 //api for creating tweets
 app.post("/tweet", upload2.single('media'), async (req, res) => {
-    const jwtToken = req.session.user;
     const tokenData = req.session.user;
     const id = tokenData.id;
     const username = tokenData.username;
