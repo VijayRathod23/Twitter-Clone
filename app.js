@@ -1,29 +1,24 @@
 var express = require('express');
-const connect = require('http2');
 var app = express();
 var mysql = require('mysql2');
-const { query, response } = require('express');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
-const { type } = require('os');
-const { match } = require('assert');
 const jwt = require('jsonwebtoken');
 const cookie = require('cookie-parser');
-const { Console } = require('console');
 const path = require('path');
-const { send } = require('process');
 app.use(express.static(path.join(__dirname, "/public")));
 const multer = require('multer');
 var session = require('express-session');
 const nodemailer = require('nodemailer');
-
+require("dotenv").config();
+const user = process.env.user;
 let trasporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
     secure: false,
     auth: {
-        user: 'vijay.rathod.esparkbiz.23@gmail.com',
-        pass: 'ezowtocsnnoyqvxk',
+        user: `${user}`,
+        pass: `${process.env.pass}`,
     }
 })
 
@@ -905,4 +900,4 @@ app.get("/retweet", (req, res) => {
 
 
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
