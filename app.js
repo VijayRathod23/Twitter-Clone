@@ -611,6 +611,13 @@ app.post("/edit_profile", upload.single('profile'), async (req, res) => {
         var sql = `update users set username='${username}',dob='${dob}',bio='${bio}',location='${location}' where id='${tokenData.id}'`
         var result = await getdata(sql);
 
+
+
+
+
+
+
+        
         var sql1 = `update tweets set username='${username}' where user_id='${tokenData.id}'`
         var result1 = await getdata(sql1);
 

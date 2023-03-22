@@ -163,7 +163,7 @@
 
                     </div>
                     <!-- followerlist display -->
-                    <p id="followercount" style="background-color:red;border:1px solid;font-weight: 200;"></p>
+                    <!-- <p id="followercount" style="background-color:red;border:1px solid;font-weight: 200;"></p> -->
                     <p id="follower"></p>
 
                 </div>
@@ -191,9 +191,7 @@
                                 <div class="tweets">
                                     <div class="post">
                                         <div class="post__avatar">
-                                            <img src="<%=tweets[i].profile_pic%>" alt="img" class="post__avatar" />
-                                        </div>
-                                        <div class="post__body">
+                                            <img src="<%=tweets[i].profile_pic%>" alt="img" class="post__avatar1" />
                                             <div class="post__header">
                                                 <div class="post__headerText">
                                                     <h3>
@@ -207,15 +205,17 @@
                                                     <p>
                                                         <%=tweets[i].tweet_text%>
                                                     </p>
+                                                    <%if(tweets[i].media){%>
+                                                        <img src="<%=tweets[i].media%>" alt="img" class="tweetImg" />
+                                                        <%}%>
                                                 </div>
                                             </div>
-                                            <%if(tweets[i].media){%>
-                                                <img src="<%=tweets[i].media%>" alt="img" class="tweetImg" />
-                                                <%}%>
-
-
+                                            
+                                        </div>
+                                        <div class="post__body">
+  
                                                     <div class="post-footer">
-                                                        <div class="btn-container">
+                                                        <div class="btn-container" >
                                                             <input type="hidden" value="<%=tweets[i].id%>"
                                                                 name="tweetid">
                                                             <div class="twt-toggle"><i
