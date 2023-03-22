@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 const multer = require('multer');
 var session = require('express-session');
 const nodemailer = require('nodemailer');
+// const reg=require('./routes/registration')
 
 let trasporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 app.use(cookie());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+
 
 
 //profile storage
@@ -905,4 +907,7 @@ app.get("/retweet", (req, res) => {
 
 
 
-app.listen(3000);
+
+app.listen(3000, () => {
+    console.log("app listening on 3000 port");
+    });
