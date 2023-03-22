@@ -248,14 +248,14 @@ app.get("/home", async (req, res) => {
                 ids += ","
             }
         }
-
+        //  console.log("---------------------------------------------------------",result.length)
         const userid = `${tokenData.id}`;
 
         ids += `,${userid})`
         const basic = `SELECT * FROM twitter_clone.users where id not in${ids}`;
         // console.log(basic);
         const user_data = await getdata(basic);
-        // console.log(query);
+         console.log("---------------------------------------------------------",ids);
         res.render("home", { tokenData, selectData, tweets, user_data })
     }
     else {
