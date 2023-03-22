@@ -10,6 +10,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 const multer = require('multer');
 var session = require('express-session');
 const nodemailer = require('nodemailer');
+const { log } = require('console');
 require("dotenv").config();
 const user = process.env.user;
 let trasporter = nodemailer.createTransport({
@@ -218,7 +219,7 @@ app.get("/home", async (req, res) => {
         return res.send(`you are not authorized register first <a href="/signup">register</a>`);
     }
     const sql = `SELECT * FROM tweets ORDER BY created_at DESC`;
-    const tweets = await getdata(sql);
+    const tweet = await getdata(sql);
     const tokenData = req.session.user;
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
@@ -227,6 +228,38 @@ app.get("/home", async (req, res) => {
 
     //  console.log("sample called hgjhgdjkashjkhjkgkgh");
     // const data=req.query.data;
+
+// .......................................retweet............................................
+
+    var retweet = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id from tweets join retweets on tweets.id = retweets.tweet_id`)
+    var tweets = new Array();
+    var new_user_profile_pic = new Array();
+    var new_user_name = new Array();
+    console.log("new user p pic none" + new_user_profile_pic);
+    console.log("new user name none"+ new_user_name);
+    
+    //if any retweet found
+    if (retweet[0]) {
+        for (var i = 0; i < retweet.length; i++) {
+            tweets.push(retweet[i]);
+        
+        var new_user_data = await getdata(`select username , profile_pic from users where id= ${retweet[i].retweet_user_id}`);
+        new_user_profile_pic.push( new_user_data[0].profile_pic);
+        new_user_name.push(new_user_data[0].username);
+
+        //console.log("tweet" + retweet[i].media);
+        }
+
+    }
+  
+
+for(var i =0; i< tweet.length; i++){
+
+    tweets.push(tweet[i]);
+}
+
+
+// ..................retweet complete.......................
 
 
     const result = await getdata(`SELECT follow.f_id FROM twitter_clone.follow where flag = '1'`);
@@ -251,14 +284,14 @@ app.get("/home", async (req, res) => {
         // console.log(basic);
         const user_data = await getdata(basic);
         // console.log(query);
-        res.render("home", { tokenData, selectData, tweets, user_data })
+        res.render("home", { tokenData, selectData, tweets,new_user_profile_pic, new_user_name, user_data })
     }
     else {
 
         const sql1 = `select * from users limit 5;`;
         const user_data = await getdata(sql1);
         //  console.log("all user data",user_data)
-        res.render("home", { tokenData, selectData, tweets, user_data })
+        res.render("home", { tokenData, selectData, tweets, new_user_profile_pic, new_user_name,user_data })
     }
 
 
@@ -365,10 +398,10 @@ app.get("/profile", async (req, res) => {
 
 
 
-        res.render("profile", { tokenData, selectData, tweets, tweet_data, count,followerdata, followdata  })
+        res.render("profile", { tokenData, selectData, tweets, tweet_data, count, followerdata, followdata })
     }
     else {
-        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0 ,followerdata, followdata })
+        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0, followerdata, followdata })
 
     }
 
@@ -379,7 +412,7 @@ app.get("/profile", async (req, res) => {
 
 //------kinjal----------
 
-app.get("/newfollow",async (req, res) => {
+app.get("/newfollow", async (req, res) => {
 
     const jwtToken = req.session.user;
     if (!jwtToken) {
@@ -390,154 +423,154 @@ app.get("/newfollow",async (req, res) => {
     const selectData = await getdata(select);
 
     //--follower count
-      
+
     const result = `SELECT COUNT(user_id) AS follower FROM twitter_clone.follow where  (f_id = '${tokenData.id}' and rm_follower ='1');`
     const followerdata = await getdata(result)
 
-    
+
     //--follow count
     var result1 = (`SELECT COUNT(f_id) AS follow FROM twitter_clone.follow where  (user_id = '${tokenData.id}' and flag ='1');`)
     const followdata = await getdata(result1)
-    
-    console.log("followerrrrrrrrr",followdata[0].follow)
-    res.render("follow", { tokenData, selectData,followerdata ,followdata })
+
+    console.log("followerrrrrrrrr", followdata[0].follow)
+    res.render("follow", { tokenData, selectData, followerdata, followdata })
 
 })
 
 //-------------------------follow-------------------------------------------------//
 
-app.get('/follow',async(req,res)=>{
+app.get('/follow', async (req, res) => {
 
     var id = req.query.id;
 
     var result = (`SELECT * FROM twitter_clone.follow where (user_id = '${id}'and flag = '1');`)
     const resultdata = await getdata(result)
-  
-    console.log('follow listig',resultdata)
-   
 
-   // console.log(resultdata)
-    
-  res.json(resultdata)
-    
-  })
-  
-  app.get('/postfollow',async(req,res)=>{
+    console.log('follow listig', resultdata)
+
+
+    // console.log(resultdata)
+
+    res.json(resultdata)
+
+})
+
+app.get('/postfollow', async (req, res) => {
 
     //to get user id to store it in follow table
-  //  const jwtToken = req.cookies.jwtToken;
+    //  const jwtToken = req.cookies.jwtToken;
     const tokenData = req.session.user;
-   // const tokenData = jwt.verify(jwtToken, "user");
+    // const tokenData = jwt.verify(jwtToken, "user");
     var user_id = tokenData.id;
     var username = tokenData.username;
     var u_profile_pic = tokenData.profile_pic;
     var u_email = tokenData.email;
-    
-  
+
+
     var id = req.query.id;
     var f_username = req.query.username;
     var f_email = req.query.f_email;
     var f_profile_pic = req.query.profile_pic;
 
-   // console.log(f_email)
+    // console.log(f_email)
 
     //var 
-     var result = (`INSERT INTO twitter_clone.follow (f_id, user_id ,username, flag ,u_profile_pic,u_email,f_username,f_email,f_profile_pic,rm_follower ) 
+    var result = (`INSERT INTO twitter_clone.follow (f_id, user_id ,username, flag ,u_profile_pic,u_email,f_username,f_email,f_profile_pic,rm_follower ) 
       VALUES ('${id}', '${user_id}','${username}','1','${u_profile_pic}','${u_email}','${f_username}','${f_email}','${f_profile_pic}','1'); `)
-        
-        const resultdata = await getdata(result)
-        console.log("here------",result)
-        
-        res.json(resultdata)
-     
-  })
+
+    const resultdata = await getdata(result)
+    console.log("here------", result)
+
+    res.json(resultdata)
+
+})
 
 //---------------------follower---------------------------------------------------------//
 
-app.get('/postfollower',async(req,res)=>{
+app.get('/postfollower', async (req, res) => {
 
     //var result = await query(`SELECT f_id FROM twitter.follow where user_id=1;`)
     var id = req.query.id;
-   // var profile_pic = req.query.profile_pic;
-    
+    // var profile_pic = req.query.profile_pic;
+
     //   console.log('insertid',id,profile_pic)
-      
-      const result = `SELECT * FROM twitter_clone.follow where (f_id = '${id}' and rm_follower ='1');`
-      const resultdata = await getdata(result)
 
-      console.log(resultdata)
-      
-      res.json(resultdata)
-    
-    })
-  //-------------------unfollow--------------------
+    const result = `SELECT * FROM twitter_clone.follow where (f_id = '${id}' and rm_follower ='1');`
+    const resultdata = await getdata(result)
 
-  app.get('/post-Unfollow',async (req,res)=>{
+    console.log(resultdata)
 
-       //to get user id to store it in follow table
-  //  const jwtToken = req.cookies.jwtToken;
-  const tokenData = req.session.user;
-  // const tokenData = jwt.verify(jwtToken, "user");
-   var user_id = tokenData.id;
-   var username = tokenData.username;
-   var u_profile_pic = tokenData.profile_pic;
-   var u_email = tokenData.email;
-   
- 
-   var id = req.query.id;
-   var f_username = req.query.username;
-   var f_email = req.query.f_email;
-   var f_profile_pic = req.query.profile_pic;
+    res.json(resultdata)
 
-  // console.log(f_email)
+})
+//-------------------unfollow--------------------
 
-   //var 
+app.get('/post-Unfollow', async (req, res) => {
+
+    //to get user id to store it in follow table
+    //  const jwtToken = req.cookies.jwtToken;
+    const tokenData = req.session.user;
+    // const tokenData = jwt.verify(jwtToken, "user");
+    var user_id = tokenData.id;
+    var username = tokenData.username;
+    var u_profile_pic = tokenData.profile_pic;
+    var u_email = tokenData.email;
+
+
+    var id = req.query.id;
+    var f_username = req.query.username;
+    var f_email = req.query.f_email;
+    var f_profile_pic = req.query.profile_pic;
+
+    // console.log(f_email)
+
+    //var 
     var result = (`  UPDATE twitter_clone.follow
     SET flag = '0'
     WHERE  (f_id= '${id}' and user_id ='${user_id}');`)
-       const resultdata = await getdata(result)
+    const resultdata = await getdata(result)
     //    console.log("here------",result)
-       
-       res.json(resultdata)
-    
- })
+
+    res.json(resultdata)
+
+})
 
 //---------------remove follower-----------
 
-app.get('/post-rm-follower',async (req,res)=>{
+app.get('/post-rm-follower', async (req, res) => {
 
-       //to get user id to store it in follow table
-  //  const jwtToken = req.cookies.jwtToken;
-  const tokenData = req.session.user;
-  // const tokenData = jwt.verify(jwtToken, "user");
-   var user_id = tokenData.id;
-   var username = tokenData.username;
-   var u_profile_pic = tokenData.profile_pic;
-   var u_email = tokenData.email;
-   
- 
-   var id = req.query.id;
-   var f_username = req.query.username;
-   var f_email = req.query.f_email;
-   var f_profile_pic = req.query.profile_pic;
+    //to get user id to store it in follow table
+    //  const jwtToken = req.cookies.jwtToken;
+    const tokenData = req.session.user;
+    // const tokenData = jwt.verify(jwtToken, "user");
+    var user_id = tokenData.id;
+    var username = tokenData.username;
+    var u_profile_pic = tokenData.profile_pic;
+    var u_email = tokenData.email;
 
-   
 
-   var result = (`  UPDATE twitter_clone.follow
+    var id = req.query.id;
+    var f_username = req.query.username;
+    var f_email = req.query.f_email;
+    var f_profile_pic = req.query.profile_pic;
+
+
+
+    var result = (`  UPDATE twitter_clone.follow
    SET rm_follower = '0'
    WHERE  ((f_id= '${id}' and user_id ='${user_id}' ) or (f_id ='${user_id}' and user_id ='${id}' ));`)
-   const resultdata = await getdata(result)
-//    console.log("here------",result)
-   
-//    console.log(result)
+    const resultdata = await getdata(result)
+    //    console.log("here------",result)
 
-   //var 
-       res.json(resultdata)
-    
- })
+    //    console.log(result)
+
+    //var 
+    res.json(resultdata)
+
+})
 
 
- 
+
 
 // Edit Profile
 app.get("/edit_profile", async (req, res) => {

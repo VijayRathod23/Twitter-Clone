@@ -127,88 +127,158 @@
                 <div class="tweet-main">
                     <!-- post starts -->
                     <%if(tweets.length !=0){%>
+
                         <%for(let i=0; i<tweets.length; i++){%>
-                            <div class="tweets">
-                                <div class="post">
-                                    <div class="post__avatar">
-                                        <img src="<%=tweets[i].profile_pic%>" alt="img" class="post__avatar1" />
-                                        <div class="post__header">
-                                            <div class="post__headerText">
+
+                            <!-- retweet found -->
+
+                            <%if(new_user_profile_pic[i]){%>
+
+                                <div class="retweeted">
+
+                                    <div class="repost__avatar">
+                                        <img src="<%=new_user_profile_pic[i]%>" alt="img"
+                                            class="repost__avatar1" />
+                                        <div class="repost__header">
+                                            <div class="repost__headerText">
                                                 <h3>
-                                                    <%=tweets[i].username%>
-                                                        <span class="post__headerSpecial"><span
-                                                                class="material-icons post__badge">
-                                                                <!-- </span>@<%=selectData[0].email%></span> -->
+                                                    <%=new_user_name[i]%>
+
                                                 </h3>
                                             </div>
-                                            <div class="post__headerDescription">
-                                                <p>
-                                                    <%=tweets[i].tweet_text%>
-                                                </p>
-                                                <%if(tweets[i].media){%>
-                                                    <img src="<%=tweets[i].media%>" alt="img" class="tweetImg" />
-                                                    <%}%>
-                                            </div>
                                         </div>
+
                                     </div>
-                                    <div class="post__body">
+                                    <!-- original tweet -->
+                                    <div class="tweets">
+                                        <div class="post">
+                                            <div class="post__avatar">
+                                                <img src="<%=tweets[i].profile_pic%>" alt="img" class="post__avatar1" />
+                                                <div class="post__header">
+                                                    <div class="post__headerText">
+                                                        <h3>
+                                                            <%=tweets[i].username%>
+                                                                <span class="post__headerSpecial"><span
+                                                                        class="material-icons post__badge">
+                                                                        <!-- </span>@<%=selectData[0].email%></span> -->
+                                                        </h3>
+                                                    </div>
+                                                    <div class="post__headerDescription">
+                                                        <p>
+                                                            <%=tweets[i].tweet_text%>
+                                                        </p>
+                                                        <%if(tweets[i].media){%>
+                                                            <img src="<%=tweets[i].media%>" alt="img"
+                                                                class="tweetImg" />
+                                                            <%}%>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="post__body">
 
 
-                                        <!-- <div>
+                                                <!-- <div>
                                                 <form action="/tweets/<%= tweets[i].id %>/like" method="POST">
                                                     <button type="submit">Like</button>
                                                   </form>
                                                   <p><strong>Likes:</strong> <%= tweets[i].likes %></p>
                                             </div> -->
 
-                                        <div class="post-footer">
-                                            <div class="btn-container">
-                                                <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
-                                                <div class="twt-toggle"
-                                                    onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')">
-                                                    <i class="fa-regular fa-comment"></i>
-                                                    comments
-                                                </div>
-                                                <div class="twt-toggle"><i class="fa-solid fa-heart"
-                                                        onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
-                                                    <span id="twt<%=tweets[i].id%>">
-                                                        <%=tweets[i].likes%>
-                                                    </span>
-                                                </div>
-                                                <div class="twt-toggle">
-                                                    <a onclick="increment_count('<%= tweets[i].id %>')"><i
-                                                            class="fa-solid fa-retweet"></i></a>
-                                                    <p id="retwt<%=tweets[i].id%>">
-                                                        <!-- count -->
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div id="commentsection<%=tweets[i].id%>" class="commentsection">
-                                                <!-- fetch the comments from the database -->
-                                            </div>
-
-                                            <div id="comment<%=tweets[i].id%>" class="comment">
-
-                                                <input type="text" name="commentfield"
-                                                    id="commentfield<%=tweets[i].id%>"
-                                                    placeholder="Please Enter Comment" class="commentfield">
-                                                <input type="submit" value="Reply" class="commentbtn"
-                                                    onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
-
 
                                             </div>
-
-
-
                                         </div>
-
                                     </div>
                                 </div>
-                            </div>
-                            <%}%>
-                                <%}%>
-                                    <!-- post ends -->
+
+
+                                <!-- Simple tweet -->
+
+
+
+                                <%}else{%>
+
+                                    <div class="tweets">
+                                        <div class="post">
+                                            <div class="post__avatar">
+                                                <img src="<%=tweets[i].profile_pic%>" alt="img" class="post__avatar1" />
+                                                <div class="post__header">
+                                                    <div class="post__headerText">
+                                                        <h3>
+                                                            <%=tweets[i].username%>
+                                                                <span class="post__headerSpecial"><span
+                                                                        class="material-icons post__badge">
+                                                                        <!-- </span>@<%=selectData[0].email%></span> -->
+                                                        </h3>
+                                                    </div>
+                                                    <div class="post__headerDescription">
+                                                        <p>
+                                                            <%=tweets[i].tweet_text%>
+                                                        </p>
+                                                        <%if(tweets[i].media){%>
+                                                            <img src="<%=tweets[i].media%>" alt="img"
+                                                                class="tweetImg" />
+                                                            <%}%>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="post__body">
+
+
+                                                <!-- <div>
+                                                <form action="/tweets/<%= tweets[i].id %>/like" method="POST">
+                                                    <button type="submit">Like</button>
+                                                  </form>
+                                                  <p><strong>Likes:</strong> <%= tweets[i].likes %></p>
+                                            </div> -->
+
+                                                <div class="post-footer">
+                                                    <div class="btn-container">
+                                                        <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
+                                                        <div class="twt-toggle"
+                                                            onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')">
+                                                            <i class="fa-regular fa-comment"></i>
+                                                            comments
+                                                        </div>
+                                                        <div class="twt-toggle"><i class="fa-solid fa-heart"
+                                                                onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                            <span id="twt<%=tweets[i].id%>">
+                                                                <%=tweets[i].likes%>
+                                                            </span>
+                                                        </div>
+                                                        <div class="twt-toggle">
+                                                            <a onclick="increment_count('<%= tweets[i].id %>')"><i
+                                                                    class="fa-solid fa-retweet"></i></a>
+                                                            <p id="retwt<%=tweets[i].id%>">
+                                                                <!-- count -->
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="commentsection<%=tweets[i].id%>" class="commentsection">
+                                                        <!-- fetch the comments from the database -->
+                                                    </div>
+
+                                                    <div id="comment<%=tweets[i].id%>" class="comment">
+
+                                                        <input type="text" name="commentfield"
+                                                            id="commentfield<%=tweets[i].id%>"
+                                                            placeholder="Please Enter Comment" class="commentfield">
+                                                        <input type="submit" value="Reply" class="commentbtn"
+                                                            onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
+
+
+                                                    </div>
+
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%}%>
+                                        <%}%>
+                                            <%}%> <!-- post ends -->
                 </div>
 
 
@@ -493,6 +563,7 @@
             var cnt_increment = data.count;
 
             document.getElementById('retwt' + tweet_id).innerHTML = cnt_increment;
+            //window.location.reload("/home");
 
 
 
