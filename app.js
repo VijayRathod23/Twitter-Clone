@@ -448,8 +448,6 @@ app.get('/follow', async (req, res) => {
     const resultdata = await getdata(result)
 
     console.log('follow listig', resultdata)
-
-
     // console.log(resultdata)
 
     res.json(resultdata)
