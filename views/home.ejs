@@ -92,7 +92,6 @@
                                     </span>
                                 </div>
                             </div>
-
                 </div>
             </div>
 
@@ -255,12 +254,61 @@
                                                             <i class="fa-regular fa-comment"></i>
                                                             comments
                                                         </div>
-                                                        <div class="twt-toggle"><i class="fa-solid fa-heart"
-                                                                onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
-                                                            <span id="twt<%=tweets[i].id%>">
-                                                                <%=tweets[i].likes%>
-                                                            </span>
+                                                        <%for (let j=0;j<tweets.length;j++){%>
+                                                                
+                                                            <%for (let k=0;k<likes.length;k++){%>
+                                                                <%console.log("tweet id",tweets[j].id,"likes pid",likes[k].pid)%>
+                                                                <%console.log("tweet uid",tokenData.id,"likes uid",likes[k].uid)%>
+
+                                                            <%if(tweets[j].id==likes[k].pid && tokenData.id==likes[k].uid && likes[k].liked ==1){%>
+                                                                <%console.log("user liked:   ",tweets[j].id,likes[k].uid)%>
+                                                                <%flag[j]=1%>
+                                                                
+                                                            <%}%>
+                                                            <%if(tweets[j].id==likes[k].pid && tokenData.id==likes[k].uid && likes[k].liked ==0){%>
+                                                                <%console.log("user disliked:   ",tweets[j].id,likes[k].uid)%>
+                                                                <%flag[j]=0%>
+                                                               
+                                                            <%}%>                                                              
+
+                                                        <%}%>
+                                                        <%}%>
+                                                        <%if(flag[i]==1){%>
+                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                        <div class="twt-toggle-like-blue"><i class="fa-solid fa-heart"
+                                                            id="twt-tg<%=tweets[i].id%>"
+                                                            onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                            
+                                                        <span id="twt<%=tweets[i].id%>">
+                                                            <%=tweets[i].likes%>
+                                                        </span>
+
                                                         </div>
+                                                       
+                                                        <%}else if(flag[i]==0){%>
+                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                        <div class="twt-toggle-like-black"><i class="fa-solid fa-heart"
+                                                            id="twt-tg<%=tweets[i].id%>"
+                                                            onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"
+                                                            ></i>
+                                                        <span id="twt<%=tweets[i].id%>">
+                                                            <%=tweets[i].likes%>
+                                                        </span>
+
+                                                        </div>
+                                                       
+                                                        <%}else{%>
+                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                        <div class="twt-toggle-like-black"><i class="fa-solid fa-heart"
+                                                            id="twt-tg<%=tweets[i].id%>"
+                                                            onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"
+                                                            ></i>
+                                                        <span id="twt<%=tweets[i].id%>">
+                                                            <%=tweets[i].likes%>
+                                                        </span>
+
+                                                        </div>
+                                                        <%}%>
                                                         <div class="twt-toggle">
                                                             <a onclick="increment_count('<%= tweets[i].id %>')"><i
                                                                     class="fa-solid fa-retweet"></i></a>
@@ -345,8 +393,50 @@
         </div>
     </div>
     <script>
+
+        
         function profile() {
             location.assign(`/profile`);
+        }
+
+        //*********************************like function
+    function like(pid, uid) {
+    // alert("like")
+            console.log('pid', pid)
+            console.log('uid', uid)
+
+            fetch("/like", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ pid, uid }),
+            }).then((res) => {
+                return res.json()
+            }).then((result) => {
+                console.log(result[0])
+                console.log(result[0].likes)
+
+                if (!result[1]) {
+                    if (result[0].likes == 0) {
+                        document.getElementById('twt-tg' + pid).style.color = "black";
+                    }
+                    else {
+                        document.getElementById('twt-tg' + pid).style.color = "#1DA1F2";
+                    }
+                    document.getElementById('twt' + pid).innerHTML = result[0].likes;
+                }
+                else {
+                    if (result[1].likes == 0) {
+                        document.getElementById('twt-tg' + pid).style.color = "black";
+                    }
+                    else {
+                        document.getElementById('twt-tg' + pid).style.color = "#1DA1F2";
+                    }
+                    document.getElementById('twt' + pid).innerHTML = result[0].likes;
+                }
+
+            })
         }
 
         async function search() {
@@ -356,10 +446,11 @@
             await fetch(`http://localhost:3000/search?search=${search}`)
                 .then(res => res.json())
                 .then((search_data) => {
+                    // console.log(':::::::::::::::::::::::::::data at',search_data)
                     for (i = 0; i < search_data.length; i++) {
-
+                            console.log("at",i,'',search_data[i].id)
                         s += `
-                        <div class="searchprofile">
+                        <div class="searchprofile" onclick="search_profile('${search_data[i].id}')">
                             <div class="profileimg">
                                 <img src="`+ search_data[i].profile_pic + `" alt="">
                             </div>
@@ -375,12 +466,7 @@
                             `</span>
                                 </div>
                             </div>
-                            <div class="followbtn">
-                                <p id="follow`+
-                            search_data[i].id +
-                            `" onclick="following(` +
-                            search_data[i].id + `)">Follow</p>
-                            </div>
+                           
                         </div> `;
 
                     }
@@ -417,26 +503,6 @@
                 })
 
         }
-
-        function like(pid, uid) {
-            console.log('pid', pid)
-            console.log('uid', uid)
-            fetch("/like", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ pid, uid }),
-            }).then((res) => {
-                return res.json()
-            }).then((result) => {
-                console.log(result[0].likes)
-                document.getElementById('twt' + pid).innerHTML = result[0].likes;
-            })
-
-
-        }
-
 
         // Emojis Section
 
@@ -586,6 +652,10 @@
 
         }
 
+        function search_profile(sid){
+            var sid = sid;
+            location.assign(`http://localhost:3000/search_profile?sid='${sid}'`);
+        }
 
     </script>
 

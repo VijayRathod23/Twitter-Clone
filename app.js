@@ -1,14 +1,21 @@
 var express = require('express');
+const connect = require('http2');
 var app = express();
 var mysql = require('mysql2');
+const { query, response } = require('express');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
+const { type } = require('os');
+const { match } = require('assert');
 const jwt = require('jsonwebtoken');
 const cookie = require('cookie-parser');
+const { Console } = require('console');
 const path = require('path');
+const { send } = require('process');
 app.use(express.static(path.join(__dirname, "/public")));
 const multer = require('multer');
 var session = require('express-session');
+
 const nodemailer = require('nodemailer');
 const { log } = require('console');
 // require("dotenv").config();
@@ -27,7 +34,6 @@ app.use(bodyParser.json());
 app.use(cookie());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
-
 
 
 //profile storage
@@ -65,12 +71,12 @@ app.set('view engine', 'ejs');
 
 //session
 app.use(session({
-    secret: 'your-secret-key',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: 24 * 60 * 60 * 1000
-    }
+  secret: 'your-secret-key',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000
+  }
 }));
 
 
@@ -134,45 +140,67 @@ app.get("/activate?", async (req, res) => {
 
 app.get("/login", (req, res) => {
     const token = req.session.user;
+    var c = 0;
+    var err = '';
+    console.log("in get",c)
     if (token) {
         return res.redirect('/home');
     }
-    res.render("login.ejs")
+    res.render("login.ejs",{c,err})
 })
 
 app.post("/login", async (req, res) => {
-    const { email, password } = req.body;
+    var { email, password,c } = req.body;
+    console.log("is c there?",req.body);
     var varifyUser = `select * from users where email = '${email}'`;
     var result = await getdata(varifyUser);
-    if (result.length == 0) {
-        return res.send(`user not regitered please register <a href="/signup">register</a>`)
+    if (result == '') {
+        c++;
+        console.log(c)
+        var err = `incorrect user or password`
+        res.render("login.ejs",{c,err})
+        // return res.send(`user not regitered please register <a href="/signup">register</a>`)
     }
-    const data = result;
-    console.log(data[0]);
-    //comparing password
-    let bpass = data[0].password;
-    console.log("bpass", bpass)
-    var match = await bcrypt.compare(password, bpass);
-    console.log(match);
-    if (!match) {
-        return res.send(`wrong user or password!`)
-    }
-    const activationLink = `http://localhost:3000/activate?token=${data[0].activation_token}`;
-    if (data[0].activated == 0) {
-        return res.render("activate", { activationLink });
-    }
+    else{
+        const data = result;
+        console.log(data[0]);
+        //comparing password
+        let bpass = data[0].password;
+        console.log("bpass", bpass)
+        var match = await bcrypt.compare(password, bpass);
+        if (!match) {
+            c++;
+            console.log("is c there", c)
+            var err = `incorrect user or password`
+            res.render("login.ejs", { c ,err})
+            // return res.send(`wrong user or password!`)
+        }
+        else{
+            const activationLink = `http://localhost:3000/activate?token=${data[0].activation_token}`;
+            if (data[0].activated == 0) {
+                return res.render("activate", { activationLink });
+            }
+            var login = `select * from users where email = '${email}' and activated =  1`;
+            var result = await getdata(login);
+            if (login == '') {
+                c++;
+            }
+            else {
+                var ins = `insert into login (user_id,login_time,attempts) values ('${result[0].id}',now(),'${c}')`
+                var result1 = await getdata(ins);
+            }
+            //generating jwt token
+            // const jwtToken = jwt.sign(data[0], "user");
+            // res.cookie("jwtToken", jwtToken);
+            // res.redirect("/home");
 
-    //generating jwt token
-    // const jwtToken = jwt.sign(data[0], "user");
-    // res.cookie("jwtToken", jwtToken);
-
-    //seting session
-    req.session.user = data[0];
-    res.redirect("/home");
+            req.session.user = result[0];
+            res.redirect("/home");
+        }
+       
+    }
+    
 })
-
-
-
 app.get("/finduser", async (req, res) => {
     const email = req.query.email;
     var sql = `select email from users where email = '${email}'`;
@@ -214,7 +242,7 @@ app.get('/activepage?', (req, res) => {
 //Home Page
 app.get("/home", async (req, res) => {
     console.log("session");
-    console.log(req.session.user);
+    console.log("user",req.session.user);
     const jwtToken = req.session.user;
     if (!jwtToken) {
         return res.send(`you are not authorized register first <a href="/signup">register</a>`);
@@ -225,12 +253,18 @@ app.get("/home", async (req, res) => {
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
 
-    //------search update kinjal------------------
+     // harshupdate
+     const sql1= `select * from users limit 5;`;
+     const user_data= await getdata(sql1);
+     console.log("all user data",user_data)
 
-    //  console.log("sample called hgjhgdjkashjkhjkgkgh");
-    // const data=req.query.data;
+    const sql2= `select liked,pid,uid from likes where uid='${tokenData.id}'`
+    const likes= await getdata(sql2);
+    // var like_flag = likes[0].liked;
+    var flag = [];
+    console.log(likes);
 
-// .......................................retweet............................................
+    // .......................................retweet............................................
 
     var retweet = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id from tweets join retweets on tweets.id = retweets.tweet_id`)
     var tweets = new Array();
@@ -285,24 +319,15 @@ for(var i =0; i< tweet.length; i++){
         // console.log(basic);
         const user_data = await getdata(basic);
         // console.log(query);
-        res.render("home", { tokenData, selectData, tweets,new_user_profile_pic, new_user_name, user_data })
+        res.render("home", { tokenData, selectData, tweets,user_data,likes,flag,new_user_profile_pic, new_user_name, user_data })
     }
     else {
 
         const sql1 = `select * from users limit 5;`;
         const user_data = await getdata(sql1);
         //  console.log("all user data",user_data)
-        res.render("home", { tokenData, selectData, tweets, new_user_profile_pic, new_user_name,user_data })
+        res.render("home", { tokenData, selectData, tweets,user_data,likes,flag, new_user_profile_pic, new_user_name,user_data })
     }
-
-
-
-    //------search ---harsh update
-
-    //  const sql1= `select * from users limit 5;`;
-    //  const user_data= await getdata(sql1);
-    //  console.log("all user data",user_data)
-
 })
 
 
@@ -329,13 +354,14 @@ for(var i =0; i< tweet.length; i++){
 
 
 // Profile Page
+// Profile Page
 app.get("/profile", async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
         return res.send(`you are not authorized register first <a href="/">register</a>`);
     }
     const tokenData = req.session.user;
-    // ***************21march**************
+    // **************21march*************
     const sql = `SELECT * FROM tweets where user_id = '${tokenData.id}' ORDER BY created_at DESC`;
     const tweets = await getdata(sql);
 
@@ -409,6 +435,7 @@ app.get("/profile", async (req, res) => {
 
 
 })
+
 
 
 //------kinjal----------
@@ -665,35 +692,33 @@ app.post("/tweet", upload2.single('media'), async (req, res) => {
 });
 
 
-// //likes
-// app.post('/tweets/:id/like', (req, res) => {
-//     const tweetId = req.params.id;
-//     con.query(
-//         'UPDATE tweets SET likes = likes + 1 WHERE id = ?',
-//         [tweetId],
-//         (err, result) => {
-//             if (err) {
-//                 console.error(err);
-//                 res.status(500).send('Error liking tweet');
-//             } else {
-//                 res.redirect('/home');
-//             }
-//         }
-//     );
-// });
 
 //search
-app.get('/search', async (req, res) => {
-    var search = req.query.search;
-    const sql2 = `select * from users where username LIKE '${search}%'`;
-    const search_data = await getdata(sql2);
-    console.log("userdata", search_data);
+app.get('/search',async(req,res)=>{
+    var search=req.query.search;
+    const sql2= `select * from users where username LIKE '${search}%'`;
+    const search_data= await getdata(sql2);
+    console.log("userdata",search_data);
     res.json(search_data)
+    
+})
+//displaying searched profile
+app.get("/search_profile?",async(req,res)=>{
+
+    const jwtToken = req.session.user;
+    if (!jwtToken) {
+        return res.send(`you are not authorized register first <a href="/login">register</a>`);
+    }
+    const tokenData = req.session.user;
+    var sid = req.query.sid;
+    console.log("sid front",sid)
+    const select = `select * from users where id = ${sid}`;
+    const selectData = await getdata(select);
+    console.log(selectData)    
+    res.render('search_profile', { tokenData, selectData })
 
 })
 
-//likes api
-//likes
 app.post('/like', async (req, res) => {
     var pid = req.body.pid;
     var user_id = req.body.uid;
@@ -701,8 +726,9 @@ app.post('/like', async (req, res) => {
     const tokenData = req.session.user;
     const uid = tokenData.id;
     console.log(pid)
-    console.log("logged in user", uid);
+    console.log(uid)
 
+    console.log("logged in user", uid);
     //selecting either user has already likes or not
     var select = `select * from likes where uid='${uid}' and pid='${pid}'`;
     var data = await getdata(select);
@@ -716,12 +742,18 @@ app.post('/like', async (req, res) => {
         var sql = `update tweets set likes = likes + 1  where id = '${pid}' and user_id='${user_id}'`;
         var result = await getdata(sql);
         console.log("inserted")
+        var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'union select liked from likes where pid='${pid}' and uid='${uid}';`;
+        var query = await getdata(q);
+        console.log(query)
+        console.log(query[0].likes);
+        res.json(query)
     }
     //update likes status in db
     else {
         console.log("found")
         var f = `select * from likes where pid='${pid}' and uid='${uid}'`;
         var u = await getdata(f);
+        // console.log("result data", u[0].liked)
         console.log("result data", u[0].liked)
         if (u[0].liked == 0) {
             console.log("like")
@@ -730,8 +762,9 @@ app.post('/like', async (req, res) => {
             var minus = `update likes set liked = 1 where pid='${pid}' and uid='${uid}'`;
             var done = await getdata(minus);
             console.log("liked")
-            var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'`;
+            var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'union select liked from likes where pid='${pid}' and uid='${uid}';`;
             var query = await getdata(q);
+            console.log(query)
             console.log(query[0].likes);
             res.json(query)
             //   res.redirect("/home");
@@ -742,16 +775,14 @@ app.post('/like', async (req, res) => {
             var result = await getdata(sql);
             var minus = `update likes set liked = 0 where pid='${pid}' and uid='${uid}'`;
             var done = await getdata(minus);
-            var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'`;
+            var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'union select liked from likes where pid='${pid}' and uid='${uid}';`;
             var query = await getdata(q);
-            console.log(query[0].likes);
-            res.json(query)
-
+            console.log(query);
+            res.json(query);
         }
     }
+
 });
-
-
 //Forget Password
 app.get('/forget-pass', (req, res) => {
     res.render('forget-pass');
