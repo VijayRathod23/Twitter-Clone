@@ -12,15 +12,14 @@ var session = require('express-session');
 const nodemailer = require('nodemailer');
 require("dotenv").config();
 const user = process.env.user;
-let trasporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
+var trasporter = nodemailer.createTransport({
+    host: "sandbox.smtp.mailtrap.io",
+    port: 2525,
     auth: {
         user: `${user}`,
-        pass: `${process.env.pass}`,
+        pass: `${process.env.pass}`
     }
-})
+  });
 
 app.use(bodyParser.json());
 app.use(cookie());
