@@ -100,7 +100,7 @@
             <div class="contentsection">
                 <h1>Home</h1>
 
-                <form action="/tweet" method="post" enctype="multipart/form-data">
+                <form action="/tweet" method="post" enctype="multipart/form-data" >
                     <div class="tweetform">
                         <img src="<%=selectData[0].profile_pic%>" alt="">
                         <input type="text" name="tweet_text" id="tweetformcontent" placeholder="What's Happening?">
@@ -380,6 +380,7 @@
 
                 })
         }
+  
 
         function profile() {
             location.assign(`/profile`);

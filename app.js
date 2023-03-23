@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 
+
 //profile storage
 const profile_storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -940,4 +941,7 @@ app.get("/retweet", (req, res) => {
 
 
 
-app.listen(process.env.PORT || 3000);
+
+app.listen(3000, () => {
+    console.log("app listening on 3000 port");
+    });
