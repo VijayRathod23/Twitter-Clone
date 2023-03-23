@@ -167,10 +167,18 @@
                                                         <p>
                                                             <%=tweets[i].tweet_text%>
                                                         </p>
-                                                        <%if(tweets[i].media){%>
-                                                            <img src="<%=tweets[i].media%>" alt="img"
-                                                                class="tweetImg" />
-                                                            <%}%>
+                                                        <!-- uploading images and video -->
+                                                        <%  const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; 
+                                                            const array_of_allowed_videos=['mp4','gif'];
+                                                        %>
+                                                            <%if(tweets[i].media){%>
+                                                                <% const file_extension = tweets[i].media.slice(((tweets[i].media.lastIndexOf('.') - 1) >>> 0) + 2); %>
+                                                                <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                                <img src="<%=tweets[i].media%>" class="tweetImg" />
+                                                                <%}else{%>
+                                                                <video src="<%=tweets[i].media%>" width="300px" autoplay
+                                                                    controls></video>
+                                                                <%}}%>
                                                     </div>
                                                 </div>
                                             </div>
