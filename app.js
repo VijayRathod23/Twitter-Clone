@@ -11,6 +11,7 @@ const multer = require('multer');
 var session = require('express-session');
 const nodemailer = require('nodemailer');
 const { log } = require('console');
+// require("dotenv").config();
 const user = process.env.user;
 let trasporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -664,22 +665,22 @@ app.post("/tweet", upload2.single('media'), async (req, res) => {
 });
 
 
-//likes
-app.post('/tweets/:id/like', (req, res) => {
-    const tweetId = req.params.id;
-    con.query(
-        'UPDATE tweets SET likes = likes + 1 WHERE id = ?',
-        [tweetId],
-        (err, result) => {
-            if (err) {
-                console.error(err);
-                res.status(500).send('Error liking tweet');
-            } else {
-                res.redirect('/home');
-            }
-        }
-    );
-});
+// //likes
+// app.post('/tweets/:id/like', (req, res) => {
+//     const tweetId = req.params.id;
+//     con.query(
+//         'UPDATE tweets SET likes = likes + 1 WHERE id = ?',
+//         [tweetId],
+//         (err, result) => {
+//             if (err) {
+//                 console.error(err);
+//                 res.status(500).send('Error liking tweet');
+//             } else {
+//                 res.redirect('/home');
+//             }
+//         }
+//     );
+// });
 
 //search
 app.get('/search', async (req, res) => {

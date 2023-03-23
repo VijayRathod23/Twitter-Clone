@@ -167,10 +167,18 @@
                                                         <p>
                                                             <%=tweets[i].tweet_text%>
                                                         </p>
-                                                        <%if(tweets[i].media){%>
-                                                            <img src="<%=tweets[i].media%>" alt="img"
-                                                                class="tweetImg" />
-                                                            <%}%>
+                                                        <!-- uploading images and video -->
+                                                        <%  const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; 
+                                                            const array_of_allowed_videos=['mp4','gif'];
+                                                        %>
+                                                            <%if(tweets[i].media){%>
+                                                                <% const file_extension = tweets[i].media.slice(((tweets[i].media.lastIndexOf('.') - 1) >>> 0) + 2); %>
+                                                                <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                                <img src="<%=tweets[i].media%>" class="tweetImg" />
+                                                                <%}else{%>
+                                                                <video src="<%=tweets[i].media%>" width="300px" autoplay
+                                                                    controls></video>
+                                                                <%}}%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -214,23 +222,31 @@
                                                         <p>
                                                             <%=tweets[i].tweet_text%>
                                                         </p>
-                                                        <%if(tweets[i].media){%>
-                                                            <img src="<%=tweets[i].media%>" alt="img"
-                                                                class="tweetImg" />
-                                                            <%}%>
+                                                        <!-- uploading images and video -->
+                                                        <%  const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; 
+                                                            const array_of_allowed_videos=['mp4','gif'];
+                                                        %>
+                                                            <%if(tweets[i].media){%>
+                                                                <% const file_extension = tweets[i].media.slice(((tweets[i].media.lastIndexOf('.') - 1) >>> 0) + 2); %>
+                                                                <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                                <img src="<%=tweets[i].media%>" class="tweetImg" />
+                                                                <%}else{%>
+                                                                <video src="<%=tweets[i].media%>" width="300px" autoplay
+                                                                    controls></video>
+                                                                <%}}%>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="post__body">
-
-
+        
+        
                                                 <!-- <div>
-                                                <form action="/tweets/<%= tweets[i].id %>/like" method="POST">
-                                                    <button type="submit">Like</button>
-                                                  </form>
-                                                  <p><strong>Likes:</strong> <%= tweets[i].likes %></p>
-                                            </div> -->
-
+                                                        <form action="/tweets/<%= tweets[i].id %>/like" method="POST">
+                                                            <button type="submit">Like</button>
+                                                          </form>
+                                                          <p><strong>Likes:</strong> <%= tweets[i].likes %></p>
+                                                    </div> -->
+        
                                                 <div class="post-footer">
                                                     <div class="btn-container">
                                                         <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
@@ -253,26 +269,26 @@
                                                             </p>
                                                         </div>
                                                     </div>
-
+        
                                                     <div id="commentsection<%=tweets[i].id%>" class="commentsection">
                                                         <!-- fetch the comments from the database -->
                                                     </div>
-
+        
                                                     <div id="comment<%=tweets[i].id%>" class="comment">
-
+        
                                                         <input type="text" name="commentfield"
                                                             id="commentfield<%=tweets[i].id%>"
                                                             placeholder="Please Enter Comment" class="commentfield">
                                                         <input type="submit" value="Reply" class="commentbtn"
                                                             onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
-
-
+        
+        
                                                     </div>
-
-
-
+        
+        
+        
                                                 </div>
-
+        
                                             </div>
                                         </div>
                                     </div>
