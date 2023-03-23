@@ -154,6 +154,7 @@ app.post("/login", async (req, res) => {
     console.log("is c there?",req.body);
     var varifyUser = `select * from users where email = '${email}'`;
     var result = await getdata(varifyUser);
+    console.log("............................................",result)
     if (result == '') {
         c++;
         console.log(c)
@@ -741,11 +742,11 @@ app.post('/like', async (req, res) => {
         var i = await getdata(insert);
         var sql = `update tweets set likes = likes + 1  where id = '${pid}' and user_id='${user_id}'`;
         var result = await getdata(sql);
-        console.log("inserted")
+       // console.log("inserted")
         var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'union select liked from likes where pid='${pid}' and uid='${uid}';`;
         var query = await getdata(q);
-        console.log(query)
-        console.log(query[0].likes);
+       // console.log(query)
+       // console.log(query[0].likes);
         res.json(query)
     }
     //update likes status in db
@@ -970,7 +971,23 @@ app.get("/retweet", (req, res) => {
     }
 })
 
+// userprofile..
 
+app.get('/userprofile', async(req, res) => {
+
+    var id = req.query.id;
+    // var profile_pic = req.query.profile_pic;
+
+    //   console.log('insertid',id,profile_pic)
+
+    const user = `SELECT * FROM twitter_clone.users where (id = '${id}');`
+    const userdata = await getdata(user)
+
+    console.log("-------------------------------------------------------------------------------",user)
+
+    res.json(userdata)
+
+})
 
 
 app.listen(3000, () => {
