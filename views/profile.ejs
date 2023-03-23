@@ -95,9 +95,9 @@
                 <div class="headerinfo">
 
                     <div onclick="teb1()">
-                        .
-                        <i class="fa-solid fa-arrow-left"></i>
-                        .
+                        
+                        <span><i class="fa-solid fa-arrow-left"></i></span>
+                        
                     </div>
 
 
@@ -605,7 +605,7 @@
         }
 
         function teb1() {
-            location.assign(`/home`);
+            window.history.go(-1)
             //  console.log("back1");
         }
 
