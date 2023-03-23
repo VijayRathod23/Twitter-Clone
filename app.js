@@ -232,7 +232,7 @@ app.get("/home", async (req, res) => {
 
 // .......................................retweet............................................
 
-    var retweet = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id from tweets join retweets on tweets.id = retweets.tweet_id`)
+    var retweet = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id , retweets.retweet_text as retweet_text, retweets.retweet_media as retweet_media from tweets join retweets on tweets.id = retweets.tweet_id`)
     var tweets = new Array();
     var new_user_profile_pic = new Array();
     var new_user_name = new Array();
@@ -873,7 +873,7 @@ app.post('/comment', async (req, res) => {
 
 
 //....Retweet
-//..............................................called after retweet icon is pressed..................
+//..............................................called after retweet icon is pressed. and it is simple retweet without content.................
 app.get("/retweet", (req, res) => {
 
     var tweet_id = req.query.tweet_id;  //...................................got tweet_id............
@@ -938,6 +938,66 @@ app.get("/retweet", (req, res) => {
         res.redirect("/login");
     }
 })
+
+// To check already retweeted or not
+
+app.get("/retweet_cnt",(req,res)=>{
+    
+    var tweet_id = req.query.tweet_id;  //...................................got tweet_id............
+   
+    const tokenData = req.session.user;
+    
+    if (tokenData) {
+       
+        const user_id = tokenData.id; // ..............................got user_id from token............
+
+        con.query(`select id from retweets where user_id='${user_id}' and tweet_id='${tweet_id}'`, (err, retweet_status) => {
+            if (retweet_status[0]) {
+                res.json({status:"True"}) //retweeted
+            }
+            else{
+                res.json({status:"False"}) //Not retweeted
+            }
+
+        })
+    }
+    else {
+        res.redirect("/login");
+    }
+
+
+
+})
+//api for creating quote_tweets
+app.post("/quote_tweet", upload2.single('media'), async (req, res) => {
+    const jwtToken = req.session.user;
+    const tokenData = req.session.user;
+    const id = tokenData.id; 
+    
+    const tweet_text = req.body.tweet_text;
+    var tweet_id= req.query.tweet_id;
+
+    console.log("uid"+id);
+    console.log("tweet text"+tweet_text);
+    console.log("tweet_id"+tweet_id);
+
+    if (req.file) {
+        const file = req.file;
+        const filename = file.originalname;
+        const filepath = file.path;
+        var imgsrc = 'http://127.0.0.1:3000/uploads/' + req.file.filename;
+        const sql = 'INSERT INTO retweets(user_id,tweet_id,retweet_text,retweet_media) VALUES (?,?,?,?)';
+        const data = [id, tweet_id,tweet_text, imgsrc];
+        con.query(sql, data);
+    }
+     else {
+        const sql = 'INSERT INTO retweets(user_id,tweet_id,retweet_text) VALUES (?,?,?)';
+        const data = [id, tweet_id, tweet_text];
+        con.query(sql, data);
+    }
+
+    res.redirect("/home");
+});
 
 
 

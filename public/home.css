@@ -381,3 +381,23 @@ max-width: 80%;
     margin-top: 1rem;
     border-radius: 50px;
 }
+.retweet_selector{
+    display: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 2rem;
+    padding: 1rem;
+}
+.retweet_selector p:hover{
+    background-color: white;
+    border-radius: 2rem;
+    
+    
+}
+.retweetImg{
+    width: 30%;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+.repost__headerDescription{
+    margin-top: 3rem;
+}
