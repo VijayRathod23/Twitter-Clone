@@ -69,6 +69,7 @@
 .profileimg img{
     width: 3rem;
     margin-right: 1rem;
+    border-radius: 50px;
 }
 
 .profileinfo{
@@ -138,7 +139,7 @@
     margin-top: 1rem;
     background-color: rgba(163, 155, 155, 0.3);
     width: 100%;
-    height: 60%;
+    height: 15rem;
 }
 
 /* .............profile pic............. */
@@ -188,26 +189,6 @@
     margin-left: 100px;
     color: black;
 }
- /* *************************Follow following button*********************** */
-
- /* ..................edit btn. div.......... */
-.following {
-    margin-top: 20px;
-    margin-right: 70px;
-}
-
-/* ...................edit btn ancher tag..... */
-.following a {
-
-    border: 1px solid black;
-    border-radius: 20px;
-    padding: 10px;
-    text-decoration: none;
-    margin-left: 100px;
-    color: black;
-}
-
-
 .name_email{
     display: flex;
     flex-direction: column;
@@ -259,19 +240,102 @@
 }
 
 /* .....................tweet.............. */
-.tweet {
+/* .tweet {
 
     width: 50%;
     padding: 0px 20px;
 
-}
+} */
 
 /* ..........................media............. */
-.media {
+/* .media {
 
     width: 50%;
     padding: 0px 20px;
 
+} */
+
+
+/* .....................Tweet Section.............. */
+
+.tweet_media{
+    display: flex;
+}
+
+.tweetsec, .retweetsec{
+    width: 50%;
+    text-align: center;
+    font-size: larger;
+    font-weight: bolder;
+}
+.tweetsec:hover{
+    background-color: #F5F8FA;
 }
 
 
+.tweets{
+    margin-top: 2rem;
+    padding: 2rem;
+    width: 60vw;
+    background-color: rgba(0, 0, 0, 0.091);
+    margin-left: 2rem;
+    border-radius: 2rem;
+}
+.post__avatar{
+    display: flex;
+    margin-bottom:2rem;
+}
+
+.post__header{
+    padding-left: 1rem;
+
+}
+
+.post__avatar1{
+    width: 3rem;
+    height: 3rem;
+    margin-top: 1rem;
+    border-radius: 50px;
+}
+.followbtn p{
+    background-color: #1DA1F2;
+    color: white;
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin-top: 0px;
+}
+
+
+
+.tweetImg{
+    width: 30%;
+}
+
+.btn-container{
+    display: flex;
+}
+
+
+/* .....................Retweets Section.............. */
+
+.retweetsec{
+    width: 50%;
+    text-align: center;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.retweetsec:hover{
+    background-color: #F5F8FA;
+}
+
+/* tweets likes css */
+.btn-container{
+    margin: 10px;
+    display: flex;
+}
+.twt-toggle{
+    width: calc(100% /3);
+    font-size: 20px;
+    cursor: pointer;
+}

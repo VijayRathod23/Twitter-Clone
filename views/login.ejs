@@ -21,7 +21,7 @@
                 <section class="section">
                     <div class="container">
                         <div class="logo">
-                            <i class="fa-brands fa-twitter"></i>
+                            <img src="icons8-twitter.gif" loop=infinity></img>
                         </div>
 
                         <div class="heading">
@@ -32,18 +32,17 @@
                         <div class="inputs">
 
                             <div class="user-info">
-                                <input type="text" hidden name="c" id= 'c' value="<%=c%>">
-                                <input type="text" name="email" placeholder="Email" id="email" onchange="checkmail('<%=c%>')">
+                                <input type="text" name="email" placeholder="Email" id="email" onchange="checkmail()">
 
                             </div>
                             <div class="user-info">
                                 <input type="text" name="password" placeholder="Password" id="password"
-                                    onchange="checkpwd('<%=c%>')">
+                                    onchange="checkpwd()">
 
-                                <p id="error"><%=err%></p>
+                                <p id="error"></p>
                             </div>
                             <div class="forgot-password">
-                                <a href="#">Forgot password</a>
+                                <a href="/forget-pass">Forgot password</a>
                             </div>
 
                         </div>
@@ -65,13 +64,10 @@
         </div>
     </form>
     <script>
-        function checkmail(c) {
-           var c = c;
+        function checkmail() {
             var email = document.getElementById('email').value;
             if (email == "") {
                 document.getElementById("error").innerHTML = " Email can not empty";
-                c = c +1;
-                document.getElementById('c').innerHTML = c;
             }
 
             else {
@@ -79,13 +75,11 @@
             }
 
         }
-        function checkpwd(c) {
+        function checkpwd() {
             document.getElementById("sub").disabled = true;
             var pwd = document.getElementById('password').value;
             if (pwd == "") {
                 document.getElementById("error").innerHTML = " Password can not empty";
-                c = c +1;
-                document.getElementById('c').innerHTML = c;
                 return false;
             }
             else {

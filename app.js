@@ -188,7 +188,6 @@ app.post("/login", async (req, res) => {
     }
     
 })
-
 app.get("/finduser", async (req, res) => {
     const email = req.query.email;
     var sql = `select email from users where email = '${email}'`;
@@ -236,7 +235,7 @@ app.get("/home", async (req, res) => {
         return res.send(`you are not authorized register first <a href="/signup">register</a>`);
     }
     const sql = `SELECT * FROM tweets ORDER BY created_at DESC`;
-    const tweets = await getdata(sql);
+    const tweet = await getdata(sql);
     const tokenData = req.session.user;
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
@@ -251,45 +250,348 @@ app.get("/home", async (req, res) => {
     // var like_flag = likes[0].liked;
     var flag = [];
     console.log(likes);
-    res.render("home", { tokenData, selectData, tweets,user_data,likes,flag})
+
+    // .......................................retweet............................................
+
+    var retweet = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id from tweets join retweets on tweets.id = retweets.tweet_id`)
+    var tweets = new Array();
+    var new_user_profile_pic = new Array();
+    var new_user_name = new Array();
+    console.log("new user p pic none" + new_user_profile_pic);
+    console.log("new user name none"+ new_user_name);
+    
+    //if any retweet found
+    if (retweet[0]) {
+        for (var i = 0; i < retweet.length; i++) {
+            tweets.push(retweet[i]);
+        
+        var new_user_data = await getdata(`select username , profile_pic from users where id= ${retweet[i].retweet_user_id}`);
+        new_user_profile_pic.push( new_user_data[0].profile_pic);
+        new_user_name.push(new_user_data[0].username);
+
+        //console.log("tweet" + retweet[i].media);
+        }
+
+    }
+  
+
+for(var i =0; i< tweet.length; i++){
+
+    tweets.push(tweet[i]);
+}
+
+
+// ..................retweet complete.......................
+
+
+    const result = await getdata(`SELECT follow.f_id FROM twitter_clone.follow where flag = '1'`);
+    // const user=result[0];
+    // console.log(user)
+    var ids = "(";
+    if (result.length != 0) {
+
+
+        for (let i = 0; i < result.length; i++) {
+            ids += `${result[i].f_id}`;
+
+            if (i != result.length - 1) {
+                ids += ","
+            }
+        }
+
+        const userid = `${tokenData.id}`;
+
+        ids += `,${userid})`
+        const basic = `SELECT * FROM twitter_clone.users where id not in${ids}`;
+        // console.log(basic);
+        const user_data = await getdata(basic);
+        // console.log(query);
+        res.render("home", { tokenData, selectData, tweets,user_data,likes,flag,new_user_profile_pic, new_user_name, user_data })
+    }
+    else {
+
+        const sql1 = `select * from users limit 5;`;
+        const user_data = await getdata(sql1);
+        //  console.log("all user data",user_data)
+        res.render("home", { tokenData, selectData, tweets,user_data,likes,flag, new_user_profile_pic, new_user_name,user_data })
+    }
 })
 
 
+// harshupdate
+// const sql1 = `select * from users limit 5;`;
+// const user_data = await getdata(sql1);
+// console.log("all user data", user_data);
+
+
+
+//...................retweet count .......................
+// var count = new Array();
+// for (var i = 0; i < tweets.length; i++) {
+
+//     const sql_retweet = `select count(id) as cnt from retweets where tweet_id = '${tweets[i].id}'`;
+//     const retweet_cnt = await getdata(sql_retweet);
+//     count.push(retweet_cnt[0].cnt);
+
+// }
+
+
+// res.render("home", { tokenData, selectData, tweets, user_data,count })
+
+
+
+// Profile Page
 // Profile Page
 app.get("/profile", async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/login">register</a>`);
+        return res.send(`you are not authorized register first <a href="/">register</a>`);
+    }
+    const tokenData = req.session.user;
+    // **************21march*************
+    const sql = `SELECT * FROM tweets where user_id = '${tokenData.id}' ORDER BY created_at DESC`;
+    const tweets = await getdata(sql);
+
+    console.log("bcnjffjewjfjnvjnejbnvjkebjkvbjbjhbjhbhb*******************", tweets)
+
+    // *************************
+    const select = `select * from users where id = '${tokenData.id}'`;
+    const selectData = await getdata(select);
+    //res.render("profile", { tokenData, selectData,tweets})
+
+
+
+    //--follower count
+
+    const result = `SELECT COUNT(user_id) AS follower FROM twitter_clone.follow where  (f_id = '${tokenData.id}' and rm_follower ='1');`
+    const followerdata = await getdata(result)
+
+
+    //--follow count
+    var result1 = (`SELECT COUNT(f_id) AS follow FROM twitter_clone.follow where  (user_id = '${tokenData.id}' and flag ='1');`)
+    const followdata = await getdata(result1)
+
+    console.log("followerrrrrrrrr", followdata[0].follow)
+
+    // res.render("profile", { tokenData, selectData, followerdata, followdata })
+
+
+
+    //..........select retweeted
+    const select_retweet = `select * from retweets where user_id = '${tokenData.id}'`;
+    const retweet_data = await getdata(select_retweet);
+
+    //..............if any retweet found for particular user
+
+
+    var count = new Array();
+    var tweet_data = new Array();
+
+    if (retweet_data[0]) {
+
+        for (var i = 0; i < retweet_data.length; i++) {
+
+            var retweeted_tweet_id = retweet_data[i].tweet_id;
+            console.log(retweeted_tweet_id);
+
+            var tweet_select = `select * from twitter_clone.tweets where id = '${retweeted_tweet_id}'`;
+
+            var tweet_data_1 = await getdata(tweet_select);
+
+
+            tweet_data.push(tweet_data_1[0]);
+
+
+
+            var sql_retweet = `select count(id) as cnt from retweets where tweet_id = '${retweeted_tweet_id}'`;
+            var retweet_cnt = await getdata(sql_retweet);
+            count.push(retweet_cnt[0].cnt);
+
+
+        }
+
+
+
+        res.render("profile", { tokenData, selectData, tweets, tweet_data, count, followerdata, followdata })
+    }
+    else {
+        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0, followerdata, followdata })
+
+    }
+
+
+
+})
+
+
+
+//------kinjal----------
+
+app.get("/newfollow", async (req, res) => {
+
+    const jwtToken = req.session.user;
+    if (!jwtToken) {
+        return res.send(`you are not authorized register first <a href="/">register</a>`);
     }
     const tokenData = req.session.user;
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
-    res.render("profile", { tokenData, selectData })
+
+    //--follower count
+
+    const result = `SELECT COUNT(user_id) AS follower FROM twitter_clone.follow where  (f_id = '${tokenData.id}' and rm_follower ='1');`
+    const followerdata = await getdata(result)
+
+
+    //--follow count
+    var result1 = (`SELECT COUNT(f_id) AS follow FROM twitter_clone.follow where  (user_id = '${tokenData.id}' and flag ='1');`)
+    const followdata = await getdata(result1)
+
+    console.log("followerrrrrrrrr", followdata[0].follow)
+    res.render("follow", { tokenData, selectData, followerdata, followdata })
+
 })
 
+//-------------------------follow-------------------------------------------------//
 
-//displaying searched profile
-app.get("/search_profile?",async(req,res)=>{
+app.get('/follow', async (req, res) => {
 
-    const jwtToken = req.session.user;
-    if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/login">register</a>`);
-    }
+    var id = req.query.id;
+
+    var result = (`SELECT * FROM twitter_clone.follow where (user_id = '${id}'and flag = '1');`)
+    const resultdata = await getdata(result)
+
+    console.log('follow listig', resultdata)
+
+
+    // console.log(resultdata)
+
+    res.json(resultdata)
+
+})
+
+app.get('/postfollow', async (req, res) => {
+
+    //to get user id to store it in follow table
+    //  const jwtToken = req.cookies.jwtToken;
     const tokenData = req.session.user;
-    var sid = req.query.sid;
-    console.log("sid front",sid)
-    const select = `select * from users where id = ${sid}`;
-    const selectData = await getdata(select);
-    console.log(selectData)    
-    res.render('search_profile', { tokenData, selectData })
+    // const tokenData = jwt.verify(jwtToken, "user");
+    var user_id = tokenData.id;
+    var username = tokenData.username;
+    var u_profile_pic = tokenData.profile_pic;
+    var u_email = tokenData.email;
+
+
+    var id = req.query.id;
+    var f_username = req.query.username;
+    var f_email = req.query.f_email;
+    var f_profile_pic = req.query.profile_pic;
+
+    // console.log(f_email)
+
+    //var 
+    var result = (`INSERT INTO twitter_clone.follow (f_id, user_id ,username, flag ,u_profile_pic,u_email,f_username,f_email,f_profile_pic,rm_follower ) 
+      VALUES ('${id}', '${user_id}','${username}','1','${u_profile_pic}','${u_email}','${f_username}','${f_email}','${f_profile_pic}','1'); `)
+
+    const resultdata = await getdata(result)
+    console.log("here------", result)
+
+    res.json(resultdata)
 
 })
+
+//---------------------follower---------------------------------------------------------//
+
+app.get('/postfollower', async (req, res) => {
+
+    //var result = await query(`SELECT f_id FROM twitter.follow where user_id=1;`)
+    var id = req.query.id;
+    // var profile_pic = req.query.profile_pic;
+
+    //   console.log('insertid',id,profile_pic)
+
+    const result = `SELECT * FROM twitter_clone.follow where (f_id = '${id}' and rm_follower ='1');`
+    const resultdata = await getdata(result)
+
+    console.log(resultdata)
+
+    res.json(resultdata)
+
+})
+//-------------------unfollow--------------------
+
+app.get('/post-Unfollow', async (req, res) => {
+
+    //to get user id to store it in follow table
+    //  const jwtToken = req.cookies.jwtToken;
+    const tokenData = req.session.user;
+    // const tokenData = jwt.verify(jwtToken, "user");
+    var user_id = tokenData.id;
+    var username = tokenData.username;
+    var u_profile_pic = tokenData.profile_pic;
+    var u_email = tokenData.email;
+
+
+    var id = req.query.id;
+    var f_username = req.query.username;
+    var f_email = req.query.f_email;
+    var f_profile_pic = req.query.profile_pic;
+
+    // console.log(f_email)
+
+    //var 
+    var result = (`  UPDATE twitter_clone.follow
+    SET flag = '0'
+    WHERE  (f_id= '${id}' and user_id ='${user_id}');`)
+    const resultdata = await getdata(result)
+    //    console.log("here------",result)
+
+    res.json(resultdata)
+
+})
+
+//---------------remove follower-----------
+
+app.get('/post-rm-follower', async (req, res) => {
+
+    //to get user id to store it in follow table
+    //  const jwtToken = req.cookies.jwtToken;
+    const tokenData = req.session.user;
+    // const tokenData = jwt.verify(jwtToken, "user");
+    var user_id = tokenData.id;
+    var username = tokenData.username;
+    var u_profile_pic = tokenData.profile_pic;
+    var u_email = tokenData.email;
+
+
+    var id = req.query.id;
+    var f_username = req.query.username;
+    var f_email = req.query.f_email;
+    var f_profile_pic = req.query.profile_pic;
+
+
+
+    var result = (`  UPDATE twitter_clone.follow
+   SET rm_follower = '0'
+   WHERE  ((f_id= '${id}' and user_id ='${user_id}' ) or (f_id ='${user_id}' and user_id ='${id}' ));`)
+    const resultdata = await getdata(result)
+    //    console.log("here------",result)
+
+    //    console.log(result)
+
+    //var 
+    res.json(resultdata)
+
+})
+
+
+
 
 // Edit Profile
 app.get("/edit_profile", async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/">register</a>`);
+        return res.send(`you are not authorized register first <a href="/signup">register</a>`);
     }
     const tokenData = req.session.user;
 
@@ -307,14 +609,35 @@ app.post("/edit_profile", upload.single('profile'), async (req, res) => {
     const tokenData = req.session.user;
     var updateTime = new Date();
     const { username, dob, bio, location } = req.body;
-    if(req.file){
+    if (req.file) {
         var profileurl = 'http://127.0.0.1:3000/profiles/' + req.file.filename;
         var sql = `update users set username='${username}',profile_pic='${profileurl}',dob='${dob}',bio='${bio}',location='${location}',updated_at='${updateTime}'  where id='${tokenData.id}'`
         var result = await getdata(sql);
+
+        var sql1 = `update tweets set username='${username}',profile_pic='${profileurl}' where user_id='${tokenData.id}'`
+        var result1 = await getdata(sql1);
+
+
+        var sql2 = `update comment set username='${username}',profile_pic='${profileurl}' where uid='${tokenData.id}'`
+        var result2 = await getdata(sql2);
+
         console.log(result)
-    }else{
+    } else {
         var sql = `update users set username='${username}',dob='${dob}',bio='${bio}',location='${location}' where id='${tokenData.id}'`
         var result = await getdata(sql);
+
+
+
+
+
+
+
+        
+        var sql1 = `update tweets set username='${username}' where user_id='${tokenData.id}'`
+        var result1 = await getdata(sql1);
+
+        var sql2 = `update comment set username='${username}' where uid='${tokenData.id}'`
+        var result2 = await getdata(sql2);
     }
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
@@ -329,7 +652,7 @@ app.get("/logout", (req, res) => {
 });
 
 //api for creating tweets
-app.post("/tweet", upload2.single('media'), async(req, res) => {
+app.post("/tweet", upload2.single('media'), async (req, res) => {
     const jwtToken = req.session.user;
     const tokenData = req.session.user;
     const id = tokenData.id;
@@ -365,6 +688,22 @@ app.get('/search',async(req,res)=>{
     console.log("userdata",search_data);
     res.json(search_data)
     
+})
+//displaying searched profile
+app.get("/search_profile?",async(req,res)=>{
+
+    const jwtToken = req.session.user;
+    if (!jwtToken) {
+        return res.send(`you are not authorized register first <a href="/login">register</a>`);
+    }
+    const tokenData = req.session.user;
+    var sid = req.query.sid;
+    console.log("sid front",sid)
+    const select = `select * from users where id = ${sid}`;
+    const selectData = await getdata(select);
+    console.log(selectData)    
+    res.render('search_profile', { tokenData, selectData })
+
 })
 
 app.post('/like', async (req, res) => {
@@ -402,6 +741,7 @@ app.post('/like', async (req, res) => {
         var f = `select * from likes where pid='${pid}' and uid='${uid}'`;
         var u = await getdata(f);
         // console.log("result data", u[0].liked)
+        console.log("result data", u[0].liked)
         if (u[0].liked == 0) {
             console.log("like")
             var sql = `update tweets set likes = likes + 1 where id = '${pid}' and user_id='${user_id}'`;
@@ -430,6 +770,196 @@ app.post('/like', async (req, res) => {
     }
 
 });
+//Forget Password
+app.get('/forget-pass', (req, res) => {
+    res.render('forget-pass');
+})
+app.get('/get-otp?', async (req, res) => {
+    const email = req.query.email;
+    console.log(email);
+    const sql = `select * from users where email = '${email}' `;
+    const result = await getdata(sql);
+    console.log(result[0]);
+    // Generate a random 4-digit number
+    var randomNum = Math.floor(Math.random() * 10000);
+    var otp = ("000" + randomNum).slice(-4);
+    console.log(otp); // Prints a random 4-digit number, e.g. "1234"
+    var otpsql = `update users set otp='${otp}' where email = '${email}'`;
+
+    if (result[0]) {
+        var otpResult = await getdata(otpsql);
+        let info = await trasporter.sendMail({
+            from: 'vijay.rathod.esparkbiz.23@gmail.com',
+            to: `${email}`,
+            subject: 'Reset Password mail',
+            html: `<h3>You Otp for reset password is <h2>${otp}</h2></h3>`
+        });
+        if (info) {
+
+        } else {
+            return res.send("error sending mail!")
+        }
+        const emailToken = jwt.sign(email, "email");
+        res.cookie("email", emailToken);
+
+        res.json({ exists: true });
+    }
+    else {
+        res.json({ exists: false });
+    }
+})
+app.get('/otpscreen', (req, res) => {
+    res.render('otpscreen')
+});
+app.get('/verify_otp?', async (req, res) => {
+    const userOtp = req.query.otp;
+    console.log(userOtp);
+    const emailToken = req.cookies.email;
+    const emailData = jwt.verify(emailToken, "email");
+    console.log("email", emailData);
+    var sql = `select otp from users where email = '${emailData}'`;
+    var otp = await getdata(sql);
+    const varifyOtp = otp[0].otp;
+    console.log(varifyOtp);
+    if (userOtp == varifyOtp) {
+        console.log('otp matched');
+        return res.redirect('/change-pass');
+    } else {
+        res.send("Invalid Otp")
+    }
+
+});
+app.get('/change-pass', (req, res) => {
+    res.render('change-pass')
+});
+//forgot passs done
+
+app.post('/save-pass', async (req, res) => {
+    const newpass = req.body.newpass;
+    const newhash = await bcrypt.hash(newpass, 10);
+    console.log(newpass);
+    console.log(newhash);
+    const emailToken = req.cookies.email;
+    const emailData = jwt.verify(emailToken, "email");
+    const sql = `update users set password = '${newhash}' where email = '${emailData}'`;
+    const result = await getdata(sql);
+    console.log('pass change');
+    if (result.changedRows == 1) {
+        res.clearCookie("email");
+        res.redirect('/login')
+    } else {
+        res.send("Error in changing password!")
+    }
+
+})
 
 
-app.listen(3000);
+//comment display
+
+app.post('/comment_display', async (req, res) => {
+
+    const tokenData = req.session.user;
+
+    const { uid, pid, commentfield, profile, username } = req.body;
+    const sql = `select profile_pic,comments,username from comment where pid='${pid}'`;
+    var query = await getdata(sql);
+    res.json(query)
+    console.log(query);
+
+
+});
+
+
+//comments api
+//comments
+app.post('/comment', async (req, res) => {
+
+    const tokenData = req.session.user;
+
+
+    const { uid, pid, username, profile, commentfield } = req.body;
+    console.log('comment', req.body);
+
+    const sql = `INSERT INTO comment (uid, pid,profile_pic,comments,username,inserted_at)VALUES ('${uid}', '${pid}', '${profile}','${commentfield}',  '${username}', NOW())`;
+    var query = await getdata(sql);
+
+    res.json(query)
+
+});
+
+
+
+
+//....Retweet
+//..............................................called after retweet icon is pressed..................
+app.get("/retweet", (req, res) => {
+
+    var tweet_id = req.query.tweet_id;  //...................................got tweet_id............
+    //const jwtToken = req.session.user;
+    const tokenData = req.session.user;
+    //const uid = tokenData.id;
+
+    if (tokenData) {
+        //const tokenData = jwt.verify(jwtToken, "user");
+        const user_id = tokenData.id; // ..............................got user_id from token............
+
+        con.query(`select id from retweets where user_id='${user_id}' and tweet_id='${tweet_id}'`, (err, retweet_status) => {
+
+
+
+            //.................................check if already retweeted by this user then delete
+
+
+            if (retweet_status[0]) {
+
+                var del = getdata(`delete from retweets where user_id='${user_id}' and tweet_id='${tweet_id}'`);
+                con.query(`select count(id) as cnt from retweets where  tweet_id='${tweet_id}'`, (err, result) => {
+                    if (err) throw err;
+
+                    var count = result[0].cnt;
+                    res.json({ count });
+
+                });
+
+            }
+
+            //.....................................else insert into retweets.....................
+            else {
+
+                var sql = `insert into retweets (user_id, tweet_id) value ('${user_id}','${tweet_id}')`;
+
+                //.....................................insert into retweets..........................
+
+                con.query(sql, (err, result) => {
+                    if (err) throw err;
+
+
+                    //...................................
+                    con.query(`select count(id) as cnt from retweets where tweet_id='${tweet_id}'`, (err, result) => {
+                        if (err) throw err;
+
+                        var count = result[0].cnt;
+                        res.json({ count });
+
+                    });
+
+                })
+
+            }
+
+        });
+
+    }
+
+
+    else {
+        res.redirect("/login");
+    }
+})
+
+
+
+
+app.listen(3000, () => {
+    console.log("app listening on 3000 port");
+    });
