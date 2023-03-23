@@ -352,3 +352,32 @@ max-width: 80%;
     font-size: 20px;
     cursor: pointer;
 }
+
+
+/* *******Retweet in home page******** */
+
+.retweeted{
+    margin-top: 2rem;
+    padding: 2rem;
+    width: 75%;
+    background-color: rgba(0, 0, 0, 0.091);
+    margin-left: 2rem;
+    border-radius: 2rem;
+}
+
+.repost__avatar{
+    display: flex;
+}
+
+
+.repost__header{
+    padding-left: 1rem;
+
+}
+
+.repost__avatar1{
+    width: 4rem;
+    height: 4rem;
+    margin-top: 1rem;
+    border-radius: 50px;
+}
