@@ -16,6 +16,19 @@ app.use(express.static(path.join(__dirname, "/public")));
 const multer = require('multer');
 var session = require('express-session');
 
+const nodemailer = require('nodemailer');
+const { log } = require('console');
+// require("dotenv").config();
+const user = process.env.user;
+let trasporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: `${user}`,
+        pass: `${process.env.pass}`,
+    }
+})
 
 app.use(bodyParser.json());
 app.use(cookie());
