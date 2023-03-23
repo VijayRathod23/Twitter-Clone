@@ -11,7 +11,6 @@ const multer = require('multer');
 var session = require('express-session');
 const nodemailer = require('nodemailer');
 const { log } = require('console');
-require("dotenv").config();
 const user = process.env.user;
 let trasporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
