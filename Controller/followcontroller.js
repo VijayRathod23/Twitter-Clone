@@ -27,7 +27,7 @@ const newfollow = asyncHandler(async (req, res) => {
 
     const jwtToken = req.session.user;
     if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/">register</a>`);
+        return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
     const tokenData = req.session.user;
     const select = `select * from users where id = '${tokenData.id}'`;
