@@ -40,7 +40,7 @@
                         <i class="fa-solid fa-house fa-2x"></i>
                         <span>Home</span>
                     </div>
-
+                    
                     <div class="navrow explore">
                         <i class="fa-solid fa-hashtag fa-2x"></i>
                         <span>Explore</span>
@@ -172,12 +172,12 @@
                                                         %>
                                                             <%if(tweets[i].media){%>
                                                                 <% const file_extension = tweets[i].media.slice(((tweets[i].media.lastIndexOf('.') - 1) >>> 0) + 2); %>
-                                                                <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                                    <%if(array_of_allowed_files.includes(file_extension)){%>
                                                                 <img src="<%=tweets[i].media%>" class="tweetImg" />
-                                                                <%}else{%>
+                                                                        <%}else{%>
                                                                 <video src="<%=tweets[i].media%>" width="300px" autoplay
                                                                     controls></video>
-                                                                <%}}%>
+                                                                            <%}}%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -237,15 +237,15 @@
                                                 </div>
                                             </div>
                                             <div class="post__body">
-        
-        
+
+
                                                 <!-- <div>
                                                         <form action="/tweets/<%= tweets[i].id %>/like" method="POST">
                                                             <button type="submit">Like</button>
                                                           </form>
                                                           <p><strong>Likes:</strong> <%= tweets[i].likes %></p>
                                                     </div> -->
-        
+
                                                 <div class="post-footer">
                                                     <div class="btn-container">
                                                         <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
@@ -255,7 +255,7 @@
                                                             comments
                                                         </div>
                                                         <%for (let j=0;j<tweets.length;j++){%>
-                                                                
+
                                                             <%for (let k=0;k<likes.length;k++){%>
                                                               
                                                             <%if(tweets[j].id==likes[k].pid && tokenData.id==likes[k].uid && likes[k].liked ==1){%>
@@ -269,6 +269,21 @@
                                                                
                                                             <%}%>                                                              
 
+
+                                                                <%if(tweets[j].id==likes[k].pid &&
+                                                                    tokenData.id==likes[k].uid && likes[k].liked==1){%>
+
+                                                                    <%flag[j]=1%>
+
+                                                                        <%}%>
+                                                                            <%if(tweets[j].id==likes[k].pid &&
+                                                                                tokenData.id==likes[k].uid &&
+                                                                                likes[k].liked==0){%>
+
+                                                                                <%flag[j]=0%>
+
+                                                                                    <%}%>
+
                                                         <%}%>
                                                         <%}%>
                                                         <%if(flag[i]==1){%>
@@ -280,6 +295,20 @@
                                                         <span id="twt<%=tweets[i].id%>">
                                                             <%=tweets[i].likes%>
                                                         </span>
+                                                                                        <%}%>
+                                                                                            <%}%>
+                                                                                                <%if(flag[i]==1){%>
+                                                                                                    <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                        <div
+                                                                                                            class="twt-toggle-like-blue">
+                                                                                                            <i class="fa-solid fa-heart"
+                                                                                                                id="twt-tg<%=tweets[i].id%>"
+                                                                                                                onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+
+                                                                                                            <span
+                                                                                                                id="twt<%=tweets[i].id%>">
+                                                                                                                <%=tweets[i].likes%>
+                                                                                                            </span>
 
                                                         </div>
                                                        
@@ -292,6 +321,20 @@
                                                         <span id="twt<%=tweets[i].id%>">
                                                             <%=tweets[i].likes%>
                                                         </span>
+                                                                                                        </div>
+
+                                                                                                        <%}else
+                                                                                                            if(flag[i]==0){%>
+                                                                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                                <div
+                                                                                                                    class="twt-toggle-like-black">
+                                                                                                                    <i class="fa-solid fa-heart"
+                                                                                                                        id="twt-tg<%=tweets[i].id%>"
+                                                                                                                        onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                                                                                    <span
+                                                                                                                        id="twt<%=tweets[i].id%>">
+                                                                                                                        <%=tweets[i].likes%>
+                                                                                                                    </span>
 
                                                         </div>
                                                        
@@ -304,31 +347,44 @@
                                                         <span id="twt<%=tweets[i].id%>">
                                                             <%=tweets[i].likes%>
                                                         </span>
+                                                                                                                </div>
 
-                                                        </div>
-                                                        <%}%>
+                                                                                                                <%}else{%>
+                                                                                                                    <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                                        <div
+                                                                                                                            class="twt-toggle-like-black">
+                                                                                                                            <i class="fa-solid fa-heart"
+                                                                                                                                id="twt-tg<%=tweets[i].id%>"
+                                                                                                                                onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                                                                                            <span
+                                                                                                                                id="twt<%=tweets[i].id%>">
+                                                                                                                                <%=tweets[i].likes%>
+                                                                                                                            </span>
+
+                                                                                                                        </div>
+                                                                                                                        <%}%>
                                                         <div class="twt-toggle">
                                                             <a onclick="increment_count('<%= tweets[i].id %>')"><i
-                                                                    class="fa-solid fa-retweet"></i></a>
+                                                                                                                                        class="fa-solid fa-retweet"></i></a>
                                                             <p id="retwt<%=tweets[i].id%>">
-                                                                <!-- count -->
-                                                            </p>
-                                                        </div>
+                                                                                                                                    <!-- count -->
+                                                                                                                                </p>
+                                                                                                                            </div>
                                                     </div>
-        
+
                                                     <div id="commentsection<%=tweets[i].id%>" class="commentsection">
                                                         <!-- fetch the comments from the database -->
                                                     </div>
-        
+
                                                     <div id="comment<%=tweets[i].id%>" class="comment">
-        
+
                                                         <input type="text" name="commentfield"
                                                             id="commentfield<%=tweets[i].id%>"
                                                             placeholder="Please Enter Comment" class="commentfield">
                                                         <input type="submit" value="Reply" class="commentbtn"
                                                             onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
-        
-        
+
+
                                                     </div>
         
         
@@ -392,14 +448,14 @@
     </div>
     <script>
 
-        
+
         function profile() {
             location.assign(`/profile`);
         }
 
         //*********************************like function
-    function like(pid, uid) {
-    // alert("like")
+        function like(pid, uid) {
+            // alert("like")
             console.log('pid', pid)
             console.log('uid', uid)
 
@@ -472,7 +528,7 @@
 
                 })
         }
-  
+
 
         function profile() {
             location.assign(`/profile`);

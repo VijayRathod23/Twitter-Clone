@@ -38,18 +38,10 @@
 
                     <div class="navrow explore">
                         <i class="fa-solid fa-hashtag fa-2x"></i>
-                        <span>Explore</span>
+                        <span>More</span>
                     </div>
 
-                    <div class="navrow notifications">
-                        <i class="fa-regular fa-bell fa-2x"></i>
-                        <span>Notifications</span>
-                    </div>
 
-                    <div class="navrow messages">
-                        <i class="fa-regular fa-envelope fa-2x"></i>
-                        <span>Messages</span>
-                    </div>
 
                     <div class="navrow profile" onclick="profile()">
                         <i class="fa-regular fa-user fa-2x"></i>
@@ -70,18 +62,18 @@
                         <img src="<%=selectData[0].profile_pic%>" alt="">
                     </div>
                     <div class="profileinfo1">
-                        <div class="name1">
+                        <div class="name1" onclick="profile()">
                             <span>
                                 <%=selectData[0].username%>
                             </span>
                         </div>
-                        <div class="username1">
+                        <div class="username1" onclick="profile()">
                             <span>
                                 <%=selectData[0].email%>
                             </span>
                         </div>
                     </div>
-                    
+
                 </div>
 
             </div>
@@ -93,8 +85,11 @@
                 <div class="headerinfo">
 
 
-                    <i class="fa-solid fa-arrow-left"></i>
-
+                    <div onclick="teb1()">
+                        .
+                        <i class="fa-solid fa-arrow-left"></i>
+                        .
+                    </div>
                     <div class="name_tweet">
                         <span class="name_user">
                             <%=selectData[0].username%>
@@ -171,7 +166,9 @@
                 function home() {
                     location.assign(`/home`);
                 }
-
+                function userprofile(id){
+                    // location.assign(`/userprofile`);
+                }
 
                 function profile() {
                     location.assign(`/profile`);
@@ -209,10 +206,10 @@
                                         <img src="${resultdata[x].f_profile_pic}" alt="">
                                     </div>
                                     <div class="profileinfo">
-                                        <div class="email">
+                                        <div class="email"onclick="userprofile(${resultdata[x].f_id})">
                                             <span>${resultdata[x].f_email}</span>
                                         </div>
-                                        <div class="username">
+                                        <div class="username"onclick="userprofile(${resultdata[x].f_id})">
                                             <span>${resultdata[x].f_username}</span>
                                         </div>
                                         </div>
@@ -225,12 +222,9 @@
                                 </div>`
 
                             }
-
                             listed.innerHTML = s;
                             // console.log(s)                 
                         })
-
-
                 }
 
 
@@ -269,10 +263,10 @@
                                         <img src="${resultdata[x].u_profile_pic}" alt="">
                                     </div>
                                     <div class="profileinfo">
-                                        <div class="email">
+                                        <div class="email"onclick="userprofile(${resultdata[x].user_id})">
                                             <span>${resultdata[x].u_email}</span>
                                         </div>
-                                        <div class="username">
+                                        <div class="username"onclick="userprofile(${resultdata[x].user_id})">
                                             <span>${resultdata[x].username}</span>
                                         </div>
                                         </div>
@@ -373,6 +367,10 @@
                             }
                         });
 
+                }
+                function teb1() {
+                    location.assign(`/profile`);
+                    //  console.log("back1");
                 }
 
 
