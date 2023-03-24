@@ -29,7 +29,7 @@ const home = asyncHandler(async (req, res) => {
     console.log("user", req.session.user);
     const jwtToken = req.session.user;
     if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/signup">register</a>`);
+        return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
     const sql = `SELECT * FROM tweets ORDER BY created_at DESC`;
     const tweet = await getdata(sql);
@@ -158,7 +158,7 @@ const search_profile = asyncHandler(async(req,res)=>{
 
     const jwtToken = req.session.user;
     if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/login">register</a>`);
+        return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
     const tokenData = req.session.user;
     var sid = req.query.sid;

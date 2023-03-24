@@ -257,16 +257,14 @@
                                                         <%for (let j=0;j<tweets.length;j++){%>
                                                                 
                                                             <%for (let k=0;k<likes.length;k++){%>
-                                                                <%console.log("tweet id",tweets[j].id,"likes pid",likes[k].pid)%>
-                                                                <%console.log("tweet uid",tokenData.id,"likes uid",likes[k].uid)%>
-
+                                                              
                                                             <%if(tweets[j].id==likes[k].pid && tokenData.id==likes[k].uid && likes[k].liked ==1){%>
-                                                                <%console.log("user liked:   ",tweets[j].id,likes[k].uid)%>
+                                                                
                                                                 <%flag[j]=1%>
                                                                 
                                                             <%}%>
                                                             <%if(tweets[j].id==likes[k].pid && tokenData.id==likes[k].uid && likes[k].liked ==0){%>
-                                                                <%console.log("user disliked:   ",tweets[j].id,likes[k].uid)%>
+                                                                
                                                                 <%flag[j]=0%>
                                                                
                                                             <%}%>                                                              
@@ -274,7 +272,7 @@
                                                         <%}%>
                                                         <%}%>
                                                         <%if(flag[i]==1){%>
-                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                            
                                                         <div class="twt-toggle-like-blue"><i class="fa-solid fa-heart"
                                                             id="twt-tg<%=tweets[i].id%>"
                                                             onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
@@ -286,7 +284,7 @@
                                                         </div>
                                                        
                                                         <%}else if(flag[i]==0){%>
-                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                            
                                                         <div class="twt-toggle-like-black"><i class="fa-solid fa-heart"
                                                             id="twt-tg<%=tweets[i].id%>"
                                                             onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"
@@ -298,7 +296,7 @@
                                                         </div>
                                                        
                                                         <%}else{%>
-                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                           
                                                         <div class="twt-toggle-like-black"><i class="fa-solid fa-heart"
                                                             id="twt-tg<%=tweets[i].id%>"
                                                             onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"
