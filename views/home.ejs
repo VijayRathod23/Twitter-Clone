@@ -330,16 +330,36 @@
 
                                                                                                                         </div>
                                                                                                                         <%}%>
+                                                                                                                        <%if(flag_rewteet[i] == 0){%>
                                                                                                                             <div
-                                                                                                                                class="twt-toggle">
-                                                                                                                                <a
+                                                                                                                                class="twt-toggle-retwt-black">
+                                                                                                                                <a id="retweet_icon<%=tweets[i].id%>"
                                                                                                                                     onclick="increment_count('<%= tweets[i].id %>')"><i
                                                                                                                                         class="fa-solid fa-retweet"></i></a>
-                                                                                                                                <p
+                                                                                                                                        <div class="retweet_selector" id="retweet_selector<%=tweets[i].id%>">
+                                                                                                                                            </div>
+                                                                                                                                <span
                                                                                                                                     id="retwt<%=tweets[i].id%>">
+                                                                                                                                    <%=count[i]%>
                                                                                                                                     <!-- count -->
-                                                                                                                                </p>
+                                                                                                                                </span>
                                                                                                                             </div>
+                                                                                                                            <%}else{%>
+                                                                                                                                <div
+                                                                                                                                class="twt-toggle-retwt-blue">
+                                                                                                                                <a id="retweet_icon<%=tweets[i].id%>"
+                                                                                                                                    onclick="increment_count('<%= tweets[i].id %>')"><i
+                                                                                                                                        class="fa-solid fa-retweet"></i></a>
+                                                                                                                                        <div class="retweet_selector" id="retweet_selector<%=tweets[i].id%>">
+                                                                                                                                            </div>
+                                                                                                                                <span
+                                                                                                                                    id="retwt<%=tweets[i].id%>">
+                                                                                                                                    <%=count[i]%>
+                                                                                                                                    <!-- count -->
+                                                                                                                                </span>
+                                                                                                                            </div>
+
+                                                                                                                                <%}%>
                                                     </div>
 
                                                     <div id="commentsection<%=tweets[i].id%>" class="commentsection">
@@ -415,9 +435,9 @@
     <script>
 
 
-        function profile() {
-            location.assign(`/profile`);
-        }
+        // function profile() {
+        //     location.assign(`/profile`);
+        // }
 
         //*********************************like function
         function like(pid, uid) {
@@ -486,7 +506,7 @@
                             `</span>
                                 </div>
                             </div>
-                           
+
                         </div> `;
 
                     }
@@ -590,7 +610,7 @@
 
         })
         // classcomment.forEach()
-        console.log(classcomment)
+        console.log(classcomment);
 
         async function comment(pid, uid) {
             var commentsection = document.getElementById('commentsection' + pid);
@@ -600,13 +620,13 @@
 
             console.log(comment)
             // commentsection.innerHTML = "";
-            commentstr = ''
+            commentstr = '';
             console.log('pid', pid)
             console.log('uid', uid)
             console.log(commentsection)
-            classcomment.forEach(i => {
+            classcomment.forEach(i => { });
 
-            })
+
             if (commentsection.style.display == "none") {
                 commentsection.style.display = "block";
                 comment.style.display = "block";
@@ -647,7 +667,12 @@
 
                 })
 
+                // else {
+                //     commentsection.style.display = "none";
+                //     comment.style.display = "none";
+                // }
             }
+
             else {
                 commentsection.style.display = "none";
                 comment.style.display = "none";
@@ -660,49 +685,60 @@
 
 
         async function increment_count(tweet_id) {
-         
-         var res = await fetch(`/retweet_cnt?tweet_id=${tweet_id}`); // Check if already retweeted
-         var data = await res.json();
-         var cnt_increment = data.status;     
+        
 
-         if (cnt_increment == "True") {
-             // do nothing
+            var res = await fetch(`/retweet_cnt?tweet_id=${tweet_id}`); // Check if already retweeted
+            var data = await res.json();
+            var cnt_increment = data.status;
 
-         }
-         //if not retweeted 
-         else {
+            if (cnt_increment == "True") {
+                var res = await fetch(`/retweet?tweet_id=${tweet_id}`);
+                var data = await res.json();
+                var cnt_increment = data.count;
+                document.getElementById("retweet_icon"+ tweet_id).style.color="black";
+                document.getElementById("retwt"+ tweet_id).style.color="black";
+                document.getElementById('retwt' + tweet_id).innerHTML = cnt_increment;
 
-             var retweet_selector = document.getElementById("retweet_selector" + tweet_id);
+                // do deletion
 
-             retweet_selector.style.display = "block";
-             var html = `<p class="simple_retweet" onclick="retweet(this,${tweet_id})">Retweet</p><p class="quote_tweet" onclick="retweet(this,${tweet_id})">Quote Tweet</p>`;
-             retweet_selector.innerHTML = html;
+            }
+            //if not retweeted 
+            else {
+                
+                var retweet_selector = document.getElementById("retweet_selector" + tweet_id);
 
-
-         }
-
-     }
-
-     async function retweet(retweet_option, tweet_id) {
-
-         var retweet_selector = document.getElementById("retweet_selector" + tweet_id);
-         retweet_selector.style.display = "none";  
-         
-         // Simple retweet
-         if (retweet_option.innerHTML == 'Retweet') {
-             var res = await fetch(`/retweet?tweet_id=${tweet_id}`);
-             var data = await res.json();
-             var cnt_increment = data.count;
-             document.getElementById('retwt' + tweet_id).innerHTML = cnt_increment;
+                retweet_selector.style.display = "block";
+                var html = `<p class="simple_retweet" onclick="retweet(this,${tweet_id})">Retweet</p><p class="quote_tweet" onclick="retweet(this,${tweet_id})">Quote Tweet</p>`;
+                retweet_selector.innerHTML = html;
 
 
-         }
+            }
 
-         // Quote tweet
-         else {
-          
-             var content_picker = document.getElementById("content");
-             var html = ` <h1>Home</h1><form action="/quote_tweet?tweet_id=${tweet_id}" method="post" enctype="multipart/form-data">
+        }
+
+        async function retweet(retweet_option, tweet_id) {
+
+            document.getElementById("retweet_icon"+ tweet_id).style.color="#1DA1F2";
+            document.getElementById("retwt"+ tweet_id).style.color="#1DA1F2";
+
+            var retweet_selector = document.getElementById("retweet_selector" + tweet_id);
+            retweet_selector.style.display = "none";
+
+            // Simple retweet
+            if (retweet_option.innerHTML == 'Retweet') {
+                var res = await fetch(`/retweet?tweet_id=${tweet_id}`);
+                var data = await res.json();
+                var cnt_increment = data.count;               
+                document.getElementById('retwt' + tweet_id).innerHTML = cnt_increment;
+
+
+            }
+
+            // Quote tweet
+            else {
+
+                var content_picker = document.getElementById("content");
+                var html = ` <h1>Home</h1><form action="/quote_tweet?tweet_id=${tweet_id}" method="post" enctype="multipart/form-data">
  <div class="tweetform"> <img src="<%=selectData[0].profile_pic%>" alt="">  <input type="text" name="tweet_text" id="tweetformcontent" placeholder="Add a comment..">
  </div>
  <div class="tweetsubmit">
@@ -716,10 +752,10 @@
      <input type="submit" value="ReTweet" class="tweet">
  </div>
 </form></div>`;
-             content_picker.innerHTML = html;   
+                content_picker.innerHTML = html;
 
 
-         }
+            }
 
         }
 
@@ -727,7 +763,7 @@
             var sid = sid;
             location.assign(`http://localhost:3000/search_profile?sid='${sid}'`);
         }
-        
+
 
 
 

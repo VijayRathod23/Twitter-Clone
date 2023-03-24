@@ -265,8 +265,9 @@ app.get("/home", async (req, res) => {
     var flag = [];
     console.log(likes);
 
-    // .......................................retweet............................................
-
+    // .......................................retweet............................................\
+    var flag_rewteet = new Array();
+    var count= new Array();
     var retweet = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id , retweets.retweet_text as retweet_text, retweets.retweet_media as retweet_media from tweets join retweets on tweets.id = retweets.tweet_id`)
     var tweets = new Array();
     var new_user_profile_pic = new Array();
@@ -277,7 +278,10 @@ app.get("/home", async (req, res) => {
     //if any retweet found
     if (retweet[0]) {
         for (var i = 0; i < retweet.length; i++) {
+            count.push(0);
+            flag_rewteet.push(0);
             tweets.push(retweet[i]);
+
         
         var new_user_data = await getdata(`select username , profile_pic from users where id= ${retweet[i].retweet_user_id}`);
         new_user_profile_pic.push( new_user_data[0].profile_pic);
@@ -289,10 +293,24 @@ app.get("/home", async (req, res) => {
     }
   
 
-for(var i =0; i< tweet.length; i++){
+for(var i =0; i< tweet.length; i++){    
+
+    var cnt_sql= `select count(id) as cnt from retweets where tweet_id='${tweet[i].id}'`;
+    var result1 = await getdata(cnt_sql);
+    var total = result1[0].cnt;
+    count.push(total);
+    var flag_retwt_sql=`select id from retweets where user_id='${tokenData.id}' and tweet_id='${tweet[i].id}'`;
+    var flag_retwt = await getdata(flag_retwt_sql);
+    if(flag_retwt[0]){
+        flag_rewteet.push(1);
+    }
+    else{
+        flag_rewteet.push(0);
+    }
 
     tweets.push(tweet[i]);
 }
+
 
 
 // ..................retweet complete.......................
@@ -320,14 +338,14 @@ for(var i =0; i< tweet.length; i++){
         // console.log(basic);
         const user_data = await getdata(basic);
         // console.log(query);
-        res.render("home", { tokenData, selectData, tweets,user_data,likes,flag,new_user_profile_pic, new_user_name, user_data })
+        res.render("home", { tokenData, selectData, tweets,user_data,likes,flag,new_user_profile_pic, new_user_name, user_data , count,flag_rewteet})
     }
     else {
 
         const sql1 = `select * from users limit 5;`;
         const user_data = await getdata(sql1);
         //  console.log("all user data",user_data)
-        res.render("home", { tokenData, selectData, tweets,user_data,likes,flag, new_user_profile_pic, new_user_name,user_data })
+        res.render("home", { tokenData, selectData, tweets,user_data,likes,flag, new_user_profile_pic, new_user_name,user_data, count , flag_rewteet })
     }
 })
 

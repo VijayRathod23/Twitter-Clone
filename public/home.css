@@ -366,7 +366,18 @@ max-width: 80%;
     color: #1DA1F2;
 }
 
-
+.twt-toggle-retwt-black{
+    width: calc(100% /3);
+    font-size: 20px;
+    /* color: red; */
+    color: black;
+}
+.twt-toggle-retwt-blue{
+    width: calc(100% /3);
+    font-size: 20px;
+    /* color: red; */
+    color: #1DA1F2;
+}
 
 /* *******Retweet in home page******** */
 
