@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <form action="" method="post">
+    <form action="/signup" method="post">
         <div class="main">
 
             <div class="registration">
@@ -26,7 +26,7 @@
                       
 
                         <div class="logo">
-                            <img src="icons8-twitter.gif" loop=infinity></img>
+                            <img src="/images/icons8-twitter.gif" loop=infinity></img>
                         </div>
 
 
@@ -47,12 +47,12 @@
                                 <p id="2"></p>
                             </div>
                             <div class="user-info">
-                                <input type="text" name="pwd" id="pwd"  onchange="checkpwd()"
+                                <input type="password" name="pwd" id="pwd"  onchange="checkpwd()"
                                 required placeholder="Password">
                                 <p id="3"></p>
                             </div>
                             <div class="user-info">
-                                <input type="text" name="repwd" id="repwd" onchange="checkrepwd()"
+                                <input type="password" name="repwd" id="repwd" onchange="checkrepwd()"
                                 required placeholder="Confirm Password">
                                 <p id="4"></p>
                             </div>
@@ -109,7 +109,7 @@
         }
     }
     function checkmail() {
-        var email = document.getElementById('mail').value;
+        var email = document.getElementById('email').value;
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         fetch(`/finduser?email=${email}`)
             .then(res => res.json())
@@ -117,6 +117,7 @@
                 console.log(data)
                 if (email == "") {
                     document.getElementById("2").innerHTML = "** email can not empty";
+                    
                 }
                 else if (!reg.test(email)) {
                     document.getElementById('2').innerHTML = "** please enter valid email";
