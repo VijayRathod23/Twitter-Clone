@@ -79,7 +79,65 @@ const retweet = asyncHandler((req, res) => {
     }
 })
 
+const retweet_cnt = asyncHandler((req,res)=>{
+    
+    var tweet_id = req.query.tweet_id;  //...................................got tweet_id............
+   
+    const tokenData = req.session.user;
+    
+    if (tokenData) {
+       
+        const user_id = tokenData.id; // ..............................got user_id from token............
+
+        con.query(`select id from retweets where user_id='${user_id}' and tweet_id='${tweet_id}'`, (err, retweet_status) => {
+            if (retweet_status[0]) {
+                res.json({status:"True"}) //retweeted
+            }
+            else{
+                res.json({status:"False"}) //Not retweeted
+            }
+
+        })
+    }
+    else {
+        res.redirect("/login");
+    }
 
 
 
-module.exports = { retweet }
+})
+
+const quote_tweet= asyncHandler(async (req, res) => {
+    const jwtToken = req.session.user;
+    const tokenData = req.session.user;
+    const id = tokenData.id; 
+    
+    const tweet_text = req.body.tweet_text;
+    var tweet_id= req.query.tweet_id;
+
+    console.log("uid"+id);
+    console.log("tweet text"+tweet_text);
+    console.log("tweet_id"+tweet_id);
+
+    if (req.file) {
+        const file = req.file;
+        const filename = file.originalname;
+        const filepath = file.path;
+        var imgsrc = 'http://127.0.0.1:3000/uploads/' + req.file.filename;
+        const sql = 'INSERT INTO retweets(user_id,tweet_id,retweet_text,retweet_media) VALUES (?,?,?,?)';
+        const data = [id, tweet_id,tweet_text, imgsrc];
+        con.query(sql, data);
+    }
+     else {
+        const sql = 'INSERT INTO retweets(user_id,tweet_id,retweet_text) VALUES (?,?,?)';
+        const data = [id, tweet_id, tweet_text];
+        con.query(sql, data);
+    }
+
+    res.redirect("/home");
+});
+
+
+
+
+module.exports = { retweet , retweet_cnt, quote_tweet}

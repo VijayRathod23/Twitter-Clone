@@ -36,40 +36,30 @@
 
                 <div class="navigation">
 
-                    <div class="navrow home">
+                    <div class="navrow home" onclick="home()">
                         <i class="fa-solid fa-house fa-2x"></i>
                         <span>Home</span>
                     </div>
 
                     <div class="navrow explore">
                         <i class="fa-solid fa-hashtag fa-2x"></i>
-                        <span>Explore</span>
+                        <span>More</span>
                     </div>
 
-                    <div class="navrow notifications">
-                        <i class="fa-regular fa-bell fa-2x"></i>
-                        <span>Notifications</span>
-                    </div>
 
-                    <div class="navrow messages">
-                        <i class="fa-regular fa-envelope fa-2x"></i>
-                        <span>Messages</span>
-                    </div>
 
                     <div class="navrow profile" onclick="profile()">
                         <i class="fa-regular fa-user fa-2x"></i>
                         <span>Profile</span>
                     </div>
 
-                    <!-- 
-                    <div class="navrow">
+                    <!-- <div class="navrow">
                         <a href="" class="tweetbtn">
                             <p>Tweet</p>
                         </a>
                     </div> -->
 
                 </div>
-
 
 
                 <!-- ************profile******************** -->
@@ -81,12 +71,12 @@
                         </div>
                         <%}%>
                             <div class="profileinfo">
-                                <div class="name">
+                                <div class="name" onclick="profile()">
                                     <span>
                                         <%=selectData[0].username%>
                                     </span>
                                 </div>
-                                <div class="username">
+                                <div class="username" onclick="profile()">
                                     <span>
                                         <%=selectData[0].email%>
                                     </span>
@@ -96,10 +86,10 @@
             </div>
 
             <!-- *********************Content Section********************** -->
-            <div class="contentsection">
+            <div class="contentsection" id="content">
                 <h1>Home</h1>
 
-                <form action="/tweet" method="post" enctype="multipart/form-data" >
+                <form action="/tweet" method="post" enctype="multipart/form-data">
                     <div class="tweetform">
                         <img src="<%=selectData[0].profile_pic%>" alt="">
                         <input type="text" name="tweet_text" id="tweetformcontent" placeholder="What's Happening?">
@@ -136,8 +126,7 @@
                                 <div class="retweeted">
 
                                     <div class="repost__avatar">
-                                        <img src="<%=new_user_profile_pic[i]%>" alt="img"
-                                            class="repost__avatar1" />
+                                        <img src="<%=new_user_profile_pic[i]%>" alt="img" class="repost__avatar1" />
                                         <div class="repost__header">
                                             <div class="repost__headerText">
                                                 <h3>
@@ -146,6 +135,24 @@
                                                 </h3>
                                             </div>
                                         </div>
+
+                                        <!-- if content found -->
+                                        <%if(tweets[i].retweet_text){%>
+
+                                            <div class="repost__headerDescription">
+                                                <p>
+                                                    <%=tweets[i].retweet_text%>
+                                                </p>
+                                                <!-- if media found -->
+                                                <%if(tweets[i].retweet_media){%>
+                                                    <img src="<%=tweets[i].retweet_media%>" alt="img"
+                                                        class="retweetImg" />
+                                                    <%}%>
+                                            </div>
+
+
+                                            <%}%>
+
 
                                     </div>
                                     <!-- original tweet -->
@@ -167,17 +174,19 @@
                                                             <%=tweets[i].tweet_text%>
                                                         </p>
                                                         <!-- uploading images and video -->
-                                                        <%  const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; 
-                                                            const array_of_allowed_videos=['mp4','gif'];
-                                                        %>
+                                                        <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; const
+                                                            array_of_allowed_videos=['mp4','gif']; %>
                                                             <%if(tweets[i].media){%>
-                                                                <% const file_extension = tweets[i].media.slice(((tweets[i].media.lastIndexOf('.') - 1) >>> 0) + 2); %>
-                                                                <%if(array_of_allowed_files.includes(file_extension)){%>
-                                                                <img src="<%=tweets[i].media%>" class="tweetImg" />
-                                                                <%}else{%>
-                                                                <video src="<%=tweets[i].media%>" width="300px" autoplay
-                                                                    controls></video>
-                                                                <%}}%>
+                                                                <% const
+                                                                    file_extension=tweets[i].media.slice(((tweets[i].media.lastIndexOf('.')
+                                                                    - 1)>>> 0) + 2); %>
+                                                                    <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                                        <img src="<%=tweets[i].media%>"
+                                                                            class="tweetImg" />
+                                                                        <%}else{%>
+                                                                            <video src="<%=tweets[i].media%>"
+                                                                                width="300px" autoplay controls></video>
+                                                                            <%}}%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -222,9 +231,8 @@
                                                             <%=tweets[i].tweet_text%>
                                                         </p>
                                                         <!-- uploading images and video -->
-                                                        <%  const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; 
-                                                            const array_of_allowed_videos=['mp4','gif'];
-                                                        %>
+                                                        <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; const
+                                                            array_of_allowed_videos=['mp4','gif']; %>
                                                             <%if(tweets[i].media){%>
                                                                 <% const file_extension = tweets[i].media.slice(((tweets[i].media.lastIndexOf('.') - 1) >>> 0) + 2); %>
                                                                 <%if(array_of_allowed_files.includes(file_extension)){%>
@@ -237,15 +245,15 @@
                                                 </div>
                                             </div>
                                             <div class="post__body">
-        
-        
+
+
                                                 <!-- <div>
                                                         <form action="/tweets/<%= tweets[i].id %>/like" method="POST">
                                                             <button type="submit">Like</button>
                                                           </form>
                                                           <p><strong>Likes:</strong> <%= tweets[i].likes %></p>
                                                     </div> -->
-        
+
                                                 <div class="post-footer">
                                                     <div class="btn-container">
                                                         <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
@@ -305,36 +313,113 @@
                                                             <%=tweets[i].likes%>
                                                         </span>
 
-                                                        </div>
-                                                        <%}%>
-                                                        <div class="twt-toggle">
-                                                            <a onclick="increment_count('<%= tweets[i].id %>')"><i
-                                                                    class="fa-solid fa-retweet"></i></a>
-                                                            <p id="retwt<%=tweets[i].id%>">
-                                                                <!-- count -->
-                                                            </p>
-                                                        </div>
+                                                                <%if(tweets[j].id==likes[k].pid &&
+                                                                    tokenData.id==likes[k].uid && likes[k].liked==1){%>
+
+                                                                    <%flag[j]=1%>
+
+                                                                        <%}%>
+                                                                            <%if(tweets[j].id==likes[k].pid &&
+                                                                                tokenData.id==likes[k].uid &&
+                                                                                likes[k].liked==0){%>
+
+                                                                                <%flag[j]=0%>
+
+                                                                                    <%}%>
+
+                                                                                        <%}%>
+                                                                                            <%}%>
+                                                                                                <%if(flag[i]==1){%>
+                                                                                                    <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                        <div
+                                                                                                            class="twt-toggle-like-blue">
+                                                                                                            <i class="fa-solid fa-heart"
+                                                                                                                id="twt-tg<%=tweets[i].id%>"
+                                                                                                                onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+
+                                                                                                            <span
+                                                                                                                id="twt<%=tweets[i].id%>">
+                                                                                                                <%=tweets[i].likes%>
+                                                                                                            </span>
+
+                                                                                                        </div>
+
+                                                                                                        <%}else
+                                                                                                            if(flag[i]==0){%>
+                                                                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                                <div
+                                                                                                                    class="twt-toggle-like-black">
+                                                                                                                    <i class="fa-solid fa-heart"
+                                                                                                                        id="twt-tg<%=tweets[i].id%>"
+                                                                                                                        onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                                                                                    <span
+                                                                                                                        id="twt<%=tweets[i].id%>">
+                                                                                                                        <%=tweets[i].likes%>
+                                                                                                                    </span>
+
+                                                                                                                </div>
+
+                                                                                                                <%}else{%>
+                                                                                                                    <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                                        <div
+                                                                                                                            class="twt-toggle-like-black">
+                                                                                                                            <i class="fa-solid fa-heart"
+                                                                                                                                id="twt-tg<%=tweets[i].id%>"
+                                                                                                                                onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                                                                                            <span
+                                                                                                                                id="twt<%=tweets[i].id%>">
+                                                                                                                                <%=tweets[i].likes%>
+                                                                                                                            </span>
+
+                                                                                                                        </div>
+                                                                                                                        <%}%>
+                                                                                                                        <%if(flag_rewteet[i] == 0){%>
+                                                                                                                            <div
+                                                                                                                                class="twt-toggle-retwt-black">
+                                                                                                                                <a id="retweet_icon<%=tweets[i].id%>"
+                                                                                                                                    onclick="increment_count('<%= tweets[i].id %>')"><i
+                                                                                                                                        class="fa-solid fa-retweet"></i></a>
+                                                                                                                                        <div class="retweet_selector" id="retweet_selector<%=tweets[i].id%>">
+                                                                                                                                            </div>
+                                                                                                                                <span
+                                                                                                                                    id="retwt<%=tweets[i].id%>">
+                                                                                                                                    <%=count[i]%>
+                                                                                                                                    <!-- count -->
+                                                                                                                                </span>
+                                                                                                                            </div>
+                                                                                                                            <%}else{%>
+                                                                                                                                <div
+                                                                                                                                class="twt-toggle-retwt-blue">
+                                                                                                                                <a id="retweet_icon<%=tweets[i].id%>"
+                                                                                                                                    onclick="increment_count('<%= tweets[i].id %>')"><i
+                                                                                                                                        class="fa-solid fa-retweet"></i></a>
+                                                                                                                                        <div class="retweet_selector" id="retweet_selector<%=tweets[i].id%>">
+                                                                                                                                            </div>
+                                                                                                                                <span
+                                                                                                                                    id="retwt<%=tweets[i].id%>">
+                                                                                                                                    <%=count[i]%>
+                                                                                                                                    <!-- count -->
+                                                                                                                                </span>
+                                                                                                                            </div>
+
+                                                                                                                                <%}%>
                                                     </div>
-        
+
                                                     <div id="commentsection<%=tweets[i].id%>" class="commentsection">
                                                         <!-- fetch the comments from the database -->
                                                     </div>
-        
+
                                                     <div id="comment<%=tweets[i].id%>" class="comment">
-        
+
                                                         <input type="text" name="commentfield"
                                                             id="commentfield<%=tweets[i].id%>"
                                                             placeholder="Please Enter Comment" class="commentfield">
                                                         <input type="submit" value="Reply" class="commentbtn"
                                                             onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
-        
-        
+
+
                                                     </div>
-        
-        
-        
                                                 </div>
-        
                                             </div>
                                         </div>
                                     </div>
@@ -392,14 +477,14 @@
     </div>
     <script>
 
-        
-        function profile() {
-            location.assign(`/profile`);
-        }
+
+        // function profile() {
+        //     location.assign(`/profile`);
+        // }
 
         //*********************************like function
-    function like(pid, uid) {
-    // alert("like")
+        function like(pid, uid) {
+            // alert("like")
             console.log('pid', pid)
             console.log('uid', uid)
 
@@ -446,7 +531,7 @@
                 .then((search_data) => {
                     // console.log(':::::::::::::::::::::::::::data at',search_data)
                     for (i = 0; i < search_data.length; i++) {
-                            console.log("at",i,'',search_data[i].id)
+                        console.log("at", i, '', search_data[i].id)
                         s += `
                         <div class="searchprofile" onclick="search_profile('${search_data[i].id}')">
                             <div class="profileimg">
@@ -464,7 +549,7 @@
                             `</span>
                                 </div>
                             </div>
-                           
+
                         </div> `;
 
                     }
@@ -472,7 +557,7 @@
 
                 })
         }
-  
+
 
         function profile() {
             location.assign(`/profile`);
@@ -526,7 +611,6 @@
         }
 
 
-
         // Comment post Section
         async function commentdata(pid, uid, username, profile) {
 
@@ -553,6 +637,7 @@
         }
 
 
+
         // Comment get Section
 
 
@@ -568,7 +653,7 @@
 
         })
         // classcomment.forEach()
-        console.log(classcomment)
+        console.log(classcomment);
 
         async function comment(pid, uid) {
             var commentsection = document.getElementById('commentsection' + pid);
@@ -578,13 +663,13 @@
 
             console.log(comment)
             // commentsection.innerHTML = "";
-            commentstr = ''
+            commentstr = '';
             console.log('pid', pid)
             console.log('uid', uid)
             console.log(commentsection)
-            classcomment.forEach(i => {
+            classcomment.forEach(i => { });
 
-            })
+
             if (commentsection.style.display == "none") {
                 commentsection.style.display = "block";
                 comment.style.display = "block";
@@ -625,7 +710,12 @@
 
                 })
 
+                // else {
+                //     commentsection.style.display = "none";
+                //     comment.style.display = "none";
+                // }
             }
+
             else {
                 commentsection.style.display = "none";
                 comment.style.display = "none";
@@ -635,25 +725,90 @@
 
 
 
-        //..............................retweet incrementation and database entry using fetch....................
-        // ..............................this fun is called when retweet btn is pressed....................
+
+
         async function increment_count(tweet_id) {
+        
 
-            var res = await fetch(`/retweet?tweet_id=${tweet_id}`);
+            var res = await fetch(`/retweet_cnt?tweet_id=${tweet_id}`); // Check if already retweeted
             var data = await res.json();
-            var cnt_increment = data.count;
+            var cnt_increment = data.status;
 
-            document.getElementById('retwt' + tweet_id).innerHTML = cnt_increment;
-            //window.location.reload("/home");
+            if (cnt_increment == "True") {
+                var res = await fetch(`/retweet?tweet_id=${tweet_id}`);
+                var data = await res.json();
+                var cnt_increment = data.count;
+                document.getElementById("retweet_icon"+ tweet_id).style.color="black";
+                document.getElementById("retwt"+ tweet_id).style.color="black";
+                document.getElementById('retwt' + tweet_id).innerHTML = cnt_increment;
+
+                // do deletion
+
+            }
+            //if not retweeted 
+            else {
+                
+                var retweet_selector = document.getElementById("retweet_selector" + tweet_id);
+
+                retweet_selector.style.display = "block";
+                var html = `<p class="simple_retweet" onclick="retweet(this,${tweet_id})">Retweet</p><p class="quote_tweet" onclick="retweet(this,${tweet_id})">Quote Tweet</p>`;
+                retweet_selector.innerHTML = html;
 
 
+            }
 
         }
 
-        function search_profile(sid){
+        async function retweet(retweet_option, tweet_id) {
+
+            document.getElementById("retweet_icon"+ tweet_id).style.color="#1DA1F2";
+            document.getElementById("retwt"+ tweet_id).style.color="#1DA1F2";
+
+            var retweet_selector = document.getElementById("retweet_selector" + tweet_id);
+            retweet_selector.style.display = "none";
+
+            // Simple retweet
+            if (retweet_option.innerHTML == 'Retweet') {
+                var res = await fetch(`/retweet?tweet_id=${tweet_id}`);
+                var data = await res.json();
+                var cnt_increment = data.count;               
+                document.getElementById('retwt' + tweet_id).innerHTML = cnt_increment;
+
+
+            }
+
+            // Quote tweet
+            else {
+
+                var content_picker = document.getElementById("content");
+                var html = ` <h1>Home</h1><form action="/quote_tweet?tweet_id=${tweet_id}" method="post" enctype="multipart/form-data">
+ <div class="tweetform"> <img src="<%=selectData[0].profile_pic%>" alt="">  <input type="text" name="tweet_text" id="tweetformcontent" placeholder="Add a comment..">
+ </div>
+ <div class="tweetsubmit">
+     <label for="file_input">
+         <!-- <img src="" alt="" srcset=""> -->
+         <i class="fa-regular fa-image "></i>
+     </label>
+     <input type="file" id="file_input" name="media">        
+
+     <!-- <i class="fa-regular fa-image "><input type="file" name="file"></i> -->
+     <input type="submit" value="ReTweet" class="tweet">
+ </div>
+</form></div>`;
+                content_picker.innerHTML = html;
+
+
+            }
+
+        }
+
+        function search_profile(sid) {
             var sid = sid;
             location.assign(`http://localhost:3000/search_profile?sid='${sid}'`);
         }
+
+
+
 
     </script>
 
