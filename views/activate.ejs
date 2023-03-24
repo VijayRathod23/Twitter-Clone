@@ -1,12 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/registration-style.css">
+
+    <style>
+
+    </style>
 </head>
+
 <body>
-    <a href="<%=activationLink%>">activate first</a>
+    <form action="" method="post" class="form1">
+        <div class="main">
+            <div class="login">
+                <section class="section">
+                    <div class="container">
+                        <div class="logo">
+                            <img src="/images/icons8-twitter.gif" loop=infinity></img>
+                        </div>
+
+                        <div class="heading">
+                            <h1>
+                                Authenticate your Account
+                            </h1>
+
+                            <p>Please activate this link to get your account activated</p>
+                        </div>
+
+                        <div class="buttons">
+                            <div class="next1">
+                                <!-- <input type="submit" value="Log In" disabled id="sub">
+                            <a href="#">Login </a> -->
+                                <a href="<%=activationLink%>">Activate</a>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </form>
 </body>
+
 </html>
