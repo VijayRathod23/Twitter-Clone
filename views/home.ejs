@@ -366,12 +366,12 @@
                                 <img src="<%=user_data[i].profile_pic%>" alt="">
                             </div>
                             <div class="profileinfo">
-                                <div class="name">
+                                <div class="name"  onclick="search_profile('<%=user_data[i].id%>')">
                                     <span>
                                         <%=user_data[i].username%>
                                     </span>
                                 </div>
-                                <div class="username">
+                                <div class="username"  onclick="search_profile('<%=user_data[i].id%>')">
                                     <span>
                                         <%=user_data[i].email%>
                                     </span>

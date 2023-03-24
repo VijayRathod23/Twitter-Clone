@@ -113,8 +113,10 @@
 
                     <!-- .......................................Edit profile btn................... -->
 
-                    <div class="following">
-                        <a href="/following">Follow</a>
+                    <div class="edit_profile">
+                        <a id="follow<%=selectData[0].id%>"
+                            onclick="following(`<%=selectData[0].id%>`,`<%=selectData[0].profile_pic%>`,`<%=selectData[0].email%>`,`<%=selectData[0].username%>`)">
+                            Follow</a>
                     </div>
 
                 </div>
@@ -178,6 +180,29 @@
         function profile() {
             location.assign(`/profile`);
         }
+        function following(id, profile_pic, email, username) {
+
+console.log("follow func")
+console.log(`${id}`)
+console.log("hiii", id, profile_pic, email, username)
+var listed = document.getElementById(`follow${id}`);
+// var followcount = document.getElementById("followcount");
+var s = "";
+fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+
+    .then(res => res.json())
+    .then((resultdata) => {
+        console.log("resultdata")
+
+        var counted = resultdata.length;
+        //  console.log(resultdata.length)
+
+        s += `Following`
+        listed.innerHTML = s;
+    })
+
+}
+
 
     </script>
 
