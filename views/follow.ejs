@@ -308,7 +308,7 @@
                                 var listed = document.getElementById(`follow${id}`);
                                 // var followcount = document.getElementById("followcount");
                                 var s = "";
-                                fetch(`/post-Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+                                fetch(`/post_Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
 
                                     .then(res => res.json())
                                     .then((resultdata) => {
@@ -348,7 +348,7 @@
                                 var listed = document.getElementById(`follow${id}`);
                                 // var followcount = document.getElementById("followcount");
                                 var s = "";
-                                fetch(`/post-rm-follower?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+                                fetch(`/post_rm_follower?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
 
                                     .then(res => res.json())
                                     .then((resultdata) => {
