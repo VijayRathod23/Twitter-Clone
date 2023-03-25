@@ -90,7 +90,7 @@
                 <!-- ......................................name and no. of tweets portion.................. -->
                 <div class="headerinfo">
 
-                    <div class="render" onclick="home()">
+                    <div class="render" onclick="teb1()">
 
                     <i class="fa-solid fa-arrow-left" ></i></div>
 
@@ -203,7 +203,10 @@ fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username
     })
 
 }
-
+function teb1() {
+            window.history.go(-1)
+            //  console.log("back1");
+        }
 
     </script>
 
