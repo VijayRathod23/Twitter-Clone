@@ -39,19 +39,23 @@
                         <span>Home</span>
                     </div>
 
-                    <div class="navrow explore">
-                        <i class="fa-solid fa-hashtag fa-2x"></i>
-                        <span>More</span>
-                    </div>
-
-
-
-
-
                     <div class="navrow profile" onmousemove="tweet();">
                         <i class="fa-regular fa-user fa-2x"></i>
                         <span>Profile</span>
                     </div>
+
+                    <div class="navrow explore" onclick="more()">
+                        <i class="fa-solid fa-hashtag fa-2x"></i>
+                        <span>More</span>
+                    </div>
+
+                    <div class="more_options" id="more_options" style="display: none;">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>logout</span>
+                    </div>
+
+
+
 
                     <!-- <div class="navrow">
                         <a href="" class="tweetbtn">
@@ -95,9 +99,9 @@
                 <div class="headerinfo">
 
                     <div onclick="teb1()">
-                        
+
                         <span><i class="fa-solid fa-arrow-left"></i></span>
-                        
+
                     </div>
 
 
@@ -207,17 +211,18 @@
                                                         <%=tweets[i].tweet_text%>
                                                     </p>
                                                     <!-- uploading images and video -->
-                                                    <%  const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; 
-                                                        const array_of_allowed_videos=['mp4','gif'];
-                                                    %>
+                                                    <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; const
+                                                        array_of_allowed_videos=['mp4','gif']; %>
                                                         <%if(tweets[i].media){%>
-                                                            <% const file_extension = tweets[i].media.slice(((tweets[i].media.lastIndexOf('.') - 1) >>> 0) + 2); %>
-                                                            <%if(array_of_allowed_files.includes(file_extension)){%>
-                                                            <img src="<%=tweets[i].media%>" class="tweetImg" />
-                                                            <%}else{%>
-                                                            <video src="<%=tweets[i].media%>" width="300px" autoplay
-                                                                controls></video>
-                                                            <%}}%>
+                                                            <% const
+                                                                file_extension=tweets[i].media.slice(((tweets[i].media.lastIndexOf('.')
+                                                                - 1)>>> 0) + 2); %>
+                                                                <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                                    <img src="<%=tweets[i].media%>" class="tweetImg" />
+                                                                    <%}else{%>
+                                                                        <video src="<%=tweets[i].media%>" width="300px"
+                                                                            autoplay controls></video>
+                                                                        <%}}%>
                                                 </div>
                                             </div>
 
@@ -342,6 +347,20 @@
 
 
     <script>
+
+        function more() {
+            var more = document.getElementById("more_options");
+            // console.log("i m by default none");
+            if (more.style.display == "none") {
+                // console.log("in none");
+                more.style.display = "block"
+            } else {
+                // console.log("in block");
+                more.style.display = "none"
+
+            }
+
+        }
 
         function home() {
             location.assign(`/home`);

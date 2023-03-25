@@ -59,7 +59,7 @@
 
 .profile{
     display: flex;
-    height: 25%;
+    /* height: 25%; */
 }
 
 .profileimg{
@@ -94,6 +94,14 @@
     margin-top: 0.5rem;
 }
 
+
+.home{
+    margin-top: 5rem;
+}
+
+.more_options{
+    padding-left: 1.5rem;
+}
 
 
 
