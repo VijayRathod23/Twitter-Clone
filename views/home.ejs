@@ -263,55 +263,9 @@
                                                             comments
                                                         </div>
                                                         <%for (let j=0;j<tweets.length;j++){%>
-                                                                
+
                                                             <%for (let k=0;k<likes.length;k++){%>
-                                                              
-                                                            <%if(tweets[j].id==likes[k].pid && tokenData.id==likes[k].uid && likes[k].liked ==1){%>
-                                                                
-                                                                <%flag[j]=1%>
-                                                                
-                                                            <%}%>
-                                                            <%if(tweets[j].id==likes[k].pid && tokenData.id==likes[k].uid && likes[k].liked ==0){%>
-                                                                
-                                                                <%flag[j]=0%>
-                                                               
-                                                            <%}%>                                                              
 
-                                                        <%}%>
-                                                        <%}%>
-                                                        <%if(flag[i]==1){%>
-                                                            
-                                                        <div class="twt-toggle-like-blue"><i class="fa-solid fa-heart"
-                                                            id="twt-tg<%=tweets[i].id%>"
-                                                            onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
-                                                            
-                                                        <span id="twt<%=tweets[i].id%>">
-                                                            <%=tweets[i].likes%>
-                                                        </span>
-
-                                                        </div>
-                                                       
-                                                        <%}else if(flag[i]==0){%>
-                                                            
-                                                        <div class="twt-toggle-like-black"><i class="fa-solid fa-heart"
-                                                            id="twt-tg<%=tweets[i].id%>"
-                                                            onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"
-                                                            ></i>
-                                                        <span id="twt<%=tweets[i].id%>">
-                                                            <%=tweets[i].likes%>
-                                                        </span>
-
-                                                        </div>
-                                                       
-                                                        <%}else{%>
-                                                           
-                                                        <div class="twt-toggle-like-black"><i class="fa-solid fa-heart"
-                                                            id="twt-tg<%=tweets[i].id%>"
-                                                            onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"
-                                                            ></i>
-                                                        <span id="twt<%=tweets[i].id%>">
-                                                            <%=tweets[i].likes%>
-                                                        </span>
 
                                                                 <%if(tweets[j].id==likes[k].pid &&
                                                                     tokenData.id==likes[k].uid && likes[k].liked==1){%>
