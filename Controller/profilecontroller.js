@@ -31,8 +31,6 @@ const profile = asyncHandler(async (req, res) => {
     const sql = `SELECT * FROM tweets where user_id = '${tokenData.id}' ORDER BY created_at DESC`;
     const tweets = await getdata(sql);
 
-    console.log("bcnjffjewjfjnvjnejbnvjkebjkvbjbjhbjhbhb*******************", tweets)
-
     // *************************
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
