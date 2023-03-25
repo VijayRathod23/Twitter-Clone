@@ -3,7 +3,7 @@ const con = require('../Connection/connection')
 const asyncHandler = require("express-async-handler");
 
 
-async function getdata(sql) {
+async function getData(sql) {
     return new Promise((res, rej) => {
         con.query(sql, (err, data) => {
             if (err) throw err;

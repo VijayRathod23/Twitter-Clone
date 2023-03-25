@@ -371,7 +371,18 @@ max-width: 80%;
     color: #1DA1F2;
 }
 
-
+.twt-toggle-retwt-black{
+    width: calc(100% /3);
+    font-size: 20px;
+    /* color: red; */
+    color: black;
+}
+.twt-toggle-retwt-blue{
+    width: calc(100% /3);
+    font-size: 20px;
+    /* color: red; */
+    color: #1DA1F2;
+}
 
 /* *******Retweet in home page******** */
 
@@ -399,4 +410,24 @@ max-width: 80%;
     height: 4rem;
     margin-top: 1rem;
     border-radius: 50px;
+}
+.retweet_selector{
+    display: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 2rem;
+    padding: 1rem;
+}
+.retweet_selector p:hover{
+    background-color: white;
+    border-radius: 2rem;
+    
+    
+}
+.retweetImg{
+    width: 30%;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+.repost__headerDescription{
+    margin-top: 3rem;
 }

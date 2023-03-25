@@ -24,6 +24,8 @@ const { log } = require('console');
 require("dotenv").config();
 const user = process.env.user; 
 
+
+
 app.use(session({
     secret: 'your-secret-key',
     resave: true,
@@ -37,6 +39,7 @@ app.use(bodyParser.json());
 app.use(cookie());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+
 
 
 const register=require('./Routes/register')
@@ -76,3 +79,4 @@ app.listen(process.env.PORT, (req, res) => {
 
     console.log('server is running on port ' + process.env.PORT);
 });
+
