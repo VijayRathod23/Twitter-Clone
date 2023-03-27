@@ -14,9 +14,6 @@
     width:20%;
     position: fixed;
     height: 100vh;
-    /* position: relative;
-    
-     z-index: 1; */
     
 }
 
@@ -46,6 +43,11 @@
     font-size: large;
 }
 
+.more_options{
+    padding-left: 1.5rem;
+    cursor: pointer;
+}
+
 .tweetbtn{
     width: 80%;
     background-color: #1DA1F2;
@@ -57,13 +59,17 @@
     color: white;
 }
 
+span a{
+    text-decoration: none;
+    color: black;
+}
 .profile{
     display: flex;
-    height: 25%;
+    /* height: 25%; */
 }
 
 .profileimg{
-    width: 25%;
+    width: 20%;
 }
 
 .profileimg img{
@@ -93,6 +99,9 @@
     margin-top: 0.5rem;
 }
 
+.home{
+    margin-top: 5rem;
+}
 
 
 
