@@ -149,7 +149,7 @@ const tweet = asyncHandler(async (req, res) => {
         const file = req.file;
         const filename = file.originalname;
         const filepath = file.path;
-        var imgsrc = 'http://127.0.0.1:3000/uploads/' + req.file.filename;
+        var imgsrc = '/uploads/' + req.file.filename;
         const sql = 'INSERT INTO tweets(user_id,tweet_text,media,username,profile_pic) VALUES (?,?,?,?,?)';
         const data = [id, tweet_text, imgsrc, username, profile_pic];
         con.query(sql, data);
@@ -186,7 +186,14 @@ const search_profile = asyncHandler(async (req, res) => {
     const select = `select * from users where id = ${sid}`;
     const selectData = await getdata(select);
     console.log(selectData)
-    res.render('search_profile', { tokenData, selectData })
+    var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = ${sid} and flag ='1');`)
+    const followdata = await getdata(result1);
+    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = ${sid} and rm_follower ='1')`
+    const followerdata = await getdata(result)
+    const sql = `SELECT * FROM tweets where user_id = ${sid} ORDER BY created_at DESC`;
+    const tweets = await getdata(sql);
+
+    res.render('search_profile', { tokenData, selectData,followdata,followerdata,tweets })
 
 })
 
@@ -255,7 +262,6 @@ const like = asyncHandler(async (req, res) => {
     }
 
 })
-
 
 const comment_display= asyncHandler(async (req, res) => {
 

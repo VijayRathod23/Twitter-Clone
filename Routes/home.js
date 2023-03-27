@@ -16,6 +16,9 @@ router.post('/tweet',mult.upload2.single('media'),tweet);
 router.post('/comment',comment);
 router.post('/comment_display',comment_display);
 
+router.post('/comment',comment);
+router.post('/comment_display',comment_display);
+
 
 
 module.exports = router

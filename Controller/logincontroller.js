@@ -66,7 +66,7 @@ const login_post=asyncHandler(async (req, res) => {
     // return res.send(wrong user or password!)
     }
     else{
-    const activationLink = `http://localhost:3000/activate?token=${data[0].activation_token}`;
+    const activationLink = `/activate?token=${data[0].activation_token}`;
     if (data[0].activated == 0) {
     return res.render("activate", { activationLink });
     }

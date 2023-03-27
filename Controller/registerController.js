@@ -40,7 +40,7 @@ const signup_post = asyncHandler(async (req, res) => {
     var hashPass = await bcrypt.hash(pwd, 10);
 
     const activation_token = Math.random().toString(36).substring(2, 15);
-    const activationLink = `http://localhost:3000/activate?token=${activation_token}`;
+    const activationLink = `/activate?token=${activation_token}`;
     console.log(email);
     var sql = `insert into users(username,email,password,activation_token) values('${name}','${email}','${hashPass}','${activation_token}')`;
     var result = await con.execute(sql);
