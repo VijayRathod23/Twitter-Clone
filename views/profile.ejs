@@ -97,12 +97,10 @@
 
                 <!-- ......................................name and no. of tweets portion.................. -->
                 <div class="headerinfo">
-
-                    <div onclick="teb1()">
-
-                        <span><i class="fa-solid fa-arrow-left"></i></span>
-
+                    <div onclick="back()">
+                        <span><i class="fa-solid fa-arrow-left" ></i></span>
                     </div>
+                  
 
 
                     <div class="name_tweet">
@@ -347,6 +345,11 @@
 
 
     <script>
+
+        function back() {
+           location.assign('/home')
+            // console.log("back1");
+        }
 
         function more() {
             var more = document.getElementById("more_options");
