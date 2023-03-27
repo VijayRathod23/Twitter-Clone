@@ -26,4 +26,4 @@ const profile_storage = multer.diskStorage({
 })
 const upload = multer({ storage: profile_storage });
 
-module.exports ={upload2,upload}
+module.exports ={upload2,upload} 

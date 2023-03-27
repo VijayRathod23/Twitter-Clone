@@ -100,7 +100,7 @@ const home = asyncHandler(async (req, res) => {
     // ..................retweet complete.......................
 
 
-    const result = await getdata(`SELECT follow.f_id FROM twitter_clone.follow where flag = '1'`);
+    const result = await getdata(`SELECT follow.f_id FROM follow where flag = '1'`);
     // const user=result[0];
     // console.log(user)
     var ids = "(";
@@ -118,7 +118,7 @@ const home = asyncHandler(async (req, res) => {
         const userid = `${tokenData.id}`;
 
         ids += `,${userid})`
-        const basic = `SELECT * FROM twitter_clone.users where id not in${ids} limit 7`;
+        const basic = `SELECT * FROM users where id not in${ids} limit 7`;
         // console.log(basic);
         const user_data = await getdata(basic);
         // console.log(query);

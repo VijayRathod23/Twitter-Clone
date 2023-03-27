@@ -42,12 +42,12 @@ const profile = asyncHandler(async (req, res) => {
 
     //--follower count
 
-    const result = `SELECT COUNT(user_id) AS follower FROM twitter_clone.follow where  (f_id = '${tokenData.id}' and rm_follower ='1');`
+    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = '${tokenData.id}' and rm_follower ='1');`
     const followerdata = await getdata(result)
 
 
     //--follow count
-    var result1 = (`SELECT COUNT(f_id) AS follow FROM twitter_clone.follow where  (user_id = '${tokenData.id}' and flag ='1');`)
+    var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = '${tokenData.id}' and flag ='1');`)
     const followdata = await getdata(result1)
 
     console.log("followerrrrrrrrr", followdata[0].follow)
@@ -73,7 +73,7 @@ const profile = asyncHandler(async (req, res) => {
             var retweeted_tweet_id = retweet_data[i].tweet_id;
             console.log(retweeted_tweet_id);
 
-            var tweet_select = `select * from twitter_clone.tweets where id = '${retweeted_tweet_id}'`;
+            var tweet_select = `select * from tweets where id = '${retweeted_tweet_id}'`;
 
             var tweet_data_1 = await getdata(tweet_select);
 
