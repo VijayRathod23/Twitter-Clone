@@ -123,7 +123,7 @@ const quote_tweet= asyncHandler(async (req, res) => {
         const file = req.file;
         const filename = file.originalname;
         const filepath = file.path;
-        var imgsrc = '/uploads/' + req.file.filename;
+        var imgsrc = 'http://127.0.0.1:3000/uploads/' + req.file.filename;
         const sql = 'INSERT INTO retweets(user_id,tweet_id,retweet_text,retweet_media) VALUES (?,?,?,?)';
         const data = [id, tweet_id,tweet_text, imgsrc];
         con.query(sql, data);
