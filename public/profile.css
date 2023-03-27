@@ -11,7 +11,7 @@
 /* ***************************Navigation Bar************************* */
 
 .navigationbar{
-    width:20%;
+    width:18%;
     position: fixed;
     height: 100vh;
     /* position: relative;
@@ -44,6 +44,10 @@
     padding-left: 1rem;
     padding-top: 0.25rem;
     font-size: large;
+}
+span a{
+    text-decoration: none;
+    color: black;
 }
 
 .tweetbtn{
