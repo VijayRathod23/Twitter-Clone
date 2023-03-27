@@ -54,7 +54,7 @@
 
                     <div class="more_options" id="more_options" style="display: none;">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <span>logout</span>
+                        <span><a href="/logout">Logout</a></span>
                     </div>
 
                     <!-- <div class="navrow">
@@ -368,21 +368,23 @@
 
                                                                                                                         <%}%>
                                                     </div>
-
                                                     <div id="commentsection<%=tweets[i].id%>" class="commentsection">
                                                         <!-- fetch the comments from the database -->
                                                     </div>
-
+        
                                                     <div id="comment<%=tweets[i].id%>" class="comment">
-
+        
                                                         <input type="text" name="commentfield"
                                                             id="commentfield<%=tweets[i].id%>"
                                                             placeholder="Please Enter Comment" class="commentfield">
                                                         <input type="submit" value="Reply" class="commentbtn"
                                                             onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
-
-
+        
+        
                                                     </div>
+        
+        
+        
                                                 </div>
                                             </div>
                                         </div>
@@ -589,117 +591,112 @@
         }
 
 
-        // Comment post Section
-        async function commentdata(pid, uid, username, profile) {
+         // Comment post Section
+         async function commentdata(pid, uid, username, profile) {
 
-            var commentfield = document.getElementById('commentfield' + pid).value
-            console.log('pid', pid)
-            console.log('uid', uid)
-            console.log('username', username)
-            console.log('profile', profile)
-            console.log('profile', commentfield)
+var commentfield = document.getElementById('commentfield' + pid).value
+console.log('pid', pid)
+console.log('uid', uid)
+console.log('username', username)
+console.log('profile', profile)
+console.log('profile', commentfield)
 
-            await fetch("/comment", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ pid, uid, username, profile, commentfield }),
-            }).then((res) => {
-                return res.json()
-            }).then((result) => {
-                console.log(result)
-                location.assign('/home')
-            })
+await fetch("/comment", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ pid, uid, username, profile, commentfield }),
+}).then((res) => {
+    return res.json()
+}).then((result) => {
+    console.log(result)
+    location.assign('/home')
+})
 
-        }
-
-
-
-        // Comment get Section
+}
 
 
-        let classcomment = document.querySelectorAll(".comment");
-        classcomment.forEach(e => {
-            e.style.display = "none";
-
-        })
-
-        let commentsection = document.querySelectorAll(".commentsection");
-        commentsection.forEach(e => {
-            e.style.display = "none";
-
-        })
-        // classcomment.forEach()
-        console.log(classcomment);
-
-        async function comment(pid, uid) {
-            var commentsection = document.getElementById('commentsection' + pid);
-            // commentsection.style.display = "none";
-            var comment = document.getElementById("comment" + pid);
-            //  comment.style.display = "none";
-
-            console.log(comment)
-            // commentsection.innerHTML = "";
-            commentstr = '';
-            console.log('pid', pid)
-            console.log('uid', uid)
-            console.log(commentsection)
-            classcomment.forEach(i => { });
+// Comment get Section
 
 
-            if (commentsection.style.display == "none") {
-                commentsection.style.display = "block";
-                comment.style.display = "block";
+let classcomment = document.querySelectorAll(".comment");
+classcomment.forEach(e => {
+e.style.display = "none";
 
-                await fetch("/comment_display", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ pid, uid }),
-                }).then((res) => {
-                    return res.json()
-                }).then((result) => {
-                    console.log(result)
-                    for (i = 0; i < result.length; i++) {
-                        commentstr += `<div class="profile1">
-                                               
-                                <div class="profileimg1">
-                                    <img src="${result[i].profile_pic}" alt="">
-                                </div>
-                                                    
-                                                    
-                                <div class="profileinfo1">
-                                    <div class="name1">
-                                        <h3>
-                                            ${result[i].username}
-                                        </h3>
-                                    </div>
-                                    <div class="comment1">
-                                        <p>${result[i].comments}</p>
-                                    </div>
-                                </div>
-                            </div>`
+})
 
+let commentsection = document.querySelectorAll(".commentsection");
+commentsection.forEach(e => {
+e.style.display = "none";
 
-                    }
-                    commentsection.innerHTML = commentstr;
+})
+// classcomment.forEach()
+console.log(classcomment)
 
-                })
+async function comment(pid, uid) {
+var commentsection = document.getElementById('commentsection' + pid);
+// commentsection.style.display = "none";
+var comment = document.getElementById("comment" + pid);
+//  comment.style.display = "none";
 
-                // else {
-                //     commentsection.style.display = "none";
-                //     comment.style.display = "none";
-                // }
-            }
+console.log(comment)
+// commentsection.innerHTML = "";
+commentstr = ''
+console.log('pid', pid)
+console.log('uid', uid)
+console.log(commentsection)
+classcomment.forEach(i => {
 
-            else {
-                commentsection.style.display = "none";
-                comment.style.display = "none";
-            }
+})
+if (commentsection.style.display == "none") {
+    commentsection.style.display = "block";
+    comment.style.display = "block";
+
+    await fetch("/comment_display", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pid, uid }),
+    }).then((res) => {
+        return res.json()
+    }).then((result) => {
+        console.log(result)
+        for (i = 0; i < result.length; i++) {
+            commentstr += `<div class="profile1">
+                                   
+                    <div class="profileimg1">
+                        <img src="${result[i].profile_pic}" alt="">
+                    </div>
+                                        
+                                        
+                    <div class="profileinfo1">
+                        <div class="name1">
+                            <h3>
+                                ${result[i].username}
+                            </h3>
+                        </div>
+                        <div class="comment1">
+                            <p>${result[i].comments}</p>
+                        </div>
+                    </div>
+                </div>`
+
 
         }
+        commentsection.innerHTML = commentstr;
+
+    })
+
+}
+else {
+    commentsection.style.display = "none";
+    comment.style.display = "none";
+}
+
+}
+
 
 
 

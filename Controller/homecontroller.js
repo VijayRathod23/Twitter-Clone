@@ -257,8 +257,43 @@ const like = asyncHandler(async (req, res) => {
 })
 
 
+const comment_display= asyncHandler(async (req, res) => {
+
+    const tokenData = req.session.user;
+
+    const { uid, pid, commentfield, profile, username } = req.body;
+    const sql = `select profile_pic,comments,username from comment where pid='${pid}'`;
+    var query = await getdata(sql);
+    res.json(query)
+    console.log(query);
+
+
+}) 
+
+
+//comments api
+//comments
+
+
+const comment= asyncHandler(async (req, res) => {
+
+    const tokenData = req.session.user;
+
+
+    const { uid, pid, username, profile, commentfield } = req.body;
+    console.log('comment', req.body);
+
+    const sql = `INSERT INTO comment (uid, pid,profile_pic,comments,username,inserted_at)VALUES ('${uid}', '${pid}', '${profile}','${commentfield}',  '${username}', NOW())`;
+    var query = await getdata(sql);
+
+    res.json(query)
+
+}) 
 
 
 
 
-module.exports = { home, tweet, like, search_profile, search }
+
+
+
+module.exports = { home, tweet, like, search_profile, search ,comment_display,comment}

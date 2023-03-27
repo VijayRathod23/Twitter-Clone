@@ -1,5 +1,5 @@
 .container{
-    max-width: 1200px;
+    max-width: 1170px;
     padding: 0px 16px;
     margin: 0 auto;
 }
@@ -45,6 +45,7 @@
 
 .more_options{
     padding-left: 1.5rem;
+    cursor: pointer;
 }
 
 .tweetbtn{
@@ -58,6 +59,10 @@
     color: white;
 }
 
+span a{
+    text-decoration: none;
+    color: black;
+}
 .profile{
     display: flex;
     /* height: 25%; */
@@ -146,7 +151,9 @@
     font-weight: 600;
     border: none;
     /* justify-content: end; */
+    cursor: pointer;
 }
+
 
 .tweetsubmit i{
     color: #1DA1F2;
@@ -324,6 +331,7 @@ max-width: 80%;
     border-radius: 10px;
     padding: 0.5rem;
     margin-top: 0px;
+    cursor: pointer;
 }
 
 #searchprofilebar{
