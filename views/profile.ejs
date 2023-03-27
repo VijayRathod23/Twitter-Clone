@@ -234,12 +234,58 @@
                                                     <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
                                                     <div class="twt-toggle"><i class="fa-regular fa-comment"></i>
                                                         comments</div>
-                                                    <div class="twt-toggle"><i class="fa-solid fa-heart"
-                                                            onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
-                                                        <p id="twt<%=tweets[i].id%>">
+                                                        <%for (let j=0;j<tweets.length;j++){%>
+
+                                                            <%for (let k=0;k<likes.length;k++){%>
+
+
+                                                                <%if(tweets[j].id==likes[k].pid &&
+                                                                    tokenData.id==likes[k].uid && likes[k].liked==1){%>
+
+                                                                    <%flag[j]=1%>
+
+                                                                <%}%>
+                                                                <%if(tweets[j].id==likes[k].pid &&
+                                                                        tokenData.id==likes[k].uid &&
+                                                                        likes[k].liked==0){%>
+
+                                                                    <%flag[j]=0%>
+
+                                                                <%}%>
+
+                                                            <%}%>
+                                                        <%}%>
+                                                        <%if(flag[i]==1){%>
+                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                            <div class="twt-toggle-like-blue">
+                                                            <i class="fa-solid fa-heart" id="twt-tg<%=tweets[i].id%>" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+
+                                                            <span id="twt<%=tweets[i].id%>">
                                                             <%=tweets[i].likes%>
-                                                        </p>
-                                                    </div>
+                                                            </span>
+
+                                                            </div>
+
+                                                        <%}else if(flag[i]==0){%>
+                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                            <div class="twt-toggle-like-black">
+                                                            <i class="fa-solid fa-heart" id="twt-tg<%=tweets[i].id%>" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                            <span id="twt<%=tweets[i].id%>">
+                                                                <%=tweets[i].likes%>
+                                                            </span>
+
+                                                            </div>
+
+                                                        <%}else{%>
+                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                            <div class="twt-toggle-like-black">
+                                                                <i class="fa-solid fa-heart" id="twt-tg<%=tweets[i].id%>" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                                <span id="twt<%=tweets[i].id%>">
+                                                                    <%=tweets[i].likes%>
+                                                                </span>
+
+                                                            </div>
+                                                        <%}%>                                                       
                                                     <div class="twt-toggle"><i class="fa-solid fa-retweet"></i>
                                                         retweet</div>
                                                 </div>
@@ -290,8 +336,6 @@
                                                             <img src="<%=tweet_data[i].media%>" alt="img"
                                                                 class="tweetImg" />
                                                             <%}%>
-
-
                                                                 <div class="post-footer">
                                                                     <div class="btn-container">
                                                                         <input type="hidden"
@@ -300,13 +344,11 @@
                                                                         <div class="twt-toggle"><i
                                                                                 class="fa-regular fa-comment"></i>
                                                                             comments</div>
-                                                                        <div class="twt-toggle"><i
-                                                                                class="fa-solid fa-heart"
-                                                                                onclick="like('<%=tweet_data[i].id%>','<%=tweet_data[i].user_id%>')"></i>
-                                                                            <p id="twt<%=tweet_data[i].id%>">
-                                                                                <%=tweet_data[i].likes%>
+                                                                        <div class="twt-toggle"><i class="fa-solid fa-heart" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                                            <p id="twt<%=tweets[i].id%>">
+                                                                                <%=tweets[i].likes%>
                                                                             </p>
-                                                                        </div>
+                                                                        </div>    
                                                                         <div class="twt-toggle">
                                                                             <a
                                                                                 onclick="increment_count('<%= tweet_data[i].id %>')"><i
@@ -316,8 +358,8 @@
                                                                             </p>
                                                                         </div>
                                                                     </div>
+                                                                </div>                                                    
                                                                 </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -326,15 +368,6 @@
                                                 <!-- post ends -->
                             </div>
                             <%}%>
-
-
-
-
-
-
-
-
-
 
                     </div>
                 </div>
@@ -399,10 +432,12 @@
         }
 
 
-        //like
+        //*********************************like function
         function like(pid, uid) {
+            // alert("like")
             console.log('pid', pid)
             console.log('uid', uid)
+
             fetch("/like", {
                 method: "POST",
                 headers: {
@@ -412,11 +447,29 @@
             }).then((res) => {
                 return res.json()
             }).then((result) => {
+                console.log(result[0])
                 console.log(result[0].likes)
-                document.getElementById('twt' + pid).innerHTML = result[0].likes;
+
+                if (!result[1]) {
+                    if (result[0].likes == 0) {
+                        document.getElementById('twt-tg' + pid).style.color = "black";
+                    }
+                    else {
+                        document.getElementById('twt-tg' + pid).style.color = "#1DA1F2";
+                    }
+                    document.getElementById('twt' + pid).innerHTML = result[0].likes;
+                }
+                else {
+                    if (result[1].likes == 0) {
+                        document.getElementById('twt-tg' + pid).style.color = "black";
+                    }
+                    else {
+                        document.getElementById('twt-tg' + pid).style.color = "#1DA1F2";
+                    }
+                    document.getElementById('twt' + pid).innerHTML = result[0].likes;
+                }
+
             })
-
-
         }
 
 
@@ -631,12 +684,6 @@
                 });
 
         }
-
-        function teb1() {
-            window.history.go(-1)
-            //  console.log("back1");
-        }
-
 
     </script>
 

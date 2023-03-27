@@ -31,11 +31,15 @@ const profile = asyncHandler(async (req, res) => {
     const sql = `SELECT * FROM tweets where user_id = '${tokenData.id}' ORDER BY created_at DESC`;
     const tweets = await getdata(sql);
 
-    console.log("bcnjffjewjfjnvjnejbnvjkebjkvbjbjhbjhbhb*******************", tweets)
-
     // *************************
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
+
+    const sql2 = `select liked,pid,uid from likes where uid='${tokenData.id}'`
+    const likes = await getdata(sql2);
+    // var like_flag = likes[0].liked;
+    var flag = [];
+    console.log(likes);
     //res.render("profile", { tokenData, selectData,tweets})
 
 
@@ -91,10 +95,10 @@ const profile = asyncHandler(async (req, res) => {
 
 
 
-        res.render("profile", { tokenData, selectData, tweets, tweet_data, count, followerdata, followdata })
+        res.render("profile", { tokenData, selectData, tweets, tweet_data, count, followerdata, followdata,likes,flag })
     }
     else {
-        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0, followerdata, followdata })
+        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0, followerdata, followdata,likes,flag })
 
     }
 
