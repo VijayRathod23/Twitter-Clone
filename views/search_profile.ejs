@@ -28,9 +28,6 @@
 
                 <div class="navigation">
 
-
-
-
                     <div class="navrow home" onclick="home()">
                         <i class="fa-solid fa-house fa-2x"></i>
                         <span>Home</span>
@@ -90,7 +87,8 @@
 
                     <div class="render" onclick="back()">
 
-                    <i class="fa-solid fa-arrow-left" ></i></div>
+                    <i class="fa-solid fa-arrow-left" ></i>
+                </div>
 
                     <div class="name_tweet">
                         <span class="name_user"><%=selectData[0].username%></span>
@@ -207,7 +205,7 @@ fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username
 
 }
 function back() {
-            window.history.go(-1)
+          location.assign('/home')
             //  console.log("back1");
         }
         //newfollow
