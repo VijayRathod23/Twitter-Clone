@@ -98,8 +98,8 @@
                 <!-- ......................................name and no. of tweets portion.................. -->
                 <div class="headerinfo">
 
-                    <div onclick="teb1()">
-
+                    <div onclick="back()">
+                        
                         <span><i class="fa-solid fa-arrow-left"></i></span>
 
                     </div>
@@ -380,6 +380,10 @@
 
 
     <script>
+        function back() {
+            window.history.go(-1)
+            //  console.log("back1");
+        }
 
         function more() {
             var more = document.getElementById("more_options");

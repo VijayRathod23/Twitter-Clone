@@ -186,7 +186,14 @@ const search_profile = asyncHandler(async (req, res) => {
     const select = `select * from users where id = ${sid}`;
     const selectData = await getdata(select);
     console.log(selectData)
-    res.render('search_profile', { tokenData, selectData })
+    var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = ${sid} and flag ='1');`)
+    const followdata = await getdata(result1);
+    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = ${sid} and rm_follower ='1')`
+    const followerdata = await getdata(result)
+    const sql = `SELECT * FROM tweets where user_id = ${sid} ORDER BY created_at DESC`;
+    const tweets = await getdata(sql);
+
+    res.render('search_profile', { tokenData, selectData,followdata,followerdata,tweets })
 
 })
 
