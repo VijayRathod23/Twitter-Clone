@@ -41,24 +41,19 @@
                         <span>Home</span>
                     </div>
 
-                    <div class="navrow explore">
+                    <div class="navrow profile" onclick="profile()">
+                        <i class="fa-regular fa-user fa-2x"></i>
+                        <span>Profile</span>
+                    </div>
+
+                    <div class="navrow explore" onclick="more()">
                         <i class="fa-solid fa-hashtag fa-2x"></i>
                         <span>Explore</span>
                     </div>
 
-                    <div class="navrow notifications">
-                        <i class="fa-regular fa-bell fa-2x"></i>
-                        <span>Notifications</span>
-                    </div>
-
-                    <div class="navrow messages">
-                        <i class="fa-regular fa-envelope fa-2x"></i>
-                        <span>Messages</span>
-                    </div>
-
-                    <div class="navrow profile" onclick="profile()">
-                        <i class="fa-regular fa-user fa-2x"></i>
-                        <span>Profile</span>
+                    <div class="more_options" id="more_options" style="display: none;">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span><a href="/logout">Logout</a></span>
                     </div>
 
                     <!-- 
@@ -226,13 +221,17 @@
                                                             const array_of_allowed_videos=['mp4','gif'];
                                                         %>
                                                             <%if(tweets[i].media){%>
-                                                                <% const file_extension = tweets[i].media.slice(((tweets[i].media.lastIndexOf('.') - 1) >>> 0) + 2); %>
-                                                                <%if(array_of_allowed_files.includes(file_extension)){%>
-                                                                <img src="<%=tweets[i].media%>" class="tweetImg" />
-                                                                <%}else{%>
-                                                                <video src="<%=tweets[i].media%>" width="300px" autoplay
-                                                                    controls class="tweetvideo" ></video>
-                                                                <%}}%>
+                                                                <% const
+                                                                    file_extension=tweets[i].media.slice(((tweets[i].media.lastIndexOf('.')
+                                                                    - 1)>>> 0) + 2); %>
+                                                                    <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                                        <img src="<%=tweets[i].media%>"
+                                                                            class="tweetImg" />
+                                                                        <%}else{%>
+                                                                            <video src="<%=tweets[i].media%>"
+                                                                                width="300px" autoplay controls
+                                                                                class="tweetvideo"></video>
+                                                                            <%}}%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -317,7 +316,6 @@
                                                             </p>
                                                         </div>
                                                     </div>
-        
                                                     <div id="commentsection<%=tweets[i].id%>" class="commentsection">
                                                         <!-- fetch the comments from the database -->
                                                     </div>
@@ -342,7 +340,8 @@
                                     </div>
                                     <%}%>
                                         <%}%>
-                                            <%}%> <!-- post ends -->
+                                            <%}%>
+                                                <!-- post ends -->
                 </div>
 
 
@@ -394,10 +393,21 @@
     </div>
     <script>
 
-        
-        function profile() {
-            location.assign(`/profile`);
+        function more() {
+            var more = document.getElementById("more_options");
+            // console.log("i m by default none");
+            if (more.style.display == "none") {
+                // console.log("in none");
+                more.style.display = "block"
+            } else {
+                // console.log("in block");
+                more.style.display = "none"
+
+            }
+
         }
+
+
 
         //*********************************like function
     function like(pid, uid) {
@@ -443,7 +453,7 @@
             var search = document.getElementById('search').value;
             var s = "";
 
-            await fetch(`http://localhost:3000/search?search=${search}`)
+            await fetch(`/search?search=${search}`)
                 .then(res => res.json())
                 .then((search_data) => {
                     // console.log(':::::::::::::::::::::::::::data at',search_data)
@@ -513,6 +523,8 @@
             .addEventListener('emoji-click', event => document.getElementById('tweetformcontent').value += event.detail.unicode);
 
         document.querySelector('emoji-picker').style.display = "none";
+
+
         // document.querySelector('tweet').style.display = "none";
 
         function abc() {
@@ -528,112 +540,112 @@
         }
 
 
+         // Comment post Section
+         async function commentdata(pid, uid, username, profile) {
 
-        // Comment post Section
-        async function commentdata(pid, uid, username, profile) {
+var commentfield = document.getElementById('commentfield' + pid).value
+console.log('pid', pid)
+console.log('uid', uid)
+console.log('username', username)
+console.log('profile', profile)
+console.log('profile', commentfield)
 
-            var commentfield = document.getElementById('commentfield' + pid).value
-            console.log('pid', pid)
-            console.log('uid', uid)
-            console.log('username', username)
-            console.log('profile', profile)
-            console.log('profile', commentfield)
+await fetch("/comment", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ pid, uid, username, profile, commentfield }),
+}).then((res) => {
+    return res.json()
+}).then((result) => {
+    console.log(result)
+    location.assign('/home')
+})
 
-            await fetch("/comment", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ pid, uid, username, profile, commentfield }),
-            }).then((res) => {
-                return res.json()
-            }).then((result) => {
-                console.log(result)
-                location.assign('/home')
-            })
-
-        }
-
-
-        // Comment get Section
+}
 
 
-        let classcomment = document.querySelectorAll(".comment");
-        classcomment.forEach(e => {
-            e.style.display = "none";
-
-        })
-
-        let commentsection = document.querySelectorAll(".commentsection");
-        commentsection.forEach(e => {
-            e.style.display = "none";
-
-        })
-        // classcomment.forEach()
-        console.log(classcomment)
-
-        async function comment(pid, uid) {
-            var commentsection = document.getElementById('commentsection' + pid);
-            // commentsection.style.display = "none";
-            var comment = document.getElementById("comment" + pid);
-            //  comment.style.display = "none";
-
-            console.log(comment)
-            // commentsection.innerHTML = "";
-            commentstr = ''
-            console.log('pid', pid)
-            console.log('uid', uid)
-            console.log(commentsection)
-            classcomment.forEach(i => {
-
-            })
-            if (commentsection.style.display == "none") {
-                commentsection.style.display = "block";
-                comment.style.display = "block";
-
-                await fetch("/comment_display", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ pid, uid }),
-                }).then((res) => {
-                    return res.json()
-                }).then((result) => {
-                    console.log(result)
-                    for (i = 0; i < result.length; i++) {
-                        commentstr += `<div class="profile1">
-                                               
-                                <div class="profileimg1">
-                                    <img src="${result[i].profile_pic}" alt="">
-                                </div>
-                                                    
-                                                    
-                                <div class="profileinfo1">
-                                    <div class="name1">
-                                        <h3>
-                                            ${result[i].username}
-                                        </h3>
-                                    </div>
-                                    <div class="comment1">
-                                        <p>${result[i].comments}</p>
-                                    </div>
-                                </div>
-                            </div>`
+// Comment get Section
 
 
-                    }
-                    commentsection.innerHTML = commentstr;
+let classcomment = document.querySelectorAll(".comment");
+classcomment.forEach(e => {
+e.style.display = "none";
 
-                })
+})
 
-            }
-            else {
-                commentsection.style.display = "none";
-                comment.style.display = "none";
-            }
+let commentsection = document.querySelectorAll(".commentsection");
+commentsection.forEach(e => {
+e.style.display = "none";
+
+})
+// classcomment.forEach()
+console.log(classcomment)
+
+async function comment(pid, uid) {
+var commentsection = document.getElementById('commentsection' + pid);
+// commentsection.style.display = "none";
+var comment = document.getElementById("comment" + pid);
+//  comment.style.display = "none";
+
+console.log(comment)
+// commentsection.innerHTML = "";
+commentstr = ''
+console.log('pid', pid)
+console.log('uid', uid)
+console.log(commentsection)
+classcomment.forEach(i => {
+
+})
+if (commentsection.style.display == "none") {
+    commentsection.style.display = "block";
+    comment.style.display = "block";
+
+    await fetch("/comment_display", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pid, uid }),
+    }).then((res) => {
+        return res.json()
+    }).then((result) => {
+        console.log(result)
+        for (i = 0; i < result.length; i++) {
+            commentstr += `<div class="profile1">
+                                   
+                    <div class="profileimg1">
+                        <img src="${result[i].profile_pic}" alt="">
+                    </div>
+                                        
+                                        
+                    <div class="profileinfo1">
+                        <div class="name1">
+                            <h3>
+                                ${result[i].username}
+                            </h3>
+                        </div>
+                        <div class="comment1">
+                            <p>${result[i].comments}</p>
+                        </div>
+                    </div>
+                </div>`
+
 
         }
+        commentsection.innerHTML = commentstr;
+
+    })
+
+}
+else {
+    commentsection.style.display = "none";
+    comment.style.display = "none";
+}
+
+}
+
 
 
 
@@ -643,18 +655,56 @@
 
             var res = await fetch(`/retweet?tweet_id=${tweet_id}`);
             var data = await res.json();
-            var cnt_increment = data.count;
+            var cnt_increment = data.status;
+
+            if (cnt_increment == "True") {
+                var res = await fetch(`/retweet?tweet_id=${tweet_id}`);
+                var data = await res.json();
+                var cnt_increment = data.count;
+                document.getElementById("retweet_icon" + tweet_id).style.color = "black";
+                document.getElementById("retwt" + tweet_id).style.color = "black";
+                document.getElementById('retwt' + tweet_id).innerHTML = cnt_increment;
 
             document.getElementById('retwt' + tweet_id).innerHTML = cnt_increment;
             //window.location.reload("/home");
 
+            }
+            //if not retweeted 
+            else {
 
+                var retweet_selector = document.getElementById("retweet_selector" + tweet_id);
+
+                retweet_selector.style.display = "block";
+                var html = `<p class="simple_retweet" onclick="retweet(this,${tweet_id})">Retweet</p><p class="quote_tweet" onclick="retweet(this,${tweet_id})">Quote Tweet</p>`;
+                retweet_selector.innerHTML = html;
+
+
+            }
 
         }
 
+        async function retweet(retweet_option, tweet_id) {
+
+            document.getElementById("retweet_icon" + tweet_id).style.color = "#1DA1F2";
+            document.getElementById("retwt" + tweet_id).style.color = "#1DA1F2";
+
+            var retweet_selector = document.getElementById("retweet_selector" + tweet_id);
+            retweet_selector.style.display = "none";
+
+            // Simple retweet
+            if (retweet_option.innerHTML == 'Retweet') {
+                var res = await fetch(`/retweet?tweet_id=${tweet_id}`);
+                var data = await res.json();
+                var cnt_increment = data.count;
+                document.getElementById('retwt' + tweet_id).innerHTML = cnt_increment;
+
+
+        }
+    }
+
         function search_profile(sid){
             var sid = sid;
-            location.assign(`http://localhost:3000/search_profile?sid='${sid}'`);
+            location.assign(`/search_profile?sid='${sid}'`);
         }
 
     </script>

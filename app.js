@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken');
 const cookie = require('cookie-parser');
 const { Console } = require('console');
 const path = require('path');
+app.use(express.static("public"))
 
 const { send } = require('process');
 app.use(express.static(path.join(__dirname, "/public")));
@@ -41,7 +42,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 
-
 const register=require('./Routes/register')
 app.use('/',register);
 
@@ -53,9 +53,6 @@ app.use('/',home);
 
 const profile=require('./Routes/profile')
 app.use('/',profile);
-
-const comment=require('./Routes/comment')
-app.use('/',comment);
 
 const retweet=require('./Routes/retweet')
 app.use('/',retweet);
@@ -73,10 +70,9 @@ app.get("/logout", (req, res) => {
     res.redirect("/login")
 });
 
-
-
 app.listen(process.env.PORT, (req, res) => {
 
     console.log('server is running on port ' + process.env.PORT);
 });
 
+ 

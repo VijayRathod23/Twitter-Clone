@@ -30,24 +30,10 @@
                 <!-- ************navigation******************** -->
 
                 <div class="navigation">
+
                     <div class="navrow home" onclick="home()">
                         <i class="fa-solid fa-house fa-2x"></i>
                         <span>Home</span>
-                    </div>
-
-                    <div class="navrow explore">
-                        <i class="fa-solid fa-hashtag fa-2x"></i>
-                        <span>Explore</span>
-                    </div>
-
-                    <div class="navrow notifications">
-                        <i class="fa-regular fa-bell fa-2x"></i>
-                        <span>Notifications</span>
-                    </div>
-
-                    <div class="navrow messages">
-                        <i class="fa-regular fa-envelope fa-2x"></i>
-                        <span>Messages</span>
                     </div>
 
                     <div class="navrow profile" onclick="profile()">
@@ -55,11 +41,23 @@
                         <span>Profile</span>
                     </div>
 
+                    <div class="navrow explore" onclick="more()">
+                        <i class="fa-solid fa-hashtag fa-2x"></i>
+                        <span>More</span>
+                    </div>
+
+
+                    <div class="more_options" id="more_options" style="display: none;">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span><a href="/logout">Logout</a></span>
+                    </div>
+
                     <!-- <div class="navrow">
                         <a href="" class="tweetbtn">
                             <p>Tweet</p>
                         </a>
                     </div> -->
+
                 </div>
                 <!-- ************profile******************** -->
                 <div class="profile">
@@ -143,6 +141,19 @@
         }
         function done() {
             alert('Edited!!');
+        }
+        function more() {
+            var more = document.getElementById("more_options");
+            // console.log("i m by default none");
+            if (more.style.display == "none") {
+                // console.log("in none");
+                more.style.display = "block"
+            } else {
+                // console.log("in block");
+                more.style.display = "none"
+
+            }
+
         }
     </script>
 

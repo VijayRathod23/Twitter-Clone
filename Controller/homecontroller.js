@@ -100,7 +100,7 @@ const home = asyncHandler(async (req, res) => {
     // ..................retweet complete.......................
 
 
-    const result = await getdata(`SELECT follow.f_id FROM twitter_clone.follow where flag = '1'`);
+    const result = await getdata(`SELECT follow.f_id FROM follow where flag = '1'`);
     // const user=result[0];
     // console.log(user)
     var ids = "(";
@@ -118,7 +118,7 @@ const home = asyncHandler(async (req, res) => {
         const userid = `${tokenData.id}`;
 
         ids += `,${userid})`
-        const basic = `SELECT * FROM twitter_clone.users where id not in${ids} limit 7`;
+        const basic = `SELECT * FROM users where id not in${ids} limit 7`;
         // console.log(basic);
         const user_data = await getdata(basic);
         // console.log(query);
@@ -149,7 +149,7 @@ const tweet = asyncHandler(async (req, res) => {
         const file = req.file;
         const filename = file.originalname;
         const filepath = file.path;
-        var imgsrc = 'http://127.0.0.1:3000/uploads/' + req.file.filename;
+        var imgsrc = '/uploads/' + req.file.filename;
         const sql = 'INSERT INTO tweets(user_id,tweet_text,media,username,profile_pic) VALUES (?,?,?,?,?)';
         const data = [id, tweet_text, imgsrc, username, profile_pic];
         con.query(sql, data);
@@ -262,4 +262,44 @@ const like = asyncHandler(async (req, res) => {
     }
 
 })
-module.exports = { home, tweet, like, search_profile, search }
+
+const comment_display= asyncHandler(async (req, res) => {
+
+    const tokenData = req.session.user;
+
+    const { uid, pid, commentfield, profile, username } = req.body;
+    const sql = `select profile_pic,comments,username from comment where pid='${pid}'`;
+    var query = await getdata(sql);
+    res.json(query)
+    console.log(query);
+
+
+}) 
+
+
+//comments api
+//comments
+
+
+const comment= asyncHandler(async (req, res) => {
+
+    const tokenData = req.session.user;
+
+
+    const { uid, pid, username, profile, commentfield } = req.body;
+    console.log('comment', req.body);
+
+    const sql = `INSERT INTO comment (uid, pid,profile_pic,comments,username,inserted_at)VALUES ('${uid}', '${pid}', '${profile}','${commentfield}',  '${username}', NOW())`;
+    var query = await getdata(sql);
+
+    res.json(query)
+
+}) 
+
+
+
+
+
+
+
+module.exports = { home, tweet, like, search_profile, search ,comment_display,comment}
