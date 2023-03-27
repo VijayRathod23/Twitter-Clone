@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken');
 const cookie = require('cookie-parser');
 const { Console } = require('console');
 const path = require('path');
+app.use(express.static("public"))
 
 const { send } = require('process');
 app.use(express.static(path.join(__dirname, "/public")));
@@ -39,7 +40,6 @@ app.use(bodyParser.json());
 app.use(cookie());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
-
 
 
 const register=require('./Routes/register')
@@ -71,9 +71,13 @@ app.get("/logout", (req, res) => {
 });
 
 
+app.get("*", (req, res) => {
+    res.render('404')
+})
 
-app.listen(process.env.PORT, (req, res) => {
+app.listen(process.env.PORT || 5000, (req, res) => {
 
     console.log('server is running on port ' + process.env.PORT);
 });
 
+ 

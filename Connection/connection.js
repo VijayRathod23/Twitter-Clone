@@ -14,4 +14,4 @@ con.connect((err) => {
 })
 
 
-module.exports=con
+module.exports={con}
