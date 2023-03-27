@@ -133,7 +133,7 @@ const edit_profile_post= asyncHandler(async (req, res) => {
     var updateTime = new Date();
     const { username, dob, bio, location } = req.body;
     if (req.file) {
-        var profileurl = 'http://127.0.0.1:3000/profiles/' + req.file.filename;
+        var profileurl = '/profiles/' + req.file.filename;
         var sql = `update users set username='${username}',profile_pic='${profileurl}',dob='${dob}',bio='${bio}',location='${location}',updated_at='${updateTime}'  where id='${tokenData.id}'`
         var result = await getdata(sql);
 

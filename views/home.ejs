@@ -479,7 +479,7 @@
             var search = document.getElementById('search').value;
             var s = "";
 
-            await fetch(`http://localhost:3000/search?search=${search}`)
+            await fetch(`/search?search=${search}`)
                 .then(res => res.json())
                 .then((search_data) => {
                     // console.log(':::::::::::::::::::::::::::data at',search_data)
@@ -759,7 +759,7 @@
 
         function search_profile(sid) {
             var sid = sid;
-            location.assign(`http://localhost:3000/search_profile?sid='${sid}'`);
+            location.assign(`/search_profile?sid='${sid}'`);
         }
 
         
