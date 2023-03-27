@@ -54,9 +54,6 @@ app.use('/',home);
 const profile=require('./Routes/profile')
 app.use('/',profile);
 
-const comment=require('./Routes/comment')
-app.use('/',comment);
-
 const retweet=require('./Routes/retweet')
 app.use('/',retweet);
 
