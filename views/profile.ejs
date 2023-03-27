@@ -233,7 +233,7 @@
                                             <div class="post-footer">
                                                 <div class="btn-container">
                                                     <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
-                                                    <div class="twt-toggle"><i class="fa-regular fa-comment"></i>
+                                                    <div class="twt-toggle"  onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"><i class="fa-regular fa-comment"></i>
                                                         comments</div>
                                                         <%for (let j=0;j<tweets.length;j++){%>
 
@@ -289,6 +289,9 @@
                                                         <%}%>                                                       
                                                     <div class="twt-toggle"><i class="fa-solid fa-retweet"></i>
                                                         retweet</div>
+                                                </div>
+                                                <div id="commentsection<%=tweets[i].id%>" class="commentsection">
+                                                
                                                 </div>
                                             </div>
                                         </div>
@@ -358,7 +361,9 @@
                                                                                 <%=count[i]%>
                                                                             </p>
                                                                         </div>
+                                                                        
                                                                     </div>
+                                                              
                                                                 </div>                                                    
                                                                 </div>
                                                 </div>
@@ -693,7 +698,73 @@
                 });
 
         }
+// Comment get Section
 
+let commentsection = document.querySelectorAll(".commentsection");
+commentsection.forEach(e => {
+e.style.display = "none";
+
+})
+
+
+async function comment(pid, uid) {
+var commentsection = document.getElementById('commentsection' + pid);
+
+
+console.log(comment)
+
+commentstr = ''
+console.log('pid', pid)
+console.log('uid', uid)
+console.log(commentsection)
+
+if (commentsection.style.display == "none") {
+    commentsection.style.display = "block";
+    
+
+    await fetch("/comment_display", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pid, uid }),
+    }).then((res) => {
+        return res.json()
+    }).then((result) => {
+        console.log(result)
+        for (i = 0; i < result.length; i++) {
+            commentstr += `<div class="profile1">
+                                   
+                    <div class="profileimg1">
+                        <img src="${result[i].profile_pic}" alt="">
+                    </div>
+                                        
+                                        
+                    <div class="profileinfo1">
+                        <div class="name1">
+                            <h3>
+                                ${result[i].username}
+                            </h3>
+                        </div>
+                        <div class="comment1">
+                            <p>${result[i].comments}</p>
+                        </div>
+                    </div>
+                </div>`
+
+
+        }
+        commentsection.innerHTML = commentstr;
+
+    })
+
+}
+else {
+    commentsection.style.display = "none";
+ 
+}
+
+}
     </script>
 
 </body>
