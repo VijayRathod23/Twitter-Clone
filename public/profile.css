@@ -45,6 +45,10 @@
     padding-top: 0.25rem;
     font-size: large;
 }
+span a{
+    text-decoration: none;
+    color: black;
+}
 
 .tweetbtn{
     width: 80%;
