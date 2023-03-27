@@ -70,12 +70,7 @@ app.get("/logout", (req, res) => {
     res.redirect("/login")
 });
 
-
-app.get("*", (req, res) => {
-    res.render('404')
-})
-
-app.listen(process.env.PORT || 5000, (req, res) => {
+app.listen(process.env.PORT, (req, res) => {
 
     console.log('server is running on port ' + process.env.PORT);
 });
