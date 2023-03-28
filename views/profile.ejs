@@ -290,9 +290,8 @@
                                                         retweet</div>
                                                 </div>
                                                 <div id="commentsection<%=tweets[i].id%>" class="commentsection">
-                                                <!-- COMMENT DISPLAY SECTION -->
+                                                
                                                 </div>
-
                                                 <div id="comment<%=tweets[i].id%>" class="comment">
         
                                                     <input type="text" name="commentfield"
@@ -708,8 +707,8 @@
                 });
 
         }
-     // Comment post Section
-     async function commentdata(pid, uid, username, profile) {
+ // Comment post Section
+ async function commentdata(pid, uid, username, profile) {
 
 var commentfield = document.getElementById('commentfield' + pid).value
 console.log('pid', pid)
@@ -728,7 +727,7 @@ await fetch("/comment", {
     return res.json()
 }).then((result) => {
     console.log(result)
-    location.assign('/profile')
+    location.assign('/home')
 })
 
 }
@@ -813,6 +812,7 @@ else {
 }
 
 }
+
     </script>
 
 </body>
