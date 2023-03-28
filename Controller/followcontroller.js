@@ -65,7 +65,24 @@ const follow = asyncHandler(async (req, res) => {
 
 })
 
+const search_follow = asyncHandler(async (req, res) => {
 
+    const tokenData = req.session.user;
+    // const tokenData = jwt.verify(jwtToken, "user");
+    var user_id = tokenData.id;
+    var id = req.query.id;
+
+    var result = (`SELECT * FROM follow where (f_id = '${id}'and flag = '1' and user_id = '${user_id}');`)
+    const resultdata = await getdata(result)
+
+    console.log('follow listig', resultdata)
+
+
+    // console.log(resultdata)
+
+    res.json(resultdata)
+
+})
 const postfollow = asyncHandler(async (req, res) => {
 
     //to get user id to store it in follow table
@@ -178,4 +195,4 @@ const post_rm_follower = asyncHandler(async (req, res) => {
 
 
 
-module.exports = { post_rm_follower, post_Unfollow, postfollower, postfollow, follow, newfollow }
+module.exports = { post_rm_follower, post_Unfollow, postfollower, postfollow, follow, newfollow ,search_follow}

@@ -118,7 +118,7 @@ const home = asyncHandler(async (req, res) => {
         const userid = `${tokenData.id}`;
 
         ids += `,${userid})`
-        const basic = `SELECT * FROM users where id not in${ids} limit 7`;
+        const basic = `SELECT * FROM users where id not in${ids} `;
         // console.log(basic);
         const user_data = await getdata(basic);
         // console.log(query);
@@ -126,7 +126,7 @@ const home = asyncHandler(async (req, res) => {
     }
     else {
 
-        const sql1 = `select * from users limit 5;`;
+        const sql1 = `select * from users ;`;
         const user_data = await getdata(sql1);
         //  console.log("all user data",user_data)
         res.render("home", { tokenData, selectData, tweets, user_data, likes, flag, new_user_profile_pic, new_user_name, user_data, count, flag_rewteet })
