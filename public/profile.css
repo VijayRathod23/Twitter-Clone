@@ -382,10 +382,11 @@ span a{
 
 
 
+/* Comment */
 
 .commentsection{
     max-height: 30rem;
-    
+    /* width: 30rem; */
     overflow-y: scroll;
     border: none;
     outline: none;
@@ -403,6 +404,37 @@ span a{
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
+
+
+/* .comment form{
+    display: flex;
+} */
+.commentfield{
+    width: 70%;
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+} 
+
+.commentbtn{
+    width: 20%;
+    border-radius: 10px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: #1DA1F2;
+    color: white;
+    font-weight: bold;
+}
+
+.comment{
+    margin-top: 10px;
+    border: #1DA1F2;
+}
+.comment form{
+    border: none;
+}
 
 .profile1{
     display: flex;
