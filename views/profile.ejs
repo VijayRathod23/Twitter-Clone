@@ -48,7 +48,6 @@
                         <i class="fa-solid fa-hashtag fa-2x"></i>
                         <span>More</span>
                     </div>
-
                     <div class="more_options" id="more_options" style="display: none;">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span><a href="/logout">Logout</a></span>
@@ -73,12 +72,12 @@
                         <img src="<%=selectData[0].profile_pic%>" alt="">
                     </div>
                     <div class="profileinfo">
-                        <div class="name">
+                        <div class="name" onclick="profile()">
                             <span>
                                 <%=selectData[0].username%>
                             </span>
                         </div>
-                        <div class="username">
+                        <div class="username" onclick="profile()">
                             <span>
                                 <%=selectData[0].email%>
                             </span>
@@ -322,9 +321,8 @@
                                     <%for(let i=0; i<tweet_data.length; i++){%>
 
                                         <div id="tweet<%=tweet_data[i].id%>">
-                                            
-                                            <p>You Retweeted this</p>
-                                            <div class="tweets tweets1">
+                                            <p> <%=selectData[0].username%> Retweeted this</p>
+                                            <div class="tweets">
                                                 <div class="post">
 
                                                     <div class="post__avatar">
