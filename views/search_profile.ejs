@@ -315,11 +315,7 @@
                                                                         <div class="twt-toggle"><i
                                                                                 class="fa-regular fa-comment"></i>
                                                                             comments</div>
-                                                                        <div class="twt-toggle"><i class="fa-solid fa-heart" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
-                                                                            <p id="twt<%=tweets[i].id%>">
-                                                                                <%=tweets[i].likes%>
-                                                                            </p>
-                                                                        </div>    
+                                                                           
                                                                         <div class="twt-toggle">
                                                                             <a
                                                                                 onclick="increment_count('<%= tweet_data[i].id %>')"><i
@@ -624,6 +620,45 @@ function back() {
             document.getElementById('retweetseccontent').style.display = "block";
             document.getElementById('retweetsec').style.backgroundColor = "#E1E8ED";
 
+        }
+        //*********************************like function
+        function like(pid, uid) {
+            // alert("like")
+            console.log('pid', pid)
+            console.log('uid', uid)
+
+            fetch("/like", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ pid, uid }),
+            }).then((res) => {
+                return res.json()
+            }).then((result) => {
+                console.log(result[0])
+                console.log(result[0].likes)
+
+                if (!result[1]) {
+                    if (result[0].likes == 0) {
+                        document.getElementById('twt-tg' + pid).style.color = "black";
+                    }
+                    else {
+                        document.getElementById('twt-tg' + pid).style.color = "#1DA1F2";
+                    }
+                    document.getElementById('twt' + pid).innerHTML = result[0].likes;
+                }
+                else {
+                    if (result[1].likes == 0) {
+                        document.getElementById('twt-tg' + pid).style.color = "black";
+                    }
+                    else {
+                        document.getElementById('twt-tg' + pid).style.color = "#1DA1F2";
+                    }
+                    document.getElementById('twt' + pid).innerHTML = result[0].likes;
+                }
+
+            })
         }
 
 
