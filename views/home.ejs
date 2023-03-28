@@ -14,7 +14,7 @@
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Emoji Picker Script -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
 </head>
@@ -559,13 +559,15 @@
 
 
         function following(id, profile_pic, email, username) {
-
+          
             console.log("follow func")
             console.log(`${id}`)
             console.log("hiii", id, profile_pic, email, username)
             var listed = document.getElementById(`follow${id}`);
-            // var followcount = document.getElementById("followcount");
-            var s = "";
+            
+            if (listed.innerText == "Follow"){
+                // console.log("hiiiiiii")
+                var s = "";
             fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
 
                 .then(res => res.json())
@@ -578,6 +580,52 @@
                     s += `Following`
                     listed.innerHTML = s;
                 })
+            }
+            else{
+                swal({
+                        title: "Are you sure?",
+                        text: "Once Unfollowed, you will not be able to see the content of this account!",
+                        icon: "warning",
+                        buttons: ["Cancel", "Unfollow"],
+
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                swal("Poof! This account has been Unfollowed!", {
+                                    icon: "success",
+                                });
+                                console.log("follow func")
+                                console.log(`${id}`)
+                                console.log("hiii", id, profile_pic, email, username)
+
+                                var listed = document.getElementById(`follow${id}`);
+                                // var followcount = document.getElementById("followcount");
+                                var s = "";
+                                fetch(`/post_Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+
+                                    .then(res => res.json())
+                                    .then((resultdata) => {
+                                        console.log("resultdata")
+
+                                        var counted = resultdata.length;
+                                        //  console.log(resultdata.length)
+
+                                        s += `Follow`
+                                        listed.innerHTML = s;
+                                    });
+                            } else {
+                                swal("You are following this account !");
+                            }
+                        });
+
+
+
+
+            }
+            
+            // console.log()
+            // var followcount = document.getElementById("followcount");
+            
 
         }
 
