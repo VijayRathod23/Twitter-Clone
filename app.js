@@ -63,6 +63,8 @@ app.use('/',follow);
 const forgot=require('./Routes/forgot')
 app.use('/',forgot);
 
+const loader=require('./Routes/loader')
+app.use('/',loader);
 
 //LogOut API
 app.get("/logout", (req, res) => {
