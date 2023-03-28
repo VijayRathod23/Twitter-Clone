@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter</title>
+
+    <link rel="stylesheet" href="/edit_profile.css">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+    <div class="loader" id="loader">
+        <div class="test">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <div class="container" id="main">
+        <div class="screen">
+
+            <!-- *********************Navigation Bar********************** -->
+
+            <div class="navigationbar">
+                <!-- ************logo******************** -->
+                <div class="logo">
+                    <i class="fa-brands fa-twitter fa-3x"></i>
+                </div>
+
+                <!-- ************navigation******************** -->
+
+                <div class="navigation">
+
+                    <div class="navrow home" onclick="home()">
+                        <i class="fa-solid fa-house fa-2x"></i>
+                        <span>Home</span>
+                    </div>
+
+                    <div class="navrow profile" onclick="profile()">
+                        <i class="fa-regular fa-user fa-2x"></i>
+                        <span>Profile</span>
+                    </div>
+
+                    <div class="navrow explore" onclick="more()">
+                        <i class="fa-solid fa-hashtag fa-2x"></i>
+                        <span>More</span>
+                    </div>
+
+
+                    <div class="more_options" id="more_options" style="display: none;">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span><a href="/logout">Logout</a></span>
+                    </div>
+
+                    <!-- <div class="navrow">
+                        <a href="" class="tweetbtn">
+                            <p>Tweet</p>
+                        </a>
+                    </div> -->
+
+                </div>
+                <!-- ************profile******************** -->
+                <div class="profile">
+                    <div class="profileimg">
+                        <img src="<%=selectData[0].profile_pic%>" alt="img">
+                    </div>
+                    <div class="profileinfo">
+                        <div class="name">
+                            <span>
+                                <%=selectData[0].username%>
+                            </span>
+                        </div>
+                        <div class="username">
+                            <span>
+                                <%=selectData[0].email%>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="more">
+                        <img src="/images/more.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <!-- *********************Content Section********************** -->
+
+            <div class="contentsection">
+
+                <form action="/edit_profile" method="post" enctype="multipart/form-data">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="tweetsubmit">
+
+                                    <label for="file_input">
+                                        <img src="<%=selectData[0].profile_pic%>" alt="profile_pic">
+                                    </label>
+                                    <input type="file" id="file_input" name="profile">
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" name="username" id="username" placeholder="Username"
+                                    value="<%=selectData[0].username%>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="date" name="dob" id="dob" placeholder="Date of Birth"
+                                    value="<%=selectData[0].dob%>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" name="bio" id="bio" placeholder="Bio" value="<%=selectData[0].bio%>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" name="location" id="location" placeholder="Location"
+                                    value="<%=selectData[0].location%>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td onclick="done()">
+                                <input type="submit" value="SAVE" class="editbtn">
+                            </td>
+                        </tr>
+                    </table>
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <script>
+
+        document.getElementById("main").style.visibility = "hidden";
+
+        setTimeout(function () {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("main").style.visibility = "visible";
+        }, 1000);
+
+
+        function home() {
+            location.assign(`/home`);
+        }
+        function profile() {
+            location.assign(`/profile`);
+        }
+        function done() {
+            alert('Edited!!');
+        }
+        function more() {
+            var more = document.getElementById("more_options");
+            // console.log("i m by default none");
+            if (more.style.display == "none") {
+                // console.log("in none");
+                more.style.display = "block"
+            } else {
+                // console.log("in block");
+                more.style.display = "none"
+
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
