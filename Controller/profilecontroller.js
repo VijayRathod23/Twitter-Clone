@@ -24,30 +24,34 @@ async function getdata(sql) {
 const profile = asyncHandler(async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/">register</a>`);
+        return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
     const tokenData = req.session.user;
     // **************21march*************
     const sql = `SELECT * FROM tweets where user_id = '${tokenData.id}' ORDER BY created_at DESC`;
     const tweets = await getdata(sql);
 
-    console.log("bcnjffjewjfjnvjnejbnvjkebjkvbjbjhbjhbhb*******************", tweets)
-
     // *************************
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
+
+    const sql2 = `select liked,pid,uid from likes where uid='${tokenData.id}'`
+    const likes = await getdata(sql2);
+    // var like_flag = likes[0].liked;
+    var flag = [];
+    console.log(likes);
     //res.render("profile", { tokenData, selectData,tweets})
 
 
 
     //--follower count
 
-    const result = `SELECT COUNT(user_id) AS follower FROM twitter_clone.follow where  (f_id = '${tokenData.id}' and rm_follower ='1');`
+    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = '${tokenData.id}' and rm_follower ='1');`
     const followerdata = await getdata(result)
 
 
     //--follow count
-    var result1 = (`SELECT COUNT(f_id) AS follow FROM twitter_clone.follow where  (user_id = '${tokenData.id}' and flag ='1');`)
+    var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = '${tokenData.id}' and flag ='1');`)
     const followdata = await getdata(result1)
 
     console.log("followerrrrrrrrr", followdata[0].follow)
@@ -73,7 +77,7 @@ const profile = asyncHandler(async (req, res) => {
             var retweeted_tweet_id = retweet_data[i].tweet_id;
             console.log(retweeted_tweet_id);
 
-            var tweet_select = `select * from twitter_clone.tweets where id = '${retweeted_tweet_id}'`;
+            var tweet_select = `select * from tweets where id = '${retweeted_tweet_id}'`;
 
             var tweet_data_1 = await getdata(tweet_select);
 
@@ -91,10 +95,10 @@ const profile = asyncHandler(async (req, res) => {
 
 
 
-        res.render("profile", { tokenData, selectData, tweets, tweet_data, count, followerdata, followdata })
+        res.render("profile", { tokenData, selectData, tweets, tweet_data, count, followerdata, followdata,likes,flag })
     }
     else {
-        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0, followerdata, followdata })
+        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0, followerdata, followdata,likes,flag })
 
     }
 
@@ -107,7 +111,7 @@ const profile = asyncHandler(async (req, res) => {
 const edit_profile= asyncHandler(async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/signup">register</a>`);
+        return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
     const tokenData = req.session.user;
 
@@ -123,13 +127,13 @@ const edit_profile= asyncHandler(async (req, res) => {
 const edit_profile_post= asyncHandler(async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/signup">register</a>`);
+        return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
     const tokenData = req.session.user;
     var updateTime = new Date();
     const { username, dob, bio, location } = req.body;
     if (req.file) {
-        var profileurl = 'http://127.0.0.1:3000/profiles/' + req.file.filename;
+        var profileurl = '/profiles/' + req.file.filename;
         var sql = `update users set username='${username}',profile_pic='${profileurl}',dob='${dob}',bio='${bio}',location='${location}',updated_at='${updateTime}'  where id='${tokenData.id}'`
         var result = await getdata(sql);
 

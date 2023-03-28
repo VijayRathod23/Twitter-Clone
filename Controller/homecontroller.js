@@ -32,7 +32,7 @@ const home = asyncHandler(async (req, res) => {
     console.log("user", req.session.user);
     const jwtToken = req.session.user;
     if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/signup">register</a>`);
+        return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
     // const sql = `SELECT * FROM tweets ORDER BY created_at DESC`;
     // const tweet = await getdata(sql);
@@ -186,7 +186,7 @@ console.log(".....................////////////////" + new_user_name[0]);
 
 // ..............................................complete.....................................
 
-    const result = await getdata(`SELECT follow.f_id FROM twitter_clone.follow where flag = '1'`);
+    const result = await getdata(`SELECT follow.f_id FROM follow where flag = '1'`);
     // const user=result[0];
     // console.log(user)
     var ids = "(";
@@ -204,7 +204,7 @@ console.log(".....................////////////////" + new_user_name[0]);
         const userid = `${tokenData.id}`;
 
         ids += `,${userid})`
-        const basic = `SELECT * FROM twitter_clone.users where id not in${ids} limit 7`;
+        const basic = `SELECT * FROM users where id not in${ids} limit 7`;
         // console.log(basic);
         const user_data = await getdata(basic);
         // console.log(query);
@@ -235,7 +235,7 @@ const tweet = asyncHandler(async (req, res) => {
         const file = req.file;
         const filename = file.originalname;
         const filepath = file.path;
-        var imgsrc = 'http://127.0.0.1:3000/uploads/' + req.file.filename;
+        var imgsrc = '/uploads/' + req.file.filename;
         const sql = 'INSERT INTO tweets(user_id,tweet_text,media,username,profile_pic) VALUES (?,?,?,?,?)';
         const data = [id, tweet_text, imgsrc, username, profile_pic];
         con.query(sql, data);
@@ -264,7 +264,7 @@ const search_profile = asyncHandler(async (req, res) => {
 
     const jwtToken = req.session.user;
     if (!jwtToken) {
-        return res.send(`you are not authorized register first <a href="/login">register</a>`);
+        return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
     const tokenData = req.session.user;
     var sid = req.query.sid;
@@ -272,7 +272,14 @@ const search_profile = asyncHandler(async (req, res) => {
     const select = `select * from users where id = ${sid}`;
     const selectData = await getdata(select);
     console.log(selectData)
-    res.render('search_profile', { tokenData, selectData })
+    var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = ${sid} and flag ='1');`)
+    const followdata = await getdata(result1);
+    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = ${sid} and rm_follower ='1')`
+    const followerdata = await getdata(result)
+    const sql = `SELECT * FROM tweets where user_id = ${sid} ORDER BY created_at DESC`;
+    const tweets = await getdata(sql);
+
+    res.render('search_profile', { tokenData, selectData,followdata,followerdata,tweets })
 
 })
 
@@ -342,9 +349,43 @@ const like = asyncHandler(async (req, res) => {
 
 })
 
+const comment_display= asyncHandler(async (req, res) => {
+
+    const tokenData = req.session.user;
+
+    const { uid, pid, commentfield, profile, username } = req.body;
+    const sql = `select profile_pic,comments,username from comment where pid='${pid}'`;
+    var query = await getdata(sql);
+    res.json(query)
+    console.log(query);
+
+
+}) 
+
+
+//comments api
+//comments
+
+
+const comment= asyncHandler(async (req, res) => {
+
+    const tokenData = req.session.user;
+
+
+    const { uid, pid, username, profile, commentfield } = req.body;
+    console.log('comment', req.body);
+
+    const sql = `INSERT INTO comment (uid, pid,profile_pic,comments,username,inserted_at)VALUES ('${uid}', '${pid}', '${profile}','${commentfield}',  '${username}', NOW())`;
+    var query = await getdata(sql);
+
+    res.json(query)
+
+}) 
 
 
 
 
 
-module.exports = { home, tweet, like, search_profile, search }
+
+
+module.exports = { home, tweet, like, search_profile, search ,comment_display,comment}
