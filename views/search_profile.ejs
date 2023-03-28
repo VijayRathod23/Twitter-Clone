@@ -284,7 +284,7 @@
                                     <%for(let i=0; i<tweet_data.length; i++){%>
 
                                         <div id="tweet<%=tweet_data[i].id%>">
-                                            <p>You Retweeted this</p>
+                                            <p><%=selectData[0].username%> Retweeted this</p>
                                             <div class="tweets">
                                                 <div class="post">
 
@@ -367,25 +367,25 @@
         }
         function following(id, profile_pic, email, username) {
 
-            console.log("follow func")
-            console.log(`${id}`)
-            console.log("hiii", id, profile_pic, email, username)
-            var listed = document.getElementById(`follow${id}`);
-            // var followcount = document.getElementById("followcount");
-            var s = "";
-            fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+    console.log("follow func")
+    console.log(`${id}`)
+    console.log("hiii", id, profile_pic, email, username)
+    var listed = document.getElementById(`follow${id}`);
+    // var followcount = document.getElementById("followcount");
+    var s = "";
+    fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
 
-            .then(res => res.json())
-            .then((resultdata) => {
-                console.log("resultdata")
-            
-                var counted = resultdata.length;
-                //  console.log(resultdata.length)
-            
-                s += `Following`
-                listed.innerHTML = s;
-            })
-        
+    .then(res => res.json())
+    .then((resultdata) => {
+        console.log("resultdata")
+
+        var counted = resultdata.length;
+        //  console.log(resultdata.length)
+
+        s += `Following`
+        listed.innerHTML = s;
+    })
+
 }
 function back() {
           location.assign('/home')
@@ -404,7 +404,6 @@ function back() {
             var listed = document.getElementById("follower");
             // var followercount = document.getElementById("followercount");
             var s = "";
-            console.log("hiii", id)
             fetch(`/searchfollow?id=${id}`)
                 .then((res) => { return res.json() })
                 .then((resultdata,frdata) => {
@@ -587,6 +586,35 @@ function back() {
                 });
 
         }
+        function tweets_retweets() {
+            console.log("harshpatel");
+
+            document.getElementById('tweetseccontent').style.display = "block";
+            document.getElementById('tweetsec').style.backgroundColor = "#E1E8ED";
+            document.getElementById('retweetseccontent').style.display = "none";
+            document.getElementById('retweetsec').style.backgroundColor = "white";
+
+        }
+
+        function tweet() {
+            document.getElementById('tweetseccontent').style.display = "block";
+            document.getElementById('tweetsec').style.backgroundColor = "#E1E8ED";
+            document.getElementById('retweetseccontent').style.display = "none";
+            document.getElementById('retweetsec').style.backgroundColor = "white";
+
+
+
+        }
+
+        function retweet() {
+            document.getElementById('tweetseccontent').style.display = "none";
+            document.getElementById('tweetsec').style.backgroundColor = "white";
+            document.getElementById('retweetseccontent').style.display = "block";
+            document.getElementById('retweetsec').style.backgroundColor = "#E1E8ED";
+
+        }
+
+
 
     </script>
 

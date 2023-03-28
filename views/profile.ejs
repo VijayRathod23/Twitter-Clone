@@ -48,7 +48,6 @@
                         <i class="fa-solid fa-hashtag fa-2x"></i>
                         <span>More</span>
                     </div>
-
                     <div class="more_options" id="more_options" style="display: none;">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span><a href="/logout">Logout</a></span>
@@ -323,7 +322,7 @@
                                     <%for(let i=0; i<tweet_data.length; i++){%>
 
                                         <div id="tweet<%=tweet_data[i].id%>">
-                                            <p>You Retweeted this</p>
+                                            <p> <%=selectData[0].username%> Retweeted this</p>
                                             <div class="tweets">
                                                 <div class="post">
 
