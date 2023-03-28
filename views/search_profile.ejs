@@ -62,14 +62,14 @@
 
                 <div class="profile">
                     <div class="profileimg">
-                        <img src="<%=selectData[0].profile_pic%>" alt="">
+                        <img src="<%=tokenData.profile_pic%>" alt="">
                     </div>
                     <div class="profileinfo">
                         <div class="name">
-                            <span><%=selectData[0].username%></span>
+                            <span><%=tokenData.username%></span>
                         </div>
                         <div class="username">
-                            <span><%=selectData[0].email%></span>
+                            <span><%=tokenData.email%></span>
                         </div>
                     </div>
                     <div class="more">
@@ -367,25 +367,25 @@
         }
         function following(id, profile_pic, email, username) {
 
-console.log("follow func")
-console.log(`${id}`)
-console.log("hiii", id, profile_pic, email, username)
-var listed = document.getElementById(`follow${id}`);
-// var followcount = document.getElementById("followcount");
-var s = "";
-fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+            console.log("follow func")
+            console.log(`${id}`)
+            console.log("hiii", id, profile_pic, email, username)
+            var listed = document.getElementById(`follow${id}`);
+            // var followcount = document.getElementById("followcount");
+            var s = "";
+            fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
 
-    .then(res => res.json())
-    .then((resultdata) => {
-        console.log("resultdata")
-
-        var counted = resultdata.length;
-        //  console.log(resultdata.length)
-
-        s += `Following`
-        listed.innerHTML = s;
-    })
-
+            .then(res => res.json())
+            .then((resultdata) => {
+                console.log("resultdata")
+            
+                var counted = resultdata.length;
+                //  console.log(resultdata.length)
+            
+                s += `Following`
+                listed.innerHTML = s;
+            })
+        
 }
 function back() {
           location.assign('/home')
