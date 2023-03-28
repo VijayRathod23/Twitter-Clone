@@ -343,6 +343,7 @@
                                                                 <p>
                                                                     <%=tweet_data[i].tweet_text%>
                                                                 </p>
+                                                                
                                                             </div>
                                                         </div>
                                                         <%if(tweet_data[i].media){%>
@@ -354,14 +355,7 @@
                                                                         <input type="hidden"
                                                                             value="<%=tweet_data[i].id%>"
                                                                             name="tweetid">
-                                                                        <div class="twt-toggle"><i
-                                                                                class="fa-regular fa-comment"></i>
-                                                                            comments</div>
-                                                                        <div class="twt-toggle"><i class="fa-solid fa-heart" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
-                                                                            <span id="twt<%=tweets[i].id%>">
-                                                                                <%=tweets[i].likes%>
-                                                                            </span>
-                                                                        </div>    
+                                                                       
                                                                         <div class="twt-toggle">
                                                                             <a
                                                                                 onclick="increment_count('<%= tweet_data[i].id %>')"><i

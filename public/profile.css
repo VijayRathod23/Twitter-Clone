@@ -337,6 +337,10 @@ hr {
     background-color: #1da0f215;
 }
 
+.post{
+    width: 60vw;
+}
+
 .post__avatar{
     display: flex;
     margin-bottom:2rem;
