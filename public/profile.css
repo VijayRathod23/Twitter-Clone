@@ -8,49 +8,61 @@
     display: flex;
     width: 100%; 
 }
+
+
 /* ***************************Navigation Bar************************* */
 
-.navigationbar{
-    width:18%;
+.navigationbar {
+    width: 18%;
     position: fixed;
     height: 100vh;
-    /* position: relative;
-    
-     z-index: 1; */
-    
+
 }
 
-.logo i{
+.logo i {
     color: #1DA1F2;
 }
 
-.logo{
+.logo {
     height: 10%;
     padding-top: 1rem;
 }
 
-.navigation{
+.navigation {
     height: 68%;
-    padding-top: 5rem;
+    padding-top: 4.5rem;
 }
 
-.navrow{
+.navrow {
     display: flex;
-    margin-bottom: 1.8rem ;
+    margin-bottom: 1.8rem;
     cursor: pointer;
+    width: 60%;
+    padding: 0.5rem;
+    border-radius: 25px;
 }
 
-.navrow span{
+.navrow:hover{
+    background-color: #1da0f22f;
+    /* padding-top: 0.5rem;
+    padding-bottom: 0.5rem; */
+    padding: 0.5rem;
+    padding-left: 1rem;
+
+}
+
+.navrow span {
     padding-left: 1rem;
     padding-top: 0.25rem;
     font-size: large;
 }
-span a{
-    text-decoration: none;
-    color: black;
+
+.more_options {
+    padding-left: 1.5rem;
+    cursor: pointer;
 }
 
-.tweetbtn{
+.tweetbtn {
     width: 80%;
     background-color: #1DA1F2;
     border-radius: 25px;
@@ -61,50 +73,58 @@ span a{
     color: white;
 }
 
-.profile{
+span a {
+    text-decoration: none;
+    color: black;
+}
+
+.profile {
     display: flex;
     /* height: 25%; */
 }
 
-.profileimg{
-    width: 25%;
+.profile:hover{
+    
+    background-color: #1da0f215;
+    border-radius: 25px;
+    padding: 0.25rem;
+    padding: 0.25rem;
 }
 
-.profileimg img{
+
+.profileimg {
+    width: 20%;
+}
+
+.profileimg img {
     width: 2.5rem;
     height: 2.5rem;
-    margin-right: 1rem;
     border-radius: 50px;
 }
 
-.profileinfo{
+.profileinfo {
     width: 60%;
 }
 
-.name span{
+.name span {
     font-weight: 600;
 }
 
-.username span{
+.username span {
     color: grey;
 }
 
-.more{
+.more {
     width: 22%;
 }
 
-.more img{
+.more img {
     width: 1rem;
     margin-top: 0.5rem;
 }
 
-
-.home{
+.home {
     margin-top: 5rem;
-}
-
-.more_options{
-    padding-left: 1.5rem;
 }
 
 
@@ -284,16 +304,39 @@ span a{
 .tweetsec:hover{
     background-color: #F5F8FA;
 }
-
+/* 
 
 .tweets{
     margin-top: 2rem;
     padding: 2rem;
-    width: 60vw;
     background-color: rgba(0, 0, 0, 0.091);
     margin-left: 2rem;
     border-radius: 2rem;
+} */
+
+.tweets {
+    width: 60vw;
+    padding: 1rem;
+    padding-bottom: 1rem;
+    /* border-bottom: 2px solid rgba(128, 128, 128, 0.193); */
+
 }
+
+/* .tweet-main {
+    width: 80%;
+    border: 2px solid rgba(128, 128, 128, 0.193);
+    margin-left: 2rem;
+    padding: 1rem;
+} */
+
+hr {
+    border-color: rgba(128, 128, 128, 0.096);
+}
+
+.tweets1:hover {
+    background-color: #1da0f215;
+}
+
 .post__avatar{
     display: flex;
     margin-bottom:2rem;

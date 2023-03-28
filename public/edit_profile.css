@@ -8,47 +8,61 @@
     display: flex;
     width: 100%; 
 }
+
+
 /* ***************************Navigation Bar************************* */
 
-.navigationbar{
-    width:18%;
+.navigationbar {
+    width: 18%;
     position: fixed;
     height: 100vh;
-    
+
 }
 
-.logo i{
+.logo i {
     color: #1DA1F2;
 }
 
-.logo{
+.logo {
     height: 10%;
     padding-top: 1rem;
 }
 
-.navigation{
+.navigation {
     height: 68%;
-    padding-top: 5rem;
+    padding-top: 4.5rem;
 }
 
-.navrow{
+.navrow {
     display: flex;
-    margin-bottom: 1.8rem ;
+    margin-bottom: 1.8rem;
     cursor: pointer;
+    width: 60%;
+    padding: 0.5rem;
+    border-radius: 25px;
 }
 
-.navrow span{
+.navrow:hover{
+    background-color: #1da0f22f;
+    /* padding-top: 0.5rem;
+    padding-bottom: 0.5rem; */
+    padding: 0.5rem;
+    padding-left: 1rem;
+
+}
+
+.navrow span {
     padding-left: 1rem;
     padding-top: 0.25rem;
     font-size: large;
 }
 
-.more_options{
+.more_options {
     padding-left: 1.5rem;
     cursor: pointer;
 }
 
-.tweetbtn{
+.tweetbtn {
     width: 80%;
     background-color: #1DA1F2;
     border-radius: 25px;
@@ -59,47 +73,48 @@
     color: white;
 }
 
-span a{
+span a {
     text-decoration: none;
     color: black;
 }
-.profile{
+
+.profile {
     display: flex;
     /* height: 25%; */
 }
 
-.profileimg{
+.profileimg {
     width: 20%;
 }
 
-.profileimg img{
+.profileimg img {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50px;
 }
 
-.profileinfo{
+.profileinfo {
     width: 60%;
 }
 
-.name span{
+.name span {
     font-weight: 600;
 }
 
-.username span{
+.username span {
     color: grey;
 }
 
-.more{
+.more {
     width: 22%;
 }
 
-.more img{
+.more img {
     width: 1rem;
     margin-top: 0.5rem;
 }
 
-.home{
+.home {
     margin-top: 5rem;
 }
 

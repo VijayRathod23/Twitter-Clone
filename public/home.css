@@ -82,6 +82,14 @@ span a {
     /* height: 25%; */
 }
 
+.profile:hover{
+    
+    background-color: #1da0f215;
+    border-radius: 25px;
+    padding: 0.25rem;
+    padding: 0.25rem;
+}
+
 .profileimg {
     width: 20%;
 }

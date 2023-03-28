@@ -39,7 +39,7 @@
                         <span>Home</span>
                     </div>
 
-                    <div class="navrow profile" onmousemove="tweet();">
+                    <div class="navrow profile" onclick="profile()">
                         <i class="fa-regular fa-user fa-2x"></i>
                         <span>Profile</span>
                     </div>
@@ -53,7 +53,6 @@
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span><a href="/logout">Logout</a></span>
                     </div>
-
 
 
 
@@ -194,7 +193,7 @@
                         <!-- post starts -->
                         <%if(tweets.length !=0){%>
                             <%for(let i=0; i<tweets.length; i++){%>
-                                <div class="tweets">
+                                <div class="tweets tweets1">
                                     <div class="post">
                                         <div class="post__avatar">
                                             <img src="<%=tweets[i].profile_pic%>" alt="img" class="post__avatar1" />
@@ -287,8 +286,8 @@
 
                                                             </div>
                                                         <%}%>                                                       
-                                                    <div class="twt-toggle"><i class="fa-solid fa-retweet"></i>
-                                                        retweet</div>
+                                                    <!-- <div class="twt-toggle"><i class="fa-solid fa-retweet"></i>
+                                                        retweet</div> -->
                                                 </div>
                                                 <div id="commentsection<%=tweets[i].id%>" class="commentsection">
                                                 
@@ -307,6 +306,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
                                 <%}%>
                                     <%}%>
                                         <!-- post ends -->
@@ -322,8 +322,9 @@
                                     <%for(let i=0; i<tweet_data.length; i++){%>
 
                                         <div id="tweet<%=tweet_data[i].id%>">
+                                            
                                             <p>You Retweeted this</p>
-                                            <div class="tweets">
+                                            <div class="tweets tweets1">
                                                 <div class="post">
 
                                                     <div class="post__avatar">
@@ -359,17 +360,17 @@
                                                                                 class="fa-regular fa-comment"></i>
                                                                             comments</div>
                                                                         <div class="twt-toggle"><i class="fa-solid fa-heart" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
-                                                                            <p id="twt<%=tweets[i].id%>">
+                                                                            <span id="twt<%=tweets[i].id%>">
                                                                                 <%=tweets[i].likes%>
-                                                                            </p>
+                                                                            </span>
                                                                         </div>    
                                                                         <div class="twt-toggle">
                                                                             <a
                                                                                 onclick="increment_count('<%= tweet_data[i].id %>')"><i
                                                                                     class="fa-solid fa-retweet"></i></a>
-                                                                            <p id="retwt<%=tweet_data[i].id%>">
+                                                                            <span id="retwt<%=tweet_data[i].id%>">
                                                                                 <%=count[i]%>
-                                                                            </p>
+                                                                            </span>
                                                                         </div>
                                                                         
                                                                     </div>
@@ -378,6 +379,7 @@
                                                                 </div>
                                                 </div>
                                             </div>
+                                            <hr>
                                         </div>
                                         <%}%>
                                             <%}%>
