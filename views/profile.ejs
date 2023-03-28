@@ -39,7 +39,7 @@
                         <span>Home</span>
                     </div>
 
-                    <div class="navrow profile" onmousemove="tweet();">
+                    <div class="navrow profile" onclick="profile()" onmousemove="tweet()">
                         <i class="fa-regular fa-user fa-2x"></i>
                         <span>Profile</span>
                     </div>
@@ -291,23 +291,13 @@
                                                         retweet</div>
                                                 </div>
                                                 <div id="commentsection<%=tweets[i].id%>" class="commentsection">
-                                                <!-- COMMENT DISPLAY SECTION -->
-                                                </div>
-
-                                                <div id="comment<%=tweets[i].id%>" class="comment">
-        
-                                                    <input type="text" name="commentfield"
-                                                        id="commentfield<%=tweets[i].id%>"
-                                                        placeholder="Please Enter Comment" class="commentfield">
-                                                    <input type="submit" value="Reply" class="commentbtn"
-                                                        onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
-    
-    
+                                                
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
                                 <%}%>
                                     <%}%>
                                         <!-- post ends -->
@@ -709,67 +699,29 @@
                 });
 
         }
-     // Comment post Section
-     async function commentdata(pid, uid, username, profile) {
-
-var commentfield = document.getElementById('commentfield' + pid).value
-console.log('pid', pid)
-console.log('uid', uid)
-console.log('username', username)
-console.log('profile', profile)
-console.log('profile', commentfield)
-
-await fetch("/comment", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ pid, uid, username, profile, commentfield }),
-}).then((res) => {
-    return res.json()
-}).then((result) => {
-    console.log(result)
-    location.assign('/profile')
-})
-
-}
-
-
 // Comment get Section
-
-
-let classcomment = document.querySelectorAll(".comment");
-classcomment.forEach(e => {
-e.style.display = "none";
-
-})
 
 let commentsection = document.querySelectorAll(".commentsection");
 commentsection.forEach(e => {
 e.style.display = "none";
 
 })
-// classcomment.forEach()
-console.log(classcomment)
+
 
 async function comment(pid, uid) {
 var commentsection = document.getElementById('commentsection' + pid);
-// commentsection.style.display = "none";
-var comment = document.getElementById("comment" + pid);
-//  comment.style.display = "none";
+
 
 console.log(comment)
-// commentsection.innerHTML = "";
+
 commentstr = ''
 console.log('pid', pid)
 console.log('uid', uid)
 console.log(commentsection)
-classcomment.forEach(i => {
 
-})
 if (commentsection.style.display == "none") {
     commentsection.style.display = "block";
-    comment.style.display = "block";
+    
 
     await fetch("/comment_display", {
         method: "POST",
@@ -810,7 +762,7 @@ if (commentsection.style.display == "none") {
 }
 else {
     commentsection.style.display = "none";
-    comment.style.display = "none";
+ 
 }
 
 }

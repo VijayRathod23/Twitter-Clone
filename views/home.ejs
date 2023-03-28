@@ -159,7 +159,7 @@
 
                                     </div>
                                     <!-- original tweet -->
-                                    <div class="tweets">
+                                    <div class="tweets retweet_tweet">
                                         <div class="post">
                                             <div class="post__avatar">
                                                 <img src="<%=tweets[i].profile_pic%>" alt="img" class="post__avatar1" />
@@ -207,7 +207,9 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
+                                <hr>
 
 
                                 <!-- Simple tweet -->
@@ -216,8 +218,8 @@
 
                                 <%}else{%>
 
-                                    <div class="tweets">
-                                        <div class="post">
+                                    <div class="tweets tweets1">
+                                        <div class="post post1">
                                             <div class="post__avatar">
                                                 <img src="<%=tweets[i].profile_pic%>" alt="img" class="post__avatar1" />
                                                 <div class="post__header">
@@ -365,7 +367,9 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
+                                    <hr>
                                     <%}%>
                                         <%}%>
                                             <%}%>
@@ -377,44 +381,48 @@
             </div>
             <!-- ********************Search and Suggestion Section************ -->
             <div class="searchsection">
-
-                <div class="searchbar">
-                    <span> 
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </span>
-                    <input type="text" name="search" id="search" placeholder="Search Here" onkeydown="search()">
-                </div>
-
-                <div id="searchresult">
-                </div>
-                <div id="searchprofilebar">
-                    <h2>You might like</h2>
-                    <%for(i=0;i<user_data.length;i++){%>
-                        <div class="searchprofile">
-                            <div class="profileimg">
-                                <img src="<%=user_data[i].profile_pic%>" alt="">
-                            </div>
-                            <div class="profileinfo">
-                                <div class="name"  onclick="search_profile('<%=user_data[i].id%>')">
-                                    <span>
-                                        <%=user_data[i].username%>
-                                    </span>
+                <div class="searchsection1">
+                    
+                    <div class="searchbar">
+                        <span> 
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        <input type="text" name="search" id="search" placeholder="Search Here" onkeydown="search()" onclick="hidesearch()">
+                    </div>
+    
+                    <div id="searchresult">
+                    </div>
+                    <div id="searchprofilebar">
+                        <h2>You might like</h2>
+                        <%for(i=0;i<user_data.length;i++){%>
+                            <div class="searchprofile">
+                                <div class="profileimg">
+                                    <img src="<%=user_data[i].profile_pic%>" alt="">
                                 </div>
-                                <div class="username"  onclick="search_profile('<%=user_data[i].id%>')">
-                                    <span>
-                                        <%=user_data[i].email%>
-                                    </span>
+                                <div class="profileinfo">
+                                    <div class="name"  onclick="search_profile('<%=user_data[i].id%>')">
+                                        <span>
+                                            <%=user_data[i].username%>
+                                        </span>
+                                    </div>
+                                    <div class="username"  onclick="search_profile('<%=user_data[i].id%>')">
+                                        <span>
+                                            <%=user_data[i].email%>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="followbtn">
+                                    <p id="follow<%=user_data[i].id%>"
+                                        onclick="following(`<%=user_data[i].id%>`,`<%=user_data[i].profile_pic%>`,`<%=user_data[i].email%>`,`<%=user_data[i].username%>`)">
+                                        Follow</p>
                                 </div>
                             </div>
-                            <div class="followbtn">
-                                <p id="follow<%=user_data[i].id%>"
-                                    onclick="following(`<%=user_data[i].id%>`,`<%=user_data[i].profile_pic%>`,`<%=user_data[i].email%>`,`<%=user_data[i].username%>`)">
-                                    Follow</p>
-                            </div>
-                        </div>
+    
+                            <%}%>
+                    </div>
 
-                        <%}%>
                 </div>
+
 
             </div>
         </div>
@@ -759,7 +767,17 @@ else {
             location.assign(`/search_profile?sid='${sid}'`);
         }
 
-        
+        // document.getElementById('searchresult').style.display="block";
+        // document.getElementById('searchprofilebar').style.display="block";
+        // function hidesearch(){
+        //     document.getElementById('searchresult').style.display="block";
+        //     document.getElementById('searchprofilebar').style.display="none";
+
+        // }
+
+        // <div id="searchresult">
+        //         </div>
+        //         <div id="searchprofilebar">
 
 
     </script>
