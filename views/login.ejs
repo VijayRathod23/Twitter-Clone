@@ -49,7 +49,7 @@
                         </div>
                         <div class="buttons">
                             <div class="next">
-                                <input type="submit" value="Log In" disabled id="sub">
+                                <input type="submit" value="Log In"  id="sub">
                                 <!-- <a href="#">Login </a> -->
                             </div>
 
@@ -81,7 +81,7 @@
 
         }
         function checkpwd(c) {
-            document.getElementById("sub").disabled = true;
+           
             var pwd = document.getElementById('password').value;
             if (pwd == "") {
                 document.getElementById("error").innerHTML = " Password can not empty";
@@ -90,7 +90,7 @@
                 return false;
             }
             else {
-                document.getElementById("sub").disabled = false;
+               
                 document.getElementById("error").textContent = "";
                 return true;
             }
