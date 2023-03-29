@@ -7,6 +7,8 @@ const asyncHandler = require("express-async-handler");
 const multer = require('multer');
 const path = require('path');
 const { log } = require('console');
+const { getDefaultSettings } = require('http2');
+
 
 
 
@@ -32,8 +34,8 @@ const home = asyncHandler(async (req, res) => {
     if (!jwtToken) {
         return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
-    const sql = `SELECT * FROM tweets ORDER BY created_at DESC`;
-    const tweet = await getdata(sql);
+    // const sql = `SELECT * FROM tweets ORDER BY created_at DESC`;
+    // const tweet = await getdata(sql);
     const tokenData = req.session.user;
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
@@ -53,38 +55,81 @@ const home = asyncHandler(async (req, res) => {
     var flag_rewteet = new Array();
     var count = new Array();
 
-    var retweet = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id , retweets.retweet_text as retweet_text , retweets.retweet_media as retweet_media from tweets join retweets on tweets.id = retweets.tweet_id`)
+   // var retweet = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id , retweets.retweet_text as retweet_text , retweets.retweet_media as retweet_media from tweets join retweets on tweets.id = retweets.tweet_id`)
     var tweets = new Array();
     var new_user_profile_pic = new Array();
     var new_user_name = new Array();
     console.log("new user p pic none" + new_user_profile_pic);
     console.log("new user name none" + new_user_name);
 
-    //if any retweet found
-    if (retweet[0]) {
-        for (var i = 0; i < retweet.length; i++) {
-            count.push(0);
-            flag_rewteet.push(0);
-            tweets.push(retweet[i]);
+    // //if any retweet found
+    // if (retweet[0]) {
+    //     for (var i = 0; i < retweet.length; i++) {
+    //         count.push(0);
+    //         flag_rewteet.push(0);
+    //         tweets.push(retweet[i]);
 
-            var new_user_data = await getdata(`select username , profile_pic from users where id= ${retweet[i].retweet_user_id}  `);
-            new_user_profile_pic.push(new_user_data[0].profile_pic);
-            new_user_name.push(new_user_data[0].username);
-            console.log("tweetid" + retweet[i].tweet_id);
-            console.log("tweet media" + retweet[i].retweet_media);
-            console.log("tweet text" + retweet[i].retweet_text);
-            console.log("user id"+retweet[i].retweet_user_id);
-        }
+    //         var new_user_data = await getdata(`select username , profile_pic from users where id= ${retweet[i].retweet_user_id}  `);
+    //         new_user_profile_pic.push(new_user_data[0].profile_pic);
+    //         new_user_name.push(new_user_data[0].username);
+    //         console.log("tweetid" + retweet[i].tweet_id);
+    //         console.log("tweet media" + retweet[i].retweet_media);
+    //         console.log("tweet text" + retweet[i].retweet_text);
+    //         console.log("user id"+retweet[i].retweet_user_id);
+    //     }
 
-    }
+    // }
 
 
-    for (var i = 0; i < tweet.length; i++) {
-        var cnt_sql = `select count(id) as cnt from retweets where tweet_id='${tweet[i].id}'`;
+    // for (var i = 0; i < tweet.length; i++) {
+    //     var cnt_sql = `select count(id) as cnt from retweets where tweet_id='${tweet[i].id}'`;
+    //     var result1 = await getdata(cnt_sql);
+    //     var total = result1[0].cnt;
+    //     count.push(total);
+    //     var flag_retwt_sql = `select id from retweets where user_id='${tokenData.id}' and tweet_id='${tweet[i].id}'`;
+    //     var flag_retwt = await getdata(flag_retwt_sql);
+    //     if (flag_retwt[0]) {
+    //         flag_rewteet.push(1);
+    //     }
+    //     else {
+    //         flag_rewteet.push(0);
+    //     }
+
+    //     tweets.push(tweet[i]);
+    // }
+
+
+    // ..................retweet complete.......................
+// ...................................for asc and desc ordering.............................
+
+var created_at = await getdata(`select created_at as created_at from tweets union select created_at as created_at from retweets order by created_at desc`);
+console.log("desc order" + created_at[0].created_at);
+
+for(var i=0;i<created_at.length;i++)
+{
+    var date_time = created_at[i].created_at;
+    var date = date_time.getFullYear()+'-'+(date_time.getMonth()+1)+'-'+date_time.getDate();
+var time = date_time.getHours()+':'+date_time.getMinutes()+':'+date_time.getSeconds();
+ var formatedate = date + ' '+ time;
+ console.log("formate date" + formatedate);
+   
+    var tweet_res = await getdata(`select * from tweets where created_at = '${formatedate}'`);
+    var retweet_res = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id , retweets.retweet_text as retweet_text , retweets.retweet_media as retweet_media from tweets join retweets on tweets.id = retweets.tweet_id where retweets.created_at = '${formatedate}'`);
+
+
+    console.log("tweet res" + tweet_res);
+console.log("Retweets res" + retweet_res);
+
+
+    if(tweet_res != ""){
+
+        console.log("Tweet found at " + created_at[i].created_at + formatedate);
+         tweets.push(tweet_res[0]);
+         var cnt_sql = `select count(id) as cnt from retweets where tweet_id='${tweet_res[0].id}'`;
         var result1 = await getdata(cnt_sql);
         var total = result1[0].cnt;
         count.push(total);
-        var flag_retwt_sql = `select id from retweets where user_id='${tokenData.id}' and tweet_id='${tweet[i].id}'`;
+        var flag_retwt_sql = `select id from retweets where user_id='${tokenData.id}' and tweet_id='${tweet_res[0].id}'`;
         var flag_retwt = await getdata(flag_retwt_sql);
         if (flag_retwt[0]) {
             flag_rewteet.push(1);
@@ -92,13 +137,54 @@ const home = asyncHandler(async (req, res) => {
         else {
             flag_rewteet.push(0);
         }
+        new_user_profile_pic.push("");
+        new_user_name.push("");
 
-        tweets.push(tweet[i]);
+    }
+    else if(retweet_res != ""){
+
+        console.log("ReTweet found at " + created_at[i].created_at);
+        tweets.push(retweet_res[0]);
+        count.push(0);
+            flag_rewteet.push(0);     
+
+            var new_user_data = await getdata(`select username , profile_pic from users where id= ${retweet_res[0].retweet_user_id}  `);
+            new_user_profile_pic.push(new_user_data[0].profile_pic);
+            new_user_name.push(new_user_data[0].username);
+
+    }
+    else if(tweet_res != "" && retweet_res != ""){
+        console.log("Both found at " + created_at[i].created_at);
+        tweets.push(tweet_res[0]);
+        var cnt_sql = `select count(id) as cnt from retweets where tweet_id='${tweet_res[0].id}'`;
+       var result1 = await getdata(cnt_sql);
+       var total = result1[0].cnt;
+       count.push(total);
+       var flag_retwt_sql = `select id from retweets where user_id='${tokenData.id}' and tweet_id='${tweet_res[0].id}'`;
+       var flag_retwt = await getdata(flag_retwt_sql);
+       if (flag_retwt[0]) {
+           flag_rewteet.push(1);
+       }
+       else {
+           flag_rewteet.push(0);
+       }
+       tweets.push(retweet_res[0]);
+       count.push(0);
+           flag_rewteet.push(0);     
+
+           var new_user_data = await getdata(`select username , profile_pic from users where id= ${retweet_res[0].retweet_user_id}  `);
+           new_user_profile_pic.push(new_user_data[0].profile_pic);
+           new_user_name.push(new_user_data[0].username);
+
+
     }
 
 
-    // ..................retweet complete.......................
+}
+console.log(".....................////////////////" + new_user_name[0]);
 
+
+// ..............................................complete.....................................
 
     const result = await getdata(`SELECT follow.f_id FROM follow where flag = '1'`);
     // const user=result[0];
