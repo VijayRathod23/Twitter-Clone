@@ -71,11 +71,12 @@ const search_follow = asyncHandler(async (req, res) => {
     // const tokenData = jwt.verify(jwtToken, "user");
     var user_id = tokenData.id;
     var id = req.query.id;
+    console.log(user_id,id)
 
     var result = (`SELECT * FROM follow where (f_id = '${id}'and flag = '1' and user_id = '${user_id}');`)
     const resultdata = await getdata(result)
 
-    console.log('follow listig', resultdata)
+    console.log('searchdata*****************************************************', resultdata)
 
 
     // console.log(resultdata)
