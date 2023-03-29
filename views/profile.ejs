@@ -16,8 +16,15 @@
 </head>
 
 <body>
+    <div class="loader" id="loader">
+        <div class="test">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
 
-    <div class="container">
+    <div class="container" id="main">
         <div class="screen">
 
             <!-- *********************Navigation Bar********************** -->
@@ -101,7 +108,6 @@
                         <span><i class="fa-solid fa-arrow-left"></i></span>
 
                     </div>
-
 
 
                     <div class="name_tweet">
@@ -332,7 +338,6 @@
                                     <%}%>
                                         <!-- post ends -->
                     </div>
-
                     <div id="retweetseccontent">
 
                         <%if(tweet_data !=0){%>
@@ -482,6 +487,13 @@
 
 
             <script>
+
+                document.getElementById("main").style.visibility = "hidden";
+                setTimeout(function () {
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("main").style.visibility = "visible";
+                }, 1000);
+                
                 function back() {
                     location.assign("/home");
                 }
@@ -644,42 +656,42 @@
                                 </div>`
 
 
-                            }
+                    }
 
-                            listed.innerHTML = s;
-                            // console.log(s)                 
-                        })
-
-
-                }
+                    listed.innerHTML = s;
+                    // console.log(s)                 
+                })
 
 
-                //followers list
-                function follower(id) {
+        }
 
-                    console.log('function call')
 
-                    // document.getElementById(`${id}`).style.backgroundColor = "yellow";
-                    var listed = document.getElementById("follower");
-                    // var followercount = document.getElementById("followercount");
-                    var s = "";
-                    console.log("heyyy", id)
-                    fetch(`/postfollower?id=${id}`)
-                        .then((res) => { return res.json() })
-                        .then((resultdata) => {
-                            //console.log("follower")
-                            console.log(resultdata.length)
+        //followers list
+        function follower(id) {
 
-                            var counted = resultdata.length;
-                            // followercount.innerHTML = counted;
+            console.log('function call')
 
-                            //listing of followers
+            // document.getElementById(`${id}`).style.backgroundColor = "yellow";
+            var listed = document.getElementById("follower");
+            // var followercount = document.getElementById("followercount");
+            var s = "";
+            console.log("heyyy", id)
+            fetch(`/postfollower?id=${id}`)
+                .then((res) => { return res.json() })
+                .then((resultdata) => {
+                    //console.log("follower")
+                    console.log(resultdata.length)
 
-                            for (var x = 0; x < resultdata.length; x++) {
+                    var counted = resultdata.length;
+                    // followercount.innerHTML = counted;
 
-                                s +=
+                    //listing of followers
 
-                                    ` <div id=div'${resultdata[x].user_id}' class="profile">
+                    for (var x = 0; x < resultdata.length; x++) {
+
+                        s +=
+
+                            ` <div id=div'${resultdata[x].user_id}' class="profile">
                                     <div class="profileimg"onclick="profile()">
                                         <img src="${resultdata[x].u_profile_pic}" alt="">
                                     </div>
@@ -699,94 +711,94 @@
                                     
                                 </div>`
 
-                            }
+                    }
 
-                            listed.innerHTML = s;
-                            // console.log(s)                 
-                        })
+                    listed.innerHTML = s;
+                    // console.log(s)                 
+                })
 
 
-                }
+        }
 
-                function Unfollow(id, profile_pic, email, username) {
+        function Unfollow(id, profile_pic, email, username) {
 
-                    swal({
-                        title: "Are you sure?",
-                        text: "Once Unfollowed, you will not be able to see the content of this account!",
-                        icon: "warning",
-                        buttons: ["Cancel", "Unfollow"],
+            swal({
+                title: "Are you sure?",
+                text: "Once Unfollowed, you will not be able to see the content of this account!",
+                icon: "warning",
+                buttons: ["Cancel", "Unfollow"],
 
-                    })
-                        .then((willDelete) => {
-                            if (willDelete) {
-                                swal("Poof! This account has been Unfollowed!", {
-                                    icon: "success",
-                                });
-                                console.log("follow func")
-                                console.log(`${id}`)
-                                console.log("hiii", id, profile_pic, email, username)
-
-                                var listed = document.getElementById(`follow${id}`);
-                                // var followcount = document.getElementById("followcount");
-                                var s = "";
-                                fetch(`/post-Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
-
-                                    .then(res => res.json())
-                                    .then((resultdata) => {
-                                        console.log("resultdata")
-
-                                        var counted = resultdata.length;
-                                        //  console.log(resultdata.length)
-
-                                        s += `Follow`
-                                        listed.innerHTML = s;
-                                    });
-                            } else {
-                                swal("You are following this account !");
-                            }
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Poof! This account has been Unfollowed!", {
+                            icon: "success",
                         });
+                        console.log("follow func")
+                        console.log(`${id}`)
+                        console.log("hiii", id, profile_pic, email, username)
+
+                        var listed = document.getElementById(`follow${id}`);
+                        // var followcount = document.getElementById("followcount");
+                        var s = "";
+                        fetch(`/post-Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+
+                            .then(res => res.json())
+                            .then((resultdata) => {
+                                console.log("resultdata")
+
+                                var counted = resultdata.length;
+                                //  console.log(resultdata.length)
+
+                                s += `Follow`
+                                listed.innerHTML = s;
+                            });
+                    } else {
+                        swal("You are following this account !");
+                    }
+                });
 
 
 
 
-                }
-                function rmfollower(id, profile_pic, email, username) {
+        }
+        function rmfollower(id, profile_pic, email, username) {
 
-                    swal({
-                        title: "Are you sure?",
-                        text: "Once Removed, They will not be able to see the content of Your account!",
-                        icon: "warning",
-                        buttons: ["Cancel", "Remove"],
+            swal({
+                title: "Are you sure?",
+                text: "Once Removed, They will not be able to see the content of Your account!",
+                icon: "warning",
+                buttons: ["Cancel", "Remove"],
 
-                    })
-                        .then((willDelete) => {
+            })
+                .then((willDelete) => {
 
-                            if (willDelete) {
+                    if (willDelete) {
 
-                                console.log("follow func")
-                                console.log(`${id}`)
-                                console.log("hiii", id, profile_pic, email, username)
-                                var listed = document.getElementById(`follow${id}`);
-                                // var followcount = document.getElementById("followcount");
-                                var s = "";
-                                fetch(`/post-rm-follower?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+                        console.log("follow func")
+                        console.log(`${id}`)
+                        console.log("hiii", id, profile_pic, email, username)
+                        var listed = document.getElementById(`follow${id}`);
+                        // var followcount = document.getElementById("followcount");
+                        var s = "";
+                        fetch(`/post-rm-follower?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
 
-                                    .then(res => res.json())
-                                    .then((resultdata) => {
-                                        console.log("resultdata")
+                            .then(res => res.json())
+                            .then((resultdata) => {
+                                console.log("resultdata")
 
-                                        var counted = resultdata.length;
-                                        //  console.log(resultdata.length)
+                                var counted = resultdata.length;
+                                //  console.log(resultdata.length)
 
-                                        s += `removed`
-                                        listed.innerHTML = s;
-                                    })
-                            }
+                                s += `removed`
+                                listed.innerHTML = s;
+                            })
+                    }
 
-                            else {
-                                text = "You canceled!";
-                            }
-                        });
+                    else {
+                        text = "You canceled!";
+                    }
+                });
 
                 }
                 // Comment post Section
