@@ -61,7 +61,7 @@ const profile = asyncHandler(async (req, res) => {
 
 
     //..........select retweeted
-    const select_retweet = `select * from retweets where user_id = '${tokenData.id}'`;
+    const select_retweet = `select * from retweets where user_id = '${tokenData.id}' order by created_at desc`;
     const retweet_data = await getdata(select_retweet);
 
     //..............if any retweet found for particular user
@@ -95,10 +95,11 @@ const profile = asyncHandler(async (req, res) => {
 
 
 
-        res.render("profile", { tokenData, selectData, tweets, tweet_data, count, followerdata, followdata,likes,flag })
+        res.render("profile", { tokenData, selectData, tweets, tweet_data,retweet_data, count, followerdata, followdata,likes,flag })
     }
     else {
-        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0, followerdata, followdata,likes,flag })
+        
+        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0,count,  followerdata, followdata,likes,flag })
 
     }
 

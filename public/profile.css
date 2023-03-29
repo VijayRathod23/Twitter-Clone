@@ -377,4 +377,51 @@ span a{
     /* color: red; */
     color: #1DA1F2;
 }
+/* *******Retweet in home page******** */
 
+.retwt_twt{
+    margin-top: 2rem;
+
+}
+.retweeted{
+    margin-top: 2rem;
+    padding: 1rem;
+    width: 60vw;
+    background-color: rgba(0, 0, 0, 0.091);
+    margin-left: 2rem;
+    border-radius: 2rem;
+}
+
+.repost__avatar{
+    display: flex;
+}
+
+
+.repost__header{
+    padding-left: 1rem;
+
+}
+
+.repost__avatar1{
+    width: 4rem;
+    height: 4rem;
+    margin-top: 1rem;
+    border-radius: 50px;
+}
+
+.retweetImg{
+    width: 20%;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+.repost__headerDescription{
+    margin-top: 3rem;
+}
+.post12{
+    background-color: rgba(0, 0, 0, 0.091);
+    border-radius: 2rem;
+    padding: 1rem;
+    width: 40vw;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+}
