@@ -337,6 +337,10 @@ hr {
     background-color: #1da0f215;
 }
 
+.post{
+    width: 60vw;
+}
+
 .post__avatar{
     display: flex;
     margin-bottom:2rem;
@@ -512,4 +516,54 @@ hr {
 .profileinfo1 {
     max-width: 80%;
     text-align: left;
+}
+/* *******Retweet in profile page******** */
+
+.retwt_twt{
+    margin-top: 2rem;
+
+}
+.retweeted{
+    margin-top: 2rem;
+    padding: 1rem;
+    width: 60vw;
+    /* background-color: rgba(0, 0, 0, 0.091); */
+    margin-left: 2rem;
+    border-radius: 2rem;
+}
+
+.repost__avatar{
+    display: flex;
+}
+
+
+.repost__header{
+    padding-left: 1rem;
+
+}
+
+.repost__avatar1{
+    width: 4rem;
+    height: 4rem;
+    margin-top: 1rem;
+    border-radius: 50px;
+}
+
+.retweetImg{
+    width: 20%;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+.repost__headerDescription{
+    margin-top: 3rem;
+}
+.post12{
+    /* background-color: rgba(0, 0, 0, 0.091); */
+    border: 0.5px solid;
+    border-radius: 2rem;
+    border-color: rgba(3, 3, 3,0.2);
+    padding: 1rem;
+    width: 40vw;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
 }

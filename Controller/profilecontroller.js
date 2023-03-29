@@ -34,6 +34,9 @@ const profile = asyncHandler(async (req, res) => {
     // *************************
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
+    var created_date = String(selectData[0].created_at);
+    var cr_date=created_date.slice(3,16);
+    console.log(".........................",cr_date);
 
     const sql2 = `select liked,pid,uid from likes where uid='${tokenData.id}'`
     const likes = await getdata(sql2);
@@ -61,7 +64,7 @@ const profile = asyncHandler(async (req, res) => {
 
 
     //..........select retweeted
-    const select_retweet = `select * from retweets where user_id = '${tokenData.id}'`;
+    const select_retweet = `select * from retweets where user_id = '${tokenData.id}' order by created_at desc`;
     const retweet_data = await getdata(select_retweet);
 
     //..............if any retweet found for particular user
@@ -95,10 +98,11 @@ const profile = asyncHandler(async (req, res) => {
 
 
 
-        res.render("profile", { tokenData, selectData, tweets, tweet_data, count, followerdata, followdata,likes,flag })
+        res.render("profile", { tokenData, selectData, tweets, tweet_data,retweet_data, count, followerdata, followdata,likes,flag ,cr_date})
     }
     else {
-        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0, followerdata, followdata,likes,flag })
+        
+        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0,count,  followerdata, followdata,likes,flag ,cr_date})
 
     }
 
