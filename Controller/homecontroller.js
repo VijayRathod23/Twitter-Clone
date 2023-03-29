@@ -34,8 +34,8 @@ const home = asyncHandler(async (req, res) => {
     if (!jwtToken) {
         return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
-    // const sql = `SELECT * FROM tweets ORDER BY created_at DESC`;
-    // const tweet = await getdata(sql);
+    const sql = `SELECT * FROM tweets ORDER BY created_at DESC`;
+    const tweet = await getdata(sql);
     const tokenData = req.session.user;
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
@@ -55,7 +55,7 @@ const home = asyncHandler(async (req, res) => {
     var flag_rewteet = new Array();
     var count = new Array();
 
-   // var retweet = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id , retweets.retweet_text as retweet_text , retweets.retweet_media as retweet_media from tweets join retweets on tweets.id = retweets.tweet_id`)
+    var retweet = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id , retweets.retweet_text as retweet_text , retweets.retweet_media as retweet_media from tweets join retweets on tweets.id = retweets.tweet_id`)
     var tweets = new Array();
     var new_user_profile_pic = new Array();
     var new_user_name = new Array();
