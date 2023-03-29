@@ -231,7 +231,9 @@
                                             <div class="post-footer">
                                                 <div class="btn-container">
                                                     <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
-                                                      <div class="twt-toggle"  onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"><i class="fa-regular fa-comment"></i>
+                                                    <div class="twt-toggle"
+                                                        onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')">
+                                                        <i class="fa-regular fa-comment"></i>
                                                         comments</div>
                                                     <%for (let j=0;j<tweets.length;j++){%>
 
@@ -308,28 +310,20 @@
                                                                                                                                 <%=count[i]%>
                                                                                                                             </span>
                                                                                                                         </div>
-                                                                                                                    </div>
-                                                                                                                    <div id="commentsection<%=tweets[i].id%>"
-                                                                                                                        class="commentsection">
+                                                </div>
+                                                <div id="commentsection<%=tweets[i].id%>" class="commentsection">
 
-                                                                                                                    </div>
-                                                                                                                    <div id="comment<%=tweets[i].id%>"
-                                                                                                                        class="comment">
+                                                </div>
+                                                <div id="comment<%=tweets[i].id%>" class="comment">
 
-                                                                                                                        <input
-                                                                                                                            type="text"
-                                                                                                                            name="commentfield"
-                                                                                                                            id="commentfield<%=tweets[i].id%>"
-                                                                                                                            placeholder="Please Enter Comment"
-                                                                                                                            class="commentfield">
-                                                                                                                        <input
-                                                                                                                            type="submit"
-                                                                                                                            value="Reply"
-                                                                                                                            class="commentbtn"
-                                                                                                                            onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
+                                                    <input type="text" name="commentfield"
+                                                        id="commentfield<%=tweets[i].id%>"
+                                                        placeholder="Please Enter Comment" class="commentfield">
+                                                    <input type="submit" value="Reply" class="commentbtn"
+                                                        onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
 
 
-                                                                                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
