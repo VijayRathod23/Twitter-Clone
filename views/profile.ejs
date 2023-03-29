@@ -231,11 +231,8 @@
                                             <div class="post-footer">
                                                 <div class="btn-container">
                                                     <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
-                                                    <div class="twt-toggle"
-                                                        onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')">
-                                                        <i class="fa-regular fa-comment"></i>
-                                                        comments
-                                                    </div>
+                                                      <div class="twt-toggle"  onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"><i class="fa-regular fa-comment"></i>
+                                                        comments</div>
                                                     <%for (let j=0;j<tweets.length;j++){%>
 
                                                         <%for (let k=0;k<likes.length;k++){%>
@@ -311,7 +308,28 @@
                                                                                                                                 <%=count[i]%>
                                                                                                                             </span>
                                                                                                                         </div>
-                                                </div>
+                                                                                                                    </div>
+                                                                                                                    <div id="commentsection<%=tweets[i].id%>"
+                                                                                                                        class="commentsection">
+
+                                                                                                                    </div>
+                                                                                                                    <div id="comment<%=tweets[i].id%>"
+                                                                                                                        class="comment">
+
+                                                                                                                        <input
+                                                                                                                            type="text"
+                                                                                                                            name="commentfield"
+                                                                                                                            id="commentfield<%=tweets[i].id%>"
+                                                                                                                            placeholder="Please Enter Comment"
+                                                                                                                            class="commentfield">
+                                                                                                                        <input
+                                                                                                                            type="submit"
+                                                                                                                            value="Reply"
+                                                                                                                            class="commentbtn"
+                                                                                                                            onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
+
+
+                                                                                                                    </div>
                                             </div>
                                         </div>
                                     </div>
@@ -384,26 +402,27 @@
                                                                         <div class="post__avatar">
                                                                             <img src="<%=tweet_data[i].profile_pic%>"
                                                                                 alt="img" class="post__avatar1" />
+                                                                            <div class="post__headerText">
+                                                                                <h3>
+                                                                                    <%=tweet_data[i].username%>
+                                                                                        <span
+                                                                                            class="post__headerSpecial"><span
+                                                                                                class="material-icons post__badge">
+                                                                                                <!-- </span>@<%=selectData[0].email%></span> -->
+                                                                                </h3>
+
+                                                                            </div>
                                                                         </div>
 
 
                                                                         <div class="post__body">
                                                                             <div class="post__header">
-                                                                                <div class="post__headerText">
-                                                                                    <h3>
-                                                                                        <%=tweet_data[i].username%>
-                                                                                            <span
-                                                                                                class="post__headerSpecial"><span
-                                                                                                    class="material-icons post__badge">
-                                                                                                    <!-- </span>@<%=selectData[0].email%></span> -->
-                                                                                    </h3>
 
-                                                                                </div>
                                                                                 <div class="post__headerDescription">
                                                                                     <p>
                                                                                         <%=tweet_data[i].tweet_text%>
                                                                                     </p>
-                                                                                
+
                                                                                     <!-- uploading images and video -->
                                                                                     <% const
                                                                                         array_of_allowed_files=['png', 'jpeg'
@@ -778,14 +797,12 @@
                 }
                 // Comment post Section
                 async function commentdata(pid, uid, username, profile) {
-
                     var commentfield = document.getElementById('commentfield' + pid).value
                     console.log('pid', pid)
                     console.log('uid', uid)
                     console.log('username', username)
                     console.log('profile', profile)
                     console.log('profile', commentfield)
-
                     await fetch("/comment", {
                         method: "POST",
                         headers: {
@@ -798,33 +815,23 @@
                         console.log(result)
                         location.assign('/profile')
                     })
-
                 }
-
-
                 // Comment get Section
-
-
                 let classcomment = document.querySelectorAll(".comment");
                 classcomment.forEach(e => {
                     e.style.display = "none";
-
                 })
-
                 let commentsection = document.querySelectorAll(".commentsection");
                 commentsection.forEach(e => {
                     e.style.display = "none";
-
                 })
                 // classcomment.forEach()
                 console.log(classcomment)
-
                 async function comment(pid, uid) {
                     var commentsection = document.getElementById('commentsection' + pid);
                     // commentsection.style.display = "none";
                     var comment = document.getElementById("comment" + pid);
                     //  comment.style.display = "none";
-
                     console.log(comment)
                     // commentsection.innerHTML = "";
                     commentstr = ''
@@ -832,12 +839,10 @@
                     console.log('uid', uid)
                     console.log(commentsection)
                     classcomment.forEach(i => {
-
                     })
                     if (commentsection.style.display == "none") {
                         commentsection.style.display = "block";
                         comment.style.display = "block";
-
                         await fetch("/comment_display", {
                             method: "POST",
                             headers: {
@@ -867,21 +872,15 @@
                         </div>
                     </div>
                 </div>`
-
-
                             }
                             commentsection.innerHTML = commentstr;
-
                         })
-
                     }
                     else {
                         commentsection.style.display = "none";
                         comment.style.display = "none";
                     }
-
                 }
-
             </script>
 
 </body>

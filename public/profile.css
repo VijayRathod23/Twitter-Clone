@@ -314,7 +314,7 @@ span a {
     border-radius: 2rem;
 } */
 
-.tweets {
+.tweets{
     width: 60vw;
     padding: 1rem;
     padding-bottom: 1rem;
@@ -556,6 +556,10 @@ hr {
 }
 .repost__headerDescription{
     margin-top: 3rem;
+}
+
+.post__headerText{
+    padding-left: 1rem;
 }
 .post12{
     /* background-color: rgba(0, 0, 0, 0.091); */
