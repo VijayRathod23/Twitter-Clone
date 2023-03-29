@@ -7,7 +7,6 @@ var con = mysql.createConnection({
     database: "twitter_clone"
 
 });
-console.log(con);
 
 con.connect((err) => {
     if (err) throw err;

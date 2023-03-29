@@ -69,9 +69,15 @@ app.get("/logout", (req, res) => {
     res.redirect("/login")
 });
 
-app.listen(process.env.PORT, (req, res) => {
+app.get("/loader",(req, res) => {
+    res.render("loader")
+})
+
+app.get('*', function(req, res){
+    res.render("404")
+  });
+app.listen(process.env.PORT || 3000, (req, res) => {
 
     console.log('server is running on port ' + process.env.PORT);
 });
 
- 

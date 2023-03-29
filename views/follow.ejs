@@ -285,48 +285,69 @@
                 }
 
                 function Unfollow(id, profile_pic, email, username) {
+                    var listed = document.getElementById(`follow${id}`)
+                    if (listed.innerText == "Following") {
+                        swal({
+                            title: "Are you sure?",
+                            text: "Once Unfollowed, you will not be able to see the content of this account!",
+                            icon: "warning",
+                            buttons: ["Cancel", "Unfollow"],
 
-                    swal({
-                        title: "Are you sure?",
-                        text: "Once Unfollowed, you will not be able to see the content of this account!",
-                        icon: "warning",
-                        buttons: ["Cancel", "Unfollow"],
-
-                    })
-                        .then((willDelete) => {
-                            if (willDelete) {
-                                swal("Poof! This account has been Unfollowed!", {
-                                    icon: "success",
-                                });
-                                console.log("follow func")
-                                console.log(`${id}`)
-                                console.log("hiii", id, profile_pic, email, username)
-
-                                var listed = document.getElementById(`follow${id}`);
-                                // var followcount = document.getElementById("followcount");
-                                var s = "";
-                                fetch(`/post_Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
-
-                                    .then(res => res.json())
-                                    .then((resultdata) => {
-                                        console.log("resultdata")
-
-                                        var counted = resultdata.length;
-                                        //  console.log(resultdata.length)
-
-                                        s += `Follow`
-                                        listed.innerHTML = s;
+                        })
+                            .then((willDelete) => {
+                                if (willDelete) {
+                                    swal("Poof! This account has been Unfollowed!", {
+                                        icon: "success",
                                     });
-                            } else {
-                                swal("You are following this account !");
-                            }
-                        });
+                                    console.log("follow func")
+                                    console.log(`${id}`)
+                                    console.log("hiii", id, profile_pic, email, username)
 
+                                    var listed = document.getElementById(`follow${id}`);
+                                    // var followcount = document.getElementById("followcount");
+                                    var s = "";
+                                    fetch(`/post_Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+
+                                        .then(res => res.json())
+                                        .then((resultdata) => {
+                                            console.log("resultdata")
+
+                                            var counted = resultdata.length;
+                                            //  console.log(resultdata.length)
+
+                                            s += `Follow`
+                                            listed.innerHTML = s;
+                                        });
+                                } else {
+                                    swal("You are following this account !");
+                                }
+                            });
+                    }
+                    else {
+
+                        var s = "";
+                        fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+
+                            .then(res => res.json())
+                            .then((resultdata) => {
+                                console.log("resultdata")
+
+                                var counted = resultdata.length;
+                                //  console.log(resultdata.length)
+
+                                s += `Following`
+                                listed.innerHTML = s;
+                            })
+                    }
 
 
 
                 }
                 function rmfollower(id, profile_pic, email, username) {
+
+                    var listed = document.getElementById(`follow${id}`)
+
+                    if(listed.innerText == "Follower"){
 
                     swal({
                         title: "Are you sure?",
@@ -364,6 +385,16 @@
                             }
                         });
 
+                    }
+                    else{
+                        swal({
+                        title: "You can not add the follower !",
+                       
+                        icon: "warning",
+                        buttons:  "OK",
+
+                    })
+                    }
                 }
                 function teb1() {
                     location.assign(`/profile`);
@@ -372,17 +403,17 @@
 
 
                 function more() {
-            var more = document.getElementById("more_options");
-            // console.log("i m by default none");
-            if (more.style.display == "none") {
-                // console.log("in none");
-                more.style.display = "block"
-            } else {
-                // console.log("in block");
-                more.style.display = "none"
+                    var more = document.getElementById("more_options");
+                    // console.log("i m by default none");
+                    if (more.style.display == "none") {
+                        // console.log("in none");
+                        more.style.display = "block"
+                    } else {
+                        // console.log("in block");
+                        more.style.display = "none"
 
-            }
+                    }
 
-        }
+                }
 
             </script>
