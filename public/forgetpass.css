@@ -94,7 +94,6 @@
 
 /* loader css */
 
-
 body{
   margin: 0px;
   box-sizing: border-box;
@@ -171,11 +170,11 @@ p{
 .loader
 {
   position:absolute;
-  top:50%;
+  top:72%;
   left:50%;
   transform:translate(-50%,-50%);
-  width:150px;
-  height:150px;
+  width:22px;
+  height:22px;
   background:transparent;
   border:3px solid #3c3c3c;
   border-radius:50%;
@@ -183,11 +182,11 @@ p{
   line-height:150px;
   font-family:sans-serif;
   font-size:20px;
-  color:#006eff;
+  /* color:#006eff; */
   letter-spacing:4px;
   text-transform:uppercase;
-  text-shadow:0 0 10px #006eff;
-  box-shadow:0 0 20px rgba(0,0,0,.5);
+  /* text-shadow:0 0 10px #006eff; */
+  /* box-shadow:0 0 20px rgba(0,0,0,.5); */
 }
 .loader:before
 {
