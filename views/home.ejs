@@ -470,6 +470,12 @@
             </div>
         </div>
         <script>
+            document.getElementById("main").style.visibility = "hidden";
+            setTimeout(function () {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("main").style.visibility = "visible";
+            }, 1000);
+
 
             function more() {
                 var more = document.getElementById("more_options");
