@@ -63,7 +63,6 @@ app.use('/',follow);
 const forgot=require('./Routes/forgot')
 app.use('/',forgot);
 
-
 //LogOut API
 app.get("/logout", (req, res) => {
     req.session.destroy(session);

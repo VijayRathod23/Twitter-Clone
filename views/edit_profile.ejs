@@ -55,12 +55,10 @@
                         <span>More</span>
                     </div>
 
-
                     <div class="more_options" id="more_options" style="display: none;">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                         <span><a href="/logout">Logout</a></span>
                     </div>
-
                     <!-- <div class="navrow">
                         <a href="" class="tweetbtn">
                             <p>Tweet</p>
@@ -75,14 +73,10 @@
                     </div>
                     <div class="profileinfo">
                         <div class="name">
-                            <span>
-                                <%=selectData[0].username%>
-                            </span>
+                            <span><%=selectData[0].username%></span>
                         </div>
                         <div class="username">
-                            <span>
-                                <%=selectData[0].email%>
-                            </span>
+                            <span><%=selectData[0].email%></span>
                         </div>
                     </div>
                     <div class="more">
@@ -100,7 +94,7 @@
                         <tr>
                             <td>
                                 <div class="tweetsubmit">
-
+                                    
                                     <label for="file_input">
                                         <img src="<%=selectData[0].profile_pic%>" alt="profile_pic">
                                     </label>
@@ -108,17 +102,15 @@
 
                                 </div>
                             </td>
-                        </tr>
+                        </tr>   
                         <tr>
                             <td>
-                                <input type="text" name="username" id="username" placeholder="Username"
-                                    value="<%=selectData[0].username%>">
+                                <input type="text" name="username" id="username" placeholder="Username" value="<%=selectData[0].username%>">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="date" name="dob" id="dob" placeholder="Date of Birth"
-                                    value="<%=selectData[0].dob%>">
+                                <input type="date" name="dob" id="dob" placeholder="Date of Birth" value="<%=selectData[0].dob%>">
                             </td>
                         </tr>
                         <tr>
@@ -128,12 +120,11 @@
                         </tr>
                         <tr>
                             <td>
-                                <input type="text" name="location" id="location" placeholder="Location"
-                                    value="<%=selectData[0].location%>">
+                                <input type="text" name="location" id="location" placeholder="Location" value="<%=selectData[0].location%>">
                             </td>
                         </tr>
                         <tr>
-                            <td onclick="done()">
+                            <td >
                                 <input type="submit" value="SAVE" class="editbtn">
                             </td>
                         </tr>
@@ -155,7 +146,7 @@
         setTimeout(function () {
             document.getElementById("loader").style.display = "none";
             document.getElementById("main").style.visibility = "visible";
-        }, 1000);
+        }, 500);
 
 
         function home() {
@@ -164,9 +155,7 @@
         function profile() {
             location.assign(`/profile`);
         }
-        function done() {
-            alert('Edited!!');
-        }
+      
         function more() {
             var more = document.getElementById("more_options");
             // console.log("i m by default none");
