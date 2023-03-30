@@ -154,6 +154,16 @@
                                             </div>
 
 
+                                            <%}else{%>
+                                                <div class="repost__headerDescription">                                                   
+                                                    <!-- if media found -->
+                                                    <%if(tweets[i].retweet_media){%>
+                                                        <img src="<%=tweets[i].retweet_media%>" alt="img"
+                                                            class="retweetImg" />
+                                                        <%}%>
+                                                </div>
+                                            
+
                                             <%}%>
 
 
