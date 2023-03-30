@@ -13,10 +13,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
-    <div class="container">
+
+    <div class="loader" id="loader">
+        <div class="test">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <div class="container" id="main">
         <div class="screen">
 
             <!-- *********************Navigation Bar********************** -->
@@ -115,7 +124,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td onclick="done()">
+                            <td >
                                 <input type="submit" value="SAVE" class="editbtn">
                             </td>
                         </tr>
@@ -131,15 +140,22 @@
     </div>
 
     <script>
+
+        document.getElementById("main").style.visibility = "hidden";
+
+        setTimeout(function () {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("main").style.visibility = "visible";
+        }, 500);
+
+
         function home() {
             location.assign(`/home`);
         }
         function profile() {
             location.assign(`/profile`);
         }
-        function done() {
-            alert('Edited!!');
-        }
+      
         function more() {
             var more = document.getElementById("more_options");
             // console.log("i m by default none");

@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
+
 <body>
 
     <div class="container">
@@ -61,10 +64,14 @@
                     </div>
                     <div class="profileinfo">
                         <div class="name" onclick="profile()">
-                            <span><%=tokenData.username%></span>
+                            <span>
+                                <%=tokenData.username%>
+                            </span>
                         </div>
                         <div class="username" onclick="profile()">
-                            <span><%=tokenData.email%></span>
+                            <span>
+                                <%=tokenData.email%>
+                            </span>
                         </div>
                     </div>
                     <div class="more">
@@ -82,11 +89,13 @@
 
                     <div class="render" onclick="back()">
 
-                    <i class="fa-solid fa-arrow-left" ></i>
-                </div>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </div>
 
                     <div class="name_tweet">
-                        <span class="name_user"><%=selectData[0].username%></span>
+                        <span class="name_user">
+                            <%=selectData[0].username%>
+                        </span>
                         <span>1 Tweets</span>
                     </div>
 
@@ -122,8 +131,12 @@
 
                     <div class="name_email">
 
-                        <span class="profile_name"><%=selectData[0].username%></span>
-                        <span class="profile_email"><%=selectData[0].email%></span>
+                        <span class="profile_name">
+                            <%=selectData[0].username%>
+                        </span>
+                        <span class="profile_email">
+                            <%=selectData[0].email%>
+                        </span>
                     </div>
 
                     <div class="home_join_date">
@@ -203,8 +216,10 @@
                                             <div class="post-footer">
                                                 <div class="btn-container">
                                                     <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
-                                                    <div class="twt-toggle"><i class="fa-regular fa-comment"></i>
-                                                        comments</div>
+                                                    <div class="twt-toggle"
+                                                    onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')">
+                                                    <i class="fa-regular fa-comment"></i>
+                                                    comments</div>
                                                         <%for (let j=0;j<tweets.length;j++){%>
 
                                                             <%for (let k=0;k<likes.length;k++){%>
@@ -260,6 +275,19 @@
                                                     <div class="twt-toggle"><i class="fa-solid fa-retweet"></i>
                                                         retweet</div>
                                                 </div>
+                                                <div id="commentsection<%=tweets[i].id%>" class="commentsection">
+
+                                                </div>
+                                                <div id="comment<%=tweets[i].id%>" class="comment">
+
+                                                    <input type="text" name="commentfield"
+                                                        id="commentfield<%=tweets[i].id%>"
+                                                        placeholder="Please Enter Comment" class="commentfield">
+                                                    <input type="submit" value="Reply" class="commentbtn"
+                                                        onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
+
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -279,7 +307,9 @@
                                     <%for(let i=0; i<tweet_data.length; i++){%>
 
                                         <div id="tweet<%=tweet_data[i].id%>">
-                                            <p><%=selectData[0].username%> Retweeted this</p>
+                                            <p>
+                                                <%=selectData[0].username%> Retweeted this
+                                            </p>
                                             <div class="tweets">
                                                 <div class="post">
 
@@ -315,11 +345,13 @@
                                                                         <div class="twt-toggle"><i
                                                                                 class="fa-regular fa-comment"></i>
                                                                             comments</div>
-                                                                        <div class="twt-toggle"><i class="fa-solid fa-heart" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                                        <div class="twt-toggle"><i
+                                                                                class="fa-solid fa-heart"
+                                                                                onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
                                                                             <p id="twt<%=tweets[i].id%>">
                                                                                 <%=tweets[i].likes%>
                                                                             </p>
-                                                                        </div>    
+                                                                        </div>
                                                                         <div class="twt-toggle">
                                                                             <a
                                                                                 onclick="increment_count('<%= tweet_data[i].id %>')"><i
@@ -329,8 +361,8 @@
                                                                             </p>
                                                                         </div>
                                                                     </div>
-                                                                </div>                                                    
                                                                 </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -379,32 +411,113 @@
         }
         function following(id, profile_pic, email, username) {
 
-    console.log("follow func")
-    console.log(`${id}`)
-    console.log("hiii", id, profile_pic, email, username)
-    var listed = document.getElementById(`follow${id}`);
-    // var followcount = document.getElementById("followcount");
-    var s = "";
-    fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+            console.log("follow func")
 
-    .then(res => res.json())
-    .then((resultdata) => {
-        console.log("resultdata")
+            var listed = document.getElementById(`follow${ id }`);
 
-        var counted = resultdata.length;
-        //  console.log(resultdata.length)
+            if (listed.innerText == "Follow") {
 
-        s += `Following`
-        listed.innerHTML = s;
-    })
+                // console.log("meeeeeeeeeeeeeeeeeee",${id})
+                var s = "";
+                fetch(`/search_follow?id=${id}`)
+                    .then(res => res.json())
+                    .then((resultdata) => {
+                        console.log("**--------------", resultdata.length)
+                        if (resultdata.length !== 0) {
+
+
+                            swal({
+                                title: "Already Following",
+                                icon: "warning",
+                                buttons: ["OK"],
+
+                            })
+                            s += `al - Following`
+                            listed.innerHTML = s;
+                            console.log("not nulllllllll")
+
+
+                        }
+
+                        else {
+
+
+
+                            fetch(`/postfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+
+                                .then(res => res.json())
+                                .then((resultdata) => {
+                                    console.log("resultdata")
+
+                                    var counted = resultdata.length;
+                                    // console.log(resultdata.length)
+
+                                    s += `Following`
+                                    listed.innerHTML = s;
+                                })
+
+
 
 }
-function back() {
-          location.assign('/home')
+
+                    })
+
+
+
+}
+            else {
+                swal({
+                    title: "Are you sure?",
+                    text: "Once Unfollowed, you will not be able to see the content of this account!",
+                    icon: "warning",
+                    buttons: ["Cancel", "Unfollow"],
+
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            swal("Poof! This account has been Unfollowed!", {
+                                icon: "success",
+                            });
+                            console.log("follow func")
+                            console.log('${ id }')
+                            console.log("hiii", id, profile_pic, email, username)
+
+                            var listed = document.getElementById(`follow${ id }`);
+                            // var followcount = document.getElementById("followcount");
+                            var s = "";
+                            fetch(`/post_Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+
+                                .then(res => res.json())
+                                .then((resultdata) => {
+                                    console.log("resultdata")
+
+                                    var counted = resultdata.length;
+                                    // console.log(resultdata.length)
+
+                                    s += `Follow`
+                                    listed.innerHTML = s;
+                                });
+                        } else {
+                            swal("You are following this account !");
+                        }
+                    });
+
+
+
+
+            }
+
+            // console.log()
+            // var followcount = document.getElementById("followcount");
+
+
+        }
+        function back() {
+            location.assign('/home')
             //  console.log("back1");
         }
         //newfollow
- function newfollow() {
+        function newfollow() {
             location.assign(`/newfollow`);
         }
 
@@ -416,11 +529,12 @@ function back() {
             var listed = document.getElementById("follower");
             // var followercount = document.getElementById("followercount");
             var s = "";
+            console.log("hiii", id)
             fetch(`/searchfollow?id=${id}`)
                 .then((res) => { return res.json() })
-                .then((resultdata,frdata) => {
+                .then((resultdata, frdata) => {
                     //console.log("follower")
-                    console.log('..................................................',resultdata.length,frdata.length)
+                    console.log('..................................................', resultdata.length, frdata.length)
 
                     // var counted = resultdata.length;
                     // followercount.innerHTML = counted;
@@ -447,7 +561,7 @@ function back() {
                     //                         '${resultdata[x].f_email}','${resultdata[x].f_username}')">Following</p>
                     //                     </div>
                     //                 </div>
-                                    
+
                     //             </div>
                     //             </div>`
 
@@ -626,7 +740,92 @@ function back() {
 
         }
 
-
+    // Comment post Section
+    async function commentdata(pid, uid, username, profile) {
+                    var commentfield = document.getElementById('commentfield' + pid).value
+                    console.log('pid', pid)
+                    console.log('uid', uid)
+                    console.log('username', username)
+                    console.log('profile', profile)
+                    console.log('profile', commentfield)
+                    await fetch("/comment", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ pid, uid, username, profile, commentfield }),
+                    }).then((res) => {
+                        return res.json()
+                    }).then((result) => {
+                        console.log(result)
+                        location.assign('/home')
+                    })
+                }
+                // Comment get Section
+                let classcomment = document.querySelectorAll(".comment");
+                classcomment.forEach(e => {
+                    e.style.display = "none";
+                })
+                let commentsection = document.querySelectorAll(".commentsection");
+                commentsection.forEach(e => {
+                    e.style.display = "none";
+                })
+                // classcomment.forEach()
+                console.log(classcomment)
+                async function comment(pid, uid) {
+                    var commentsection = document.getElementById('commentsection' + pid);
+                    // commentsection.style.display = "none";
+                    var comment = document.getElementById("comment" + pid);
+                    //  comment.style.display = "none";
+                    console.log(comment)
+                    // commentsection.innerHTML = "";
+                    commentstr = ''
+                    console.log('pid', pid)
+                    console.log('uid', uid)
+                    console.log(commentsection)
+                    classcomment.forEach(i => {
+                    })
+                    if (commentsection.style.display == "none") {
+                        commentsection.style.display = "block";
+                        comment.style.display = "block";
+                        await fetch("/comment_display", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ pid, uid }),
+                        }).then((res) => {
+                            return res.json()
+                        }).then((result) => {
+                            console.log(result)
+                            for (i = 0; i < result.length; i++) {
+                                commentstr += `<div class="profile1">
+                                   
+                    <div class="profileimg1">
+                        <img src="${result[i].profile_pic}" alt="">
+                    </div>
+                                        
+                                        
+                    <div class="profileinfo1">
+                        <div class="name1">
+                            <h3>
+                                ${result[i].username}
+                            </h3>
+                        </div>
+                        <div class="comment1">
+                            <p>${result[i].comments}</p>
+                        </div>
+                    </div>
+                </div>`
+                            }
+                            commentsection.innerHTML = commentstr;
+                        })
+                    }
+                    else {
+                        commentsection.style.display = "none";
+                        comment.style.display = "none";
+                    }
+                }
 
     </script>
 
