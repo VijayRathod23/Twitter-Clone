@@ -115,9 +115,9 @@ const quote_tweet= asyncHandler(async (req, res) => {
     const tweet_text = req.body.tweet_text;
     var tweet_id= req.query.tweet_id;
 
-    console.log("uid"+id);
-    console.log("tweet text"+tweet_text);
-    console.log("tweet_id"+tweet_id);
+    // console.log("uid"+id);
+    // console.log("tweet text"+tweet_text);
+    // console.log("tweet_id"+tweet_id);
 
     if (req.file) {
         const file = req.file;

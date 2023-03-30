@@ -263,7 +263,7 @@
                                                                                     <%}%>
                                                                                         <%}%>
                                                                                             <%if(flag[i]==1){%>
-                                                                                                <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                
                                                                                                     <div
                                                                                                         class="twt-toggle-like-blue">
                                                                                                         <i class="fa-solid fa-heart"
@@ -279,7 +279,7 @@
 
                                                                                                     <%}else
                                                                                                         if(flag[i]==0){%>
-                                                                                                        <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                        
                                                                                                             <div
                                                                                                                 class="twt-toggle-like-black">
                                                                                                                 <i class="fa-solid fa-heart"
@@ -293,7 +293,7 @@
                                                                                                             </div>
 
                                                                                                             <%}else{%>
-                                                                                                                <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                               
                                                                                                                     <div
                                                                                                                         class="twt-toggle-like-black">
                                                                                                                         <i class="fa-solid fa-heart"
@@ -521,7 +521,7 @@
                 }
 
                 function tweets_retweets() {
-                    console.log("harshpatel");
+                    // console.log("harshpatel");
 
                     document.getElementById('tweetseccontent').style.display = "block";
                     document.getElementById('tweetsec').style.backgroundColor = "#E1E8ED";
@@ -552,8 +552,8 @@
                 //*********************************like function
                 function like(pid, uid) {
                     // alert("like")
-                    console.log('pid', pid)
-                    console.log('uid', uid)
+                    // console.log('pid', pid)
+                    // console.log('uid', uid)
 
                     fetch("/like", {
                         method: "POST",
@@ -564,8 +564,8 @@
                     }).then((res) => {
                         return res.json()
                     }).then((result) => {
-                        console.log(result[0])
-                        console.log(result[0].likes)
+                        // console.log(result[0])
+                        // console.log(result[0].likes)
 
                         if (!result[1]) {
                             if (result[0].likes == 0) {
@@ -619,12 +619,12 @@
                     var listed = document.getElementById("follower");
                     // var followercount = document.getElementById("followercount");
                     var s = "";
-                    console.log("hiii", id)
+                    // console.log("hiii", id)
                     fetch(`/follow?id=${id}`)
                         .then((res) => { return res.json() })
                         .then((resultdata) => {
                             //console.log("follower")
-                            console.log(resultdata.length)
+                            // console.log(resultdata.length)
 
                             var counted = resultdata.length;
                             // followercount.innerHTML = counted;
@@ -669,18 +669,18 @@
         //followers list
         function follower(id) {
 
-            console.log('function call')
+            // console.log('function call')
 
             // document.getElementById(`${id}`).style.backgroundColor = "yellow";
             var listed = document.getElementById("follower");
             // var followercount = document.getElementById("followercount");
             var s = "";
-            console.log("heyyy", id)
+            // console.log("heyyy", id)
             fetch(`/postfollower?id=${id}`)
                 .then((res) => { return res.json() })
                 .then((resultdata) => {
                     //console.log("follower")
-                    console.log(resultdata.length)
+                    // console.log(resultdata.length)
 
                     var counted = resultdata.length;
                     // followercount.innerHTML = counted;
@@ -734,9 +734,9 @@
                         swal("Poof! This account has been Unfollowed!", {
                             icon: "success",
                         });
-                        console.log("follow func")
-                        console.log(`${id}`)
-                        console.log("hiii", id, profile_pic, email, username)
+                        // console.log("follow func")
+                        // console.log(`${id}`)
+                        // console.log("hiii", id, profile_pic, email, username)
 
                         var listed = document.getElementById(`follow${id}`);
                         // var followcount = document.getElementById("followcount");
@@ -745,7 +745,7 @@
 
                             .then(res => res.json())
                             .then((resultdata) => {
-                                console.log("resultdata")
+                                // console.log("resultdata")
 
                                 var counted = resultdata.length;
                                 //  console.log(resultdata.length)
@@ -775,9 +775,9 @@
 
                     if (willDelete) {
 
-                        console.log("follow func")
-                        console.log(`${id}`)
-                        console.log("hiii", id, profile_pic, email, username)
+                        // console.log("follow func")
+                        // console.log(`${id}`)
+                        // console.log("hiii", id, profile_pic, email, username)
                         var listed = document.getElementById(`follow${id}`);
                         // var followcount = document.getElementById("followcount");
                         var s = "";
@@ -785,7 +785,7 @@
 
                             .then(res => res.json())
                             .then((resultdata) => {
-                                console.log("resultdata")
+                                // console.log("resultdata")
 
                                 var counted = resultdata.length;
                                 //  console.log(resultdata.length)
@@ -808,11 +808,11 @@
                     if(commentfield == ''){
                         document.getElementById('reply').disabled;
                     }else{
-                    console.log('pid', pid)
-                    console.log('uid', uid)
-                    console.log('username', username)
-                    console.log('profile', profile)
-                    console.log('profile', commentfield)
+                    // console.log('pid', pid)
+                    // console.log('uid', uid)
+                    // console.log('username', username)
+                    // console.log('profile', profile)
+                    // console.log('profile', commentfield)
                     await fetch("/comment", {
                         method: "POST",
                         headers: {
@@ -822,7 +822,7 @@
                     }).then((res) => {
                         return res.json()
                     }).then((result) => {
-                        console.log(result)
+                        // console.log(result)
                         location.assign('/profile')
                     })
                 }
@@ -837,18 +837,16 @@
                     e.style.display = "none";
                 })
                 // classcomment.forEach()
-                console.log(classcomment)
+                // console.log(classcomment)
                 async function comment(pid, uid) {
                     var commentsection = document.getElementById('commentsection' + pid);
                     // commentsection.style.display = "none";
                     var comment = document.getElementById("comment" + pid);
                     //  comment.style.display = "none";
-                    console.log(comment)
+                    
                     // commentsection.innerHTML = "";
                     commentstr = ''
-                    console.log('pid', pid)
-                    console.log('uid', uid)
-                    console.log(commentsection)
+                    
                     classcomment.forEach(i => {
                     })
                     if (commentsection.style.display == "none") {
@@ -863,7 +861,7 @@
                         }).then((res) => {
                             return res.json()
                         }).then((result) => {
-                            console.log(result)
+                            
                             for (i = 0; i < result.length; i++) {
                                 commentstr += `<div class="profile1">
                                    

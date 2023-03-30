@@ -80,9 +80,9 @@ const verify_otp = asyncHandler(async (req, res) => {
     var sql = `select otp from users where email = '${emailData}'`;
     var otp = await getdata(sql);
     const varifyOtp = otp[0].otp;
-    console.log(varifyOtp);
+    // console.log(varifyOtp);
     if (userOtp == varifyOtp) {
-        console.log('otp matched');
+        // console.log('otp matched');
         return res.redirect('/change_pass');
     } else {
         res.send("Invalid Otp")
@@ -108,7 +108,6 @@ const save_pass = asyncHandler(async (req, res) => {
     } else {
         res.send("Error in changing password!")
     }
-
 })
 
 

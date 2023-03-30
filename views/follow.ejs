@@ -58,21 +58,23 @@
 
                 <div class="profile1">
                     <div class="profileimg1">
-                        <img src="<%=selectData[0].profile_pic%>" alt="">
+                        <img src="<%=tokenData.profile_pic%>" alt="">
                     </div>
                     <div class="profileinfo1">
-                        <div class="name1" onclick="profile()">
+                        <div class="name" onclick="profile()">
                             <span>
-                                <%=selectData[0].username%>
+                                <%=tokenData.username%>
                             </span>
                         </div>
                         <div class="username1" onclick="profile()">
                             <span>
-                                <%=selectData[0].email%>
+                                <%=tokenData.email%>
                             </span>
                         </div>
                     </div>
-
+                    <div class="more">
+                        <img src="/images/more.png" alt="">
+                    </div>
                 </div>
 
             </div>
@@ -84,8 +86,10 @@
                 <div class="headerinfo">
 
 
-                    <div onclick="teb1()">
-                        <i class="fa-solid fa-arrow-left"></i>
+                    <div onclick="back()">
+
+                        <span><i class="fa-solid fa-arrow-left"></i></span>
+
                     </div>
                     <div class="name_tweet">
                         <span class="name_user">
@@ -183,7 +187,7 @@
                     var listed = document.getElementById("follower");
                     // var followercount = document.getElementById("followercount");
                     var s = "";
-                    console.log("hiii", id)
+                    // console.log("hiii", id)
                     fetch(`/follow?id=${id}`)
                         .then((res) => { return res.json() })
                         .then((resultdata) => {
@@ -233,18 +237,18 @@
 
 
 
-                    console.log('function call')
+                    // console.log('function call')
 
                     // document.getElementById(`${id}`).style.backgroundColor = "yellow";
                     var listed = document.getElementById("follower");
                     // var followercount = document.getElementById("followercount");
                     var s = "";
-                    console.log("heyyy", id)
+                    // console.log("heyyy", id)
                     fetch(`/postfollower?id=${id}`)
                         .then((res) => { return res.json() })
                         .then((resultdata) => {
                             //console.log("follower")
-                            console.log(resultdata.length)
+                            // console.log(resultdata.length)
 
                             var counted = resultdata.length;
                             // followercount.innerHTML = counted;
@@ -299,9 +303,9 @@
                                     swal("Poof! This account has been Unfollowed!", {
                                         icon: "success",
                                     });
-                                    console.log("follow func")
-                                    console.log(`${id}`)
-                                    console.log("hiii", id, profile_pic, email, username)
+                                    // console.log("follow func")
+                                    // console.log(`${id}`)
+                                    // console.log("hiii", id, profile_pic, email, username)
 
                                     var listed = document.getElementById(`follow${id}`);
                                     // var followcount = document.getElementById("followcount");
@@ -310,7 +314,7 @@
 
                                         .then(res => res.json())
                                         .then((resultdata) => {
-                                            console.log("resultdata")
+                                            // console.log("resultdata")
 
                                             var counted = resultdata.length;
                                             //  console.log(resultdata.length)
@@ -330,7 +334,7 @@
 
                             .then(res => res.json())
                             .then((resultdata) => {
-                                console.log("resultdata")
+                                // console.log("resultdata")
 
                                 var counted = resultdata.length;
                                 //  console.log(resultdata.length)
@@ -370,7 +374,7 @@
 
                                     .then(res => res.json())
                                     .then((resultdata) => {
-                                        console.log("resultdata")
+                                        // console.log("resultdata")
 
                                         var counted = resultdata.length;
                                         //  console.log(resultdata.length)
@@ -396,9 +400,8 @@
                     })
                     }
                 }
-                function teb1() {
-                    location.assign(`/profile`);
-                    //  console.log("back1");
+                function back() {
+                    location.assign("/home");
                 }
 
 

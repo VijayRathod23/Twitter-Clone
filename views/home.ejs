@@ -311,7 +311,7 @@
                                                                                         <%}%>
                                                                                             <%}%>
                                                                                                 <%if(flag[i]==1){%>
-                                                                                                    <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                    
                                                                                                         <div
                                                                                                             class="twt-toggle-like-blue">
                                                                                                             <i class="fa-solid fa-heart"
@@ -327,7 +327,7 @@
 
                                                                                                         <%}else
                                                                                                             if(flag[i]==0){%>
-                                                                                                            <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                            
                                                                                                                 <div
                                                                                                                     class="twt-toggle-like-black">
                                                                                                                     <i class="fa-solid fa-heart"
@@ -341,7 +341,7 @@
                                                                                                                 </div>
 
                                                                                                                 <%}else{%>
-                                                                                                                    <%console.log("::::::::::::flag:::::::::::::::::::",flag)%>
+                                                                                                                    
                                                                                                                         <div
                                                                                                                             class="twt-toggle-like-black">
                                                                                                                             <i class="fa-solid fa-heart"
@@ -496,8 +496,8 @@
             //*********************************like function
             function like(pid, uid) {
                 // alert("like")
-                console.log('pid', pid)
-                console.log('uid', uid)
+                // console.log('pid', pid)
+                // console.log('uid', uid)
 
                 fetch("/like", {
                     method: "POST",
@@ -508,8 +508,8 @@
                 }).then((res) => {
                     return res.json()
                 }).then((result) => {
-                    console.log(result[0])
-                    console.log(result[0].likes)
+                    // console.log(result[0])
+                    // console.log(result[0].likes)
 
                     if (!result[1]) {
                         if (result[0].likes == 0) {
@@ -542,7 +542,7 @@
                     .then((search_data) => {
                         // console.log(':::::::::::::::::::::::::::data at',search_data)
                         for (i = 0; i < search_data.length; i++) {
-                            console.log("at", i, '', search_data[i].id)
+                            // console.log("at", i, '', search_data[i].id)
                             s += `
                         <div class="searchprofile" onclick="search_profile('${search_data[i].id}')">
                             <div class="profileimg">
@@ -577,7 +577,7 @@
 
             function following(id, profile_pic, email, username) {
 
-                console.log("follow func")
+                // console.log("follow func")
 
                 var listed = document.getElementById(`follow${id}`);
 
@@ -588,7 +588,7 @@
                     fetch(`/search_follow?id=${id}`)
                         .then(res => res.json())
                         .then((resultdata) => {
-                            console.log("**--------------", resultdata.length)
+                            // console.log("**--------------", resultdata.length)
                             if (resultdata.length !== 0) {
 
 
@@ -600,7 +600,7 @@
                                 })
                                 s += `al-Following`
                                 listed.innerHTML = s;
-                                console.log("not nulllllllll")
+                                // console.log("not nulllllllll")
 
 
                             }
@@ -613,7 +613,7 @@
 
                                     .then(res => res.json())
                                     .then((resultdata) => {
-                                        console.log("resultdata")
+                                        // console.log("resultdata")
 
                                         var counted = resultdata.length;
                                         //  console.log(resultdata.length)
@@ -644,9 +644,9 @@
                                 swal("Poof! This account has been Unfollowed!", {
                                     icon: "success",
                                 });
-                                console.log("follow func")
-                                console.log(`${id}`)
-                                console.log("hiii", id, profile_pic, email, username)
+                                // console.log("follow func")
+                                // console.log(`${id}`)
+                                // console.log("hiii", id, profile_pic, email, username)
 
                                 var listed = document.getElementById(`follow${id}`);
                                 // var followcount = document.getElementById("followcount");
@@ -655,7 +655,7 @@
 
                                     .then(res => res.json())
                                     .then((resultdata) => {
-                                        console.log("resultdata")
+                                        // console.log("resultdata")
 
                                         var counted = resultdata.length;
                                         //  console.log(resultdata.length)
@@ -693,7 +693,7 @@
             // document.querySelector('tweet').style.display = "none";
 
             function abc() {
-                console.log("harsh")
+                // console.log("harsh")
                 if (document.querySelector('emoji-picker').style.display == "none") {
                     document.querySelector('emoji-picker').style.display = "block";
                     document.querySelector('.tweet').style.display = "none";
@@ -709,28 +709,25 @@
             async function commentdata(pid, uid, username, profile) {
 
                 var commentfield = document.getElementById('commentfield' + pid).value
-                if (commentfield == '') {
-                    document.getElementById('reply').disabled
-                } else {
-                    console.log('pid', pid)
-                    console.log('uid', uid)
-                    console.log('username', username)
-                    console.log('profile', profile)
-                    console.log('profile', commentfield)
+                // console.log('pid', pid)
+                // console.log('uid', uid)
+                // console.log('username', username)
+                // console.log('profile', profile)
+                // console.log('profile', commentfield)
 
-                    await fetch("/comment", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ pid, uid, username, profile, commentfield }),
-                    }).then((res) => {
-                        return res.json()
-                    }).then((result) => {
-                        console.log(result)
-                        location.assign('/home')
-                    })
-                }
+                await fetch("/comment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ pid, uid, username, profile, commentfield }),
+                }).then((res) => {
+                    return res.json()
+                }).then((result) => {
+                    // console.log(result)
+                    location.assign('/home')
+                })
+
             }
 
 
@@ -749,7 +746,7 @@
 
             })
             // classcomment.forEach()
-            console.log(classcomment)
+            // console.log(classcomment)
 
             async function comment(pid, uid) {
                 var commentsection = document.getElementById('commentsection' + pid);
@@ -757,12 +754,12 @@
                 var comment = document.getElementById("comment" + pid);
                 //  comment.style.display = "none";
 
-                console.log(comment)
+                // console.log(comment)
                 // commentsection.innerHTML = "";
                 commentstr = ''
-                console.log('pid', pid)
-                console.log('uid', uid)
-                console.log(commentsection)
+                // console.log('pid', pid)
+                // console.log('uid', uid)
+                // console.log(commentsection)
                 classcomment.forEach(i => {
 
                 })
@@ -779,7 +776,7 @@
                     }).then((res) => {
                         return res.json()
                     }).then((result) => {
-                        console.log(result)
+                        // console.log(result)
                         for (i = 0; i < result.length; i++) {
                             commentstr += `<div class="profile1">
                                    

@@ -369,8 +369,6 @@ span a {
 .searchbar input {
     border: none;
     outline: none;
-
-
 }
 
 .searchbar span i {
@@ -409,7 +407,6 @@ span a {
 #searchprofilebar .searchprofile .profileinfo .name {
     width: 90%;
     overflow-wrap: break-word;
-
 }
 
 
