@@ -58,21 +58,23 @@
 
                 <div class="profile1">
                     <div class="profileimg1">
-                        <img src="<%=selectData[0].profile_pic%>" alt="">
+                        <img src="<%=tokenData.profile_pic%>" alt="">
                     </div>
                     <div class="profileinfo1">
-                        <div class="name1" onclick="profile()">
+                        <div class="name" onclick="profile()">
                             <span>
-                                <%=selectData[0].username%>
+                                <%=tokenData.username%>
                             </span>
                         </div>
                         <div class="username1" onclick="profile()">
                             <span>
-                                <%=selectData[0].email%>
+                                <%=tokenData.email%>
                             </span>
                         </div>
                     </div>
-
+                    <div class="more">
+                        <img src="/images/more.png" alt="">
+                    </div>
                 </div>
 
             </div>
