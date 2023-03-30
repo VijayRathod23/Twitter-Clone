@@ -36,13 +36,13 @@ const profile = asyncHandler(async (req, res) => {
     const selectData = await getdata(select);
     var created_date = String(selectData[0].created_at);
     var cr_date=created_date.slice(3,16);
-    console.log(".........................",cr_date);
+    // console.log(".........................",cr_date);
 
     const sql2 = `select liked,pid,uid from likes where uid='${tokenData.id}'`
     const likes = await getdata(sql2);
     // var like_flag = likes[0].liked;
     var flag = [];
-    console.log(likes);
+    // console.log(likes);
     //res.render("profile", { tokenData, selectData,tweets})
 
 
@@ -57,7 +57,7 @@ const profile = asyncHandler(async (req, res) => {
     var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = '${tokenData.id}' and flag ='1');`)
     const followdata = await getdata(result1)
 
-    console.log("followerrrrrrrrr", followdata[0].follow)
+    // console.log("followerrrrrrrrr", followdata[0].follow)
 
     // res.render("profile", { tokenData, selectData, followerdata, followdata })
 
@@ -78,7 +78,7 @@ const profile = asyncHandler(async (req, res) => {
         for (var i = 0; i < retweet_data.length; i++) {
 
             var retweeted_tweet_id = retweet_data[i].tweet_id;
-            console.log(retweeted_tweet_id);
+            // console.log(retweeted_tweet_id);
 
             var tweet_select = `select * from tweets where id = '${retweeted_tweet_id}'`;
 
@@ -148,7 +148,7 @@ const edit_profile_post= asyncHandler(async (req, res) => {
         var sql2 = `update comment set username='${username}',profile_pic='${profileurl}' where uid='${tokenData.id}'`
         var result2 = await getdata(sql2);
 
-        console.log(result)
+        // console.log(result)
     } else {
         var sql = `update users set username='${username}',dob='${dob}',bio='${bio}',location='${location}' where id='${tokenData.id}'`
         var result = await getdata(sql);

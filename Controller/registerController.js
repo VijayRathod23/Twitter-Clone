@@ -32,7 +32,7 @@ const signup_post = asyncHandler(async (req, res) => {
     var sql = `select * from users where email = '${email}'`;
     var result = await getdata(sql);
 
-    console.log("query result" + result);
+    // console.log("query result" + result);
     if (result.length != 0) {
         return res.send(`User Already registered! please <a href="/login">login</a>`)
     }
@@ -41,7 +41,7 @@ const signup_post = asyncHandler(async (req, res) => {
 
     const activation_token = Math.random().toString(36).substring(2, 15);
     const activationLink = `/activate?token=${activation_token}`;
-    console.log(email);
+    // console.log(email);
     var sql = `insert into users(username,email,password,activation_token) values('${name}','${email}','${hashPass}','${activation_token}')`;
     var result = await con.execute(sql);
     // res.send(`user register successfully!  <a href="${activationLink}"> Activate Account </a>`);

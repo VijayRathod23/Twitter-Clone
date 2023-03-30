@@ -28,8 +28,8 @@ async function getdata(sql) {
 
 
 const home = asyncHandler(async (req, res) => {
-    console.log("session");
-    console.log("user", req.session.user);
+    // console.log("session");
+    // console.log("user", req.session.user);
     const jwtToken = req.session.user;
     if (!jwtToken) {
         return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
@@ -43,13 +43,13 @@ const home = asyncHandler(async (req, res) => {
     // harshupdate
     const sql1 = `select * from users limit 5;`;
     const user_data = await getdata(sql1);
-    console.log("all user data", user_data)
+    // console.log("all user data", user_data)
 
     const sql2 = `select liked,pid,uid from likes where uid='${tokenData.id}'`
     const likes = await getdata(sql2);
     // var like_flag = likes[0].liked;
     var flag = [];
-    console.log(likes);
+    // console.log(likes);
 
     // .......................................retweet............................................
     var flag_rewteet = new Array();
@@ -59,8 +59,8 @@ const home = asyncHandler(async (req, res) => {
     var tweets = new Array();
     var new_user_profile_pic = new Array();
     var new_user_name = new Array();
-    console.log("new user p pic none" + new_user_profile_pic);
-    console.log("new user name none" + new_user_name);
+    // console.log("new user p pic none" + new_user_profile_pic);
+    // console.log("new user name none" + new_user_name);
 
     // //if any retweet found
     // if (retweet[0]) {
@@ -103,7 +103,7 @@ const home = asyncHandler(async (req, res) => {
 // ...................................for asc and desc ordering.............................
 
 var created_at = await getdata(`select created_at as created_at from tweets union select created_at as created_at from retweets order by created_at desc`);
-console.log("desc order" + created_at[0].created_at);
+// console.log("desc order" + created_at[0].created_at);
 
 for(var i=0;i<created_at.length;i++)
 {
@@ -111,19 +111,19 @@ for(var i=0;i<created_at.length;i++)
     var date = date_time.getFullYear()+'-'+(date_time.getMonth()+1)+'-'+date_time.getDate();
 var time = date_time.getHours()+':'+date_time.getMinutes()+':'+date_time.getSeconds();
  var formatedate = date + ' '+ time;
- console.log("formate date" + formatedate);
+//  console.log("formate date" + formatedate);
    
     var tweet_res = await getdata(`select * from tweets where created_at = '${formatedate}'`);
     var retweet_res = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id , retweets.retweet_text as retweet_text , retweets.retweet_media as retweet_media from tweets join retweets on tweets.id = retweets.tweet_id where retweets.created_at = '${formatedate}'`);
 
 
-    console.log("tweet res" + tweet_res);
-console.log("Retweets res" + retweet_res);
+//     console.log("tweet res" + tweet_res);
+// console.log("Retweets res" + retweet_res);
 
 
     if(tweet_res != ""){
 
-        console.log("Tweet found at " + created_at[i].created_at + formatedate);
+        // console.log("Tweet found at " + created_at[i].created_at + formatedate);
          tweets.push(tweet_res[0]);
          var cnt_sql = `select count(id) as cnt from retweets where tweet_id='${tweet_res[0].id}'`;
         var result1 = await getdata(cnt_sql);
@@ -143,7 +143,7 @@ console.log("Retweets res" + retweet_res);
     }
     else if(retweet_res != ""){
 
-        console.log("ReTweet found at " + created_at[i].created_at);
+        // console.log("ReTweet found at " + created_at[i].created_at);
         tweets.push(retweet_res[0]);
         count.push(0);
             flag_rewteet.push(0);     
@@ -154,7 +154,7 @@ console.log("Retweets res" + retweet_res);
 
     }
     else if(tweet_res != "" && retweet_res != ""){
-        console.log("Both found at " + created_at[i].created_at);
+        // console.log("Both found at " + created_at[i].created_at);
         tweets.push(tweet_res[0]);
         var cnt_sql = `select count(id) as cnt from retweets where tweet_id='${tweet_res[0].id}'`;
        var result1 = await getdata(cnt_sql);
@@ -181,7 +181,7 @@ console.log("Retweets res" + retweet_res);
 
 
 }
-console.log(".....................////////////////" + new_user_name[0]);
+// console.log(".....................////////////////" + new_user_name[0]);
 
 
 // ..............................................complete.....................................
@@ -228,7 +228,7 @@ const tweet = asyncHandler(async (req, res) => {
     const id = tokenData.id;
     const username = tokenData.username;
     const profile_pic = tokenData.profile_pic;
-    console.log("profile pic");
+    // console.log("profile pic");
     const tweet_text = req.body.tweet_text;
 
     if (req.file) {
@@ -254,7 +254,7 @@ const search = asyncHandler(async (req, res) => {
     var search = req.query.search;
     const sql2 = `select * from users where username LIKE '${search}%'`;
     const search_data = await getdata(sql2);
-    console.log("userdata", search_data);
+    // console.log("userdata", search_data);
     res.json(search_data)
 
 })
@@ -280,7 +280,7 @@ const search_profile = asyncHandler(async (req, res) => {
     const likes = await getdata(sql2);
     // var like_flag = likes[0].liked;
     var flag = [];
-    console.log(likes);
+    // console.log(likes);
     //res.render("profile", { tokenData, selectData,tweets})
 
 
@@ -295,7 +295,7 @@ const search_profile = asyncHandler(async (req, res) => {
     var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = ${sid} and flag ='1');`)
     const followdata = await getdata(result1)
 
-    console.log("followerrrrrrrrr", followdata[0].follow)
+    // console.log("followerrrrrrrrr", followdata[0].follow)
 
     // res.render("profile", { tokenData, selectData, followerdata, followdata })
 
@@ -316,7 +316,7 @@ const search_profile = asyncHandler(async (req, res) => {
         for (var i = 0; i < retweet_data.length; i++) {
 
             var retweeted_tweet_id = retweet_data[i].tweet_id;
-            console.log(retweeted_tweet_id);
+            // console.log(retweeted_tweet_id);
 
             var tweet_select = `select * from tweets where id = '${retweeted_tweet_id}'`;
 
