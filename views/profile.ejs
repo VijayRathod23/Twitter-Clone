@@ -325,7 +325,7 @@
                                                     <input type="text" name="commentfield"
                                                         id="commentfield<%=tweets[i].id%>"
                                                         placeholder="Please Enter Comment" class="commentfield">
-                                                    <input type="submit" value="Reply" class="commentbtn"
+                                                    <input type="submit" value="Reply" class="commentbtn" id="reply"
                                                         onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
 
 
@@ -804,6 +804,10 @@
                 // Comment post Section
                 async function commentdata(pid, uid, username, profile) {
                     var commentfield = document.getElementById('commentfield' + pid).value
+
+                    if(commentfield == ''){
+                        document.getElementById('reply').disabled;
+                    }else{
                     console.log('pid', pid)
                     console.log('uid', uid)
                     console.log('username', username)
@@ -821,6 +825,7 @@
                         console.log(result)
                         location.assign('/profile')
                     })
+                }
                 }
                 // Comment get Section
                 let classcomment = document.querySelectorAll(".comment");
