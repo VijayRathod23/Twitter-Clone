@@ -93,9 +93,24 @@
 
 .profileinfo1 {
     width: 60%;
+    margin-top: 1rem;
 }
 
 span a{
     text-decoration: none;
     color: black;
 }
+
+.navigation{
+    height: 63%;
+}
+
+
+
+
+
+
+
+
+
+

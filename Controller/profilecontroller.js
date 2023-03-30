@@ -149,6 +149,9 @@ const edit_profile_post= asyncHandler(async (req, res) => {
         var sql2 = `update comment set username='${username}',profile_pic='${profileurl}' where uid='${tokenData.id}'`
         var result2 = await getdata(sql2);
 
+        var sql3 = `update follow set username='${username}',u_profile_pic='${profileurl}' where user_id='${tokenData.id}'`
+        var result3 = await getdata(sql3);
+
         // console.log(result)
     } else {
         var sql = `update users set username='${username}',dob='${dob}',bio='${bio}',location='${location}' where id='${tokenData.id}'`
@@ -159,6 +162,9 @@ const edit_profile_post= asyncHandler(async (req, res) => {
 
         var sql2 = `update comment set username='${username}' where uid='${tokenData.id}'`
         var result2 = await getdata(sql2);
+
+        var sql3 = `update follow set username='${username}' where user_id='${tokenData.id}'`
+        var result3 = await getdata(sql3);
     }
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
