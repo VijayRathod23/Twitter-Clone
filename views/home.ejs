@@ -172,6 +172,26 @@
                                             </div>
 
 
+                                            <%}else{%>
+                                                <div class="repost__headerDescription">                                                   
+                                                    <!-- if media found -->
+                                                     <!-- uploading images and video -->
+                                                <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; const
+                                                array_of_allowed_videos=['mp4','gif']; %>
+                                                <%if(tweets[i].retweet_media){%>
+                                                    <% const
+                                                        file_extension=tweets[i].retweet_media.slice(((tweets[i].retweet_media.lastIndexOf('.')
+                                                        - 1)>>> 0) + 2); %>
+                                                        <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                            <img src="<%=tweets[i].retweet_media%>" alt="img"
+                                                                class="retweetImg" />
+                                                            <%}else{%>
+                                                                <video src="<%=tweets[i].retweet_media%>"
+                                                                    width="300px" autoplay controls></video>
+                                                                <%}}%>
+                                                </div>
+                                            
+
                                             <%}%>
 
 

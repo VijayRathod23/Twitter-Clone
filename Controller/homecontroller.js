@@ -310,7 +310,7 @@ const search_profile = asyncHandler(async (req, res) => {
 
     var count = new Array();
     var tweet_data = new Array();
-
+    console.log("..................//////////////////////............",retweet_data[0])
     if (retweet_data[0]) {
 
         for (var i = 0; i < retweet_data.length; i++) {
@@ -321,7 +321,7 @@ const search_profile = asyncHandler(async (req, res) => {
             var tweet_select = `select * from tweets where id = '${retweeted_tweet_id}'`;
 
             var tweet_data_1 = await getdata(tweet_select);
-
+            
 
             tweet_data.push(tweet_data_1[0]);
 

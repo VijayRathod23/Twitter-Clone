@@ -240,7 +240,8 @@
                                                     <div class="twt-toggle"
                                                         onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')">
                                                         <i class="fa-regular fa-comment"></i>
-                                                        comments</div>
+                                                        comments
+                                                    </div>
                                                     <%for (let j=0;j<tweets.length;j++){%>
 
                                                         <%for (let k=0;k<likes.length;k++){%>
@@ -368,9 +369,11 @@
                                                             </h3>
                                                         </div>
                                                     </div>
+                                                    </div>
+                                                    <div class="retwt_twt">
 
                                                     <%if(retweet_data[i].retweet_text){%>
-                                                        <div class="retwt_twt">
+                                                        
                                                             <div class="repost__headerDescription">
                                                                 <p>
                                                                     <%=retweet_data[i].retweet_text%>
@@ -390,94 +393,123 @@
                                                                                         src="<%=retweet_data[i].retweet_media%>"
                                                                                         width="300px" autoplay
                                                                                         controls></video>
-                                                                                    <%}}%>
+                                                                                    <%}%>
+
+                                                                                        <%}%>
                                                             </div>
+                                                        </div>
+                                                        <%}else{%>
+                                                           
+                                                            <div class="repost__headerDescription">
+                                                                <!-- if media found -->
+                                                                <!-- uploading images and video -->
+                                                                <% const array_of_allowed_files=['png', 'jpeg' , 'jpg'
+                                                                    ]; const array_of_allowed_videos=['mp4','gif']; %>
+                                                                    <%if(retweet_data[i].retweet_media){%>
+                                                                        <% const
+                                                                            file_extension=retweet_data[i].retweet_media.slice(((retweet_data[i].retweet_media.lastIndexOf('.')
+                                                                            - 1)>>> 0) + 2); %>
+                                                                            <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                                                <img src="<%=retweet_data[i].retweet_media%>"
+                                                                                    alt="img" class="retweetImg" />
+                                                                                <%}else{%>
+                                                                                    <video
+                                                                                        src="<%=retweet_data[i].retweet_media%>"
+                                                                                        width="300px" autoplay
+                                                                                        controls></video>
+                                                                                    <%}%>
+
+                                                                                        <%}%>
+                                                            </div>
+                                                       
 
 
                                                             <%}%>
+                                                            </div>
+
                                                                 <div class="tweets12">
                                                                     <div class="post12">
 
                                                                         <div class="post__avatar">
                                                                             <img src="<%=tweet_data[i].profile_pic%>"
                                                                                 alt="img" class="post__avatar1" />
-                                                                            <div class="post__headerText">
-                                                                                <h3>
-                                                                                    <%=tweet_data[i].username%>
-                                                                                        <span
-                                                                                            class="post__headerSpecial"><span
-                                                                                                class="material-icons post__badge">
-                                                                                                <!-- </span>@<%=selectData[0].email%></span> -->
-                                                                                </h3>
-
-                                                                            </div>
                                                                         </div>
 
 
                                                                         <div class="post__body">
                                                                             <div class="post__header">
-
+                                                                                <div class="post__headerText">
+                                                                                    <h3>
+                                                                                        <%=tweet_data[i].username%>
+                                                                                            <span
+                                                                                                class="post__headerSpecial"><span
+                                                                                                    class="material-icons post__badge">
+                                                                                                    <!-- </span>@<%=selectData[0].email%></span> -->
+                                                                                    </h3>
+                                                                                </div>
                                                                                 <div class="post__headerDescription">
                                                                                     <p>
                                                                                         <%=tweet_data[i].tweet_text%>
                                                                                     </p>
-
-                                                                                    <!-- uploading images and video -->
-                                                                                    <% const
-                                                                                        array_of_allowed_files=['png', 'jpeg'
-                                                                                        , 'jpg' ]; const
-                                                                                        array_of_allowed_videos=['mp4','gif'];
-                                                                                        %>
-                                                                                        <%if(tweets[i].media){%>
-                                                                                            <% const
-                                                                                                file_extension=tweets[i].media.slice(((tweets[i].media.lastIndexOf('.')
-                                                                                                - 1)>>> 0) + 2); %>
-                                                                                                <%if(array_of_allowed_files.includes(file_extension)){%>
-                                                                                                    <img src="<%=tweets[i].media%>"
-                                                                                                        class="tweetImg" />
-                                                                                                    <%}else{%>
-                                                                                                        <video
-                                                                                                            src="<%=tweets[i].media%>"
-                                                                                                            width="300px"
-                                                                                                            autoplay
-                                                                                                            controls></video>
-                                                                                                        <%}}%>
                                                                                 </div>
                                                                             </div>
+                                                                             <!-- uploading images and video -->
+                                                                <% const array_of_allowed_files=['png', 'jpeg' , 'jpg'
+                                                                    ]; const array_of_allowed_videos=['mp4','gif']; %>
+                                                                    <%if(tweet_data[i].media){%>
+                                                                        <% const
+                                                                            file_extension=tweet_data[i].media.slice(((tweet_data[i].media.lastIndexOf('.')
+                                                                            - 1)>>> 0) + 2); %>
+                                                                            <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                                                <img src="<%=tweet_data[i].media%>"
+                                                                                    alt="img" class="retweetImg" />
+                                                                                <%}else{%>
+                                                                                    <video
+                                                                                        src="<%=tweet_data[i].media%>"
+                                                                                        width="300px" autoplay
+                                                                                        controls></video>
+                                                                                    <%}%>
+
+                                                                                        <%}%>
+
+                                                                                    <div class="post-footer">
+                                                                                        <div class="btn-container">
 
 
-                                                                            <div class="post-footer">
-                                                                                <div class="btn-container">
-
-
-                                                                                    <div class="twt-toggle">
-                                                                                        <a
-                                                                                            onclick="increment_count('<%= tweet_data[i].id %>')"><i
-                                                                                                class="fa-solid fa-retweet"></i></a>
-                                                                                        <span
-                                                                                            id="retwt<%=tweet_data[i].id%>">
-                                                                                            <%=count[i]%>
-                                                                                        </span>
+                                                                                            <div class="twt-toggle">
+                                                                                                <a
+                                                                                                    onclick="increment_count('<%= tweet_data[i].id %>')"><i
+                                                                                                        class="fa-solid fa-retweet"></i></a>
+                                                                                                <span
+                                                                                                    id="retwt<%=tweet_data[i].id%>">
+                                                                                                    <%=count[i]%>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </div>
 
                                                                         </div>
 
                                                                     </div>
                                                                 </div>
-                                                        </div>
-                                                </div>
+
+                                                
+                                                
                                             </div>
-                                            <%}%>
-                                                <hr>
-                                                <%}%>
-                                                    <!-- post ends -->
-
-                                                    <%}%>
-
+                                            
                                         </div>
+                                        
+                                        <%}%>
+                                            
+                                            <%}%>
+                                                <!-- post ends -->
+
+
+
+
+                                                             
                             </div>
+                            <%}%>   
                     </div>
 
 
@@ -493,7 +525,7 @@
                     document.getElementById("loader").style.display = "none";
                     document.getElementById("main").style.visibility = "visible";
                 }, 500);
-                
+
                 function back() {
                     location.assign("/home");
                 }
@@ -656,18 +688,18 @@
                                 </div>`
 
 
-                    }
+                            }
 
-                    listed.innerHTML = s;
-                    // console.log(s)                 
-                })
-
-
-        }
+                            listed.innerHTML = s;
+                            // console.log(s)                 
+                        })
 
 
-        //followers list
-        function follower(id) {
+                }
+
+
+                //followers list
+                function follower(id) {
 
             // console.log('function call')
 
@@ -682,16 +714,16 @@
                     //console.log("follower")
                     // console.log(resultdata.length)
 
-                    var counted = resultdata.length;
-                    // followercount.innerHTML = counted;
+                            var counted = resultdata.length;
+                            // followercount.innerHTML = counted;
 
-                    //listing of followers
+                            //listing of followers
 
-                    for (var x = 0; x < resultdata.length; x++) {
+                            for (var x = 0; x < resultdata.length; x++) {
 
-                        s +=
+                                s +=
 
-                            ` <div id=div'${resultdata[x].user_id}' class="profile">
+                                    ` <div id=div'${resultdata[x].user_id}' class="profile">
                                     <div class="profileimg"onclick="profile()">
                                         <img src="${resultdata[x].u_profile_pic}" alt="">
                                     </div>
@@ -711,22 +743,22 @@
                                     
                                 </div>`
 
-                    }
+                            }
 
-                    listed.innerHTML = s;
-                    // console.log(s)                 
-                })
+                            listed.innerHTML = s;
+                            // console.log(s)                 
+                        })
 
 
-        }
+                }
 
-        function Unfollow(id, profile_pic, email, username) {
+                function Unfollow(id, profile_pic, email, username) {
 
-            swal({
-                title: "Are you sure?",
-                text: "Once Unfollowed, you will not be able to see the content of this account!",
-                icon: "warning",
-                buttons: ["Cancel", "Unfollow"],
+                    swal({
+                        title: "Are you sure?",
+                        text: "Once Unfollowed, you will not be able to see the content of this account!",
+                        icon: "warning",
+                        buttons: ["Cancel", "Unfollow"],
 
             })
                 .then((willDelete) => {
@@ -738,42 +770,42 @@
                         // console.log(`${id}`)
                         // console.log("hiii", id, profile_pic, email, username)
 
-                        var listed = document.getElementById(`follow${id}`);
-                        // var followcount = document.getElementById("followcount");
-                        var s = "";
-                        fetch(`/post-Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
+                                var listed = document.getElementById(`follow${id}`);
+                                // var followcount = document.getElementById("followcount");
+                                var s = "";
+                                fetch(`/post-Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
 
                             .then(res => res.json())
                             .then((resultdata) => {
                                 // console.log("resultdata")
 
-                                var counted = resultdata.length;
-                                //  console.log(resultdata.length)
+                                        var counted = resultdata.length;
+                                        //  console.log(resultdata.length)
 
-                                s += `Follow`
-                                listed.innerHTML = s;
-                            });
-                    } else {
-                        swal("You are following this account !");
-                    }
-                });
-
-
+                                        s += `Follow`
+                                        listed.innerHTML = s;
+                                    });
+                            } else {
+                                swal("You are following this account !");
+                            }
+                        });
 
 
-        }
-        function rmfollower(id, profile_pic, email, username) {
 
-            swal({
-                title: "Are you sure?",
-                text: "Once Removed, They will not be able to see the content of Your account!",
-                icon: "warning",
-                buttons: ["Cancel", "Remove"],
 
-            })
-                .then((willDelete) => {
+                }
+                function rmfollower(id, profile_pic, email, username) {
 
-                    if (willDelete) {
+                    swal({
+                        title: "Are you sure?",
+                        text: "Once Removed, They will not be able to see the content of Your account!",
+                        icon: "warning",
+                        buttons: ["Cancel", "Remove"],
+
+                    })
+                        .then((willDelete) => {
+
+                            if (willDelete) {
 
                         // console.log("follow func")
                         // console.log(`${id}`)
@@ -787,22 +819,23 @@
                             .then((resultdata) => {
                                 // console.log("resultdata")
 
-                                var counted = resultdata.length;
-                                //  console.log(resultdata.length)
+                                        var counted = resultdata.length;
+                                        //  console.log(resultdata.length)
 
-                                s += `removed`
-                                listed.innerHTML = s;
-                            })
-                    }
+                                        s += `removed`
+                                        listed.innerHTML = s;
+                                    })
+                            }
 
-                    else {
-                        text = "You canceled!";
-                    }
-                });
+                            else {
+                                text = "You canceled!";
+                            }
+                        });
 
                 }
                 // Comment post Section
                 async function commentdata(pid, uid, username, profile) {
+
                     var commentfield = document.getElementById('commentfield' + pid).value
 
                     if(commentfield == ''){
@@ -825,16 +858,22 @@
                         // console.log(result)
                         location.assign('/profile')
                     })
+
                 }
                 }
                 // Comment get Section
+
+
                 let classcomment = document.querySelectorAll(".comment");
                 classcomment.forEach(e => {
                     e.style.display = "none";
+
                 })
+
                 let commentsection = document.querySelectorAll(".commentsection");
                 commentsection.forEach(e => {
                     e.style.display = "none";
+
                 })
                 // classcomment.forEach()
                 // console.log(classcomment)
@@ -848,10 +887,12 @@
                     commentstr = ''
                     
                     classcomment.forEach(i => {
+
                     })
                     if (commentsection.style.display == "none") {
                         commentsection.style.display = "block";
                         comment.style.display = "block";
+
                         await fetch("/comment_display", {
                             method: "POST",
                             headers: {
@@ -881,15 +922,21 @@
                         </div>
                     </div>
                 </div>`
+
+
                             }
                             commentsection.innerHTML = commentstr;
+
                         })
+
                     }
                     else {
                         commentsection.style.display = "none";
                         comment.style.display = "none";
                     }
+
                 }
+
             </script>
 
 </body>

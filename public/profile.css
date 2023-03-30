@@ -534,6 +534,7 @@ hr {
 
 .repost__avatar{
     display: flex;
+    
 }
 
 
@@ -556,6 +557,8 @@ hr {
 }
 .repost__headerDescription{
     margin-top: 3rem;
+    display: inline;
+    
 }
 
 .post__headerText{
