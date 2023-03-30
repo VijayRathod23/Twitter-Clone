@@ -204,7 +204,7 @@ var time = date_time.getHours()+':'+date_time.getMinutes()+':'+date_time.getSeco
         const userid = `${tokenData.id}`;
 
         ids += `,${userid})`
-        const basic = `SELECT * FROM users where id not in${ids} limit 7`;
+        const basic = `SELECT * FROM users where id not in ${ids} limit 7`;
         // console.log(basic);
         const user_data = await getdata(basic);
         // console.log(query);

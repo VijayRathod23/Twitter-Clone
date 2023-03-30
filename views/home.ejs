@@ -103,7 +103,7 @@
                 <form action="/tweet" method="post" enctype="multipart/form-data">
                     <div class="tweetform">
                         <img src="<%=selectData[0].profile_pic%>" alt="">
-                        <input type="text" name="tweet_text" id="tweetformcontent" placeholder="What's Happening?">
+                        <input type="text" name="tweet_text" id="tweetformcontent" placeholder="What's Happening?" >
                     </div>
                     <div class="tweetsubmit">
                         <label for="file_input">
@@ -120,7 +120,7 @@
                         </div>
 
                         <!-- <i class="fa-regular fa-image "><input type="file" name="file"></i> -->
-                        <input type="submit" value="Tweet" class="tweet">
+                        <input type="submit" value="Tweet" class="tweet" >
                     </div>
                 </form>
 
@@ -397,7 +397,7 @@
                                                         <input type="text" name="commentfield"
                                                             id="commentfield<%=tweets[i].id%>"
                                                             placeholder="Please Enter Comment" class="commentfield">
-                                                        <input type="submit" value="Reply" class="commentbtn"
+                                                        <input type="submit" value="Reply" class="commentbtn" id="reply"
                                                             onclick="commentdata('<%=tweets[i].id%>','<%=selectData[0].id%>','<%=selectData[0].username%>','<%=selectData[0].profile_pic%>')">
 
 
