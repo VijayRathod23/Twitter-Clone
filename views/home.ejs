@@ -734,19 +734,25 @@
                 // console.log('username', username)
                 // console.log('profile', profile)
                 // console.log('profile', commentfield)
+                
+                if(commentfield ==""){
+                   document.getElementById('reply').disable;
+                }
+                else{
 
-                await fetch("/comment", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ pid, uid, username, profile, commentfield }),
-                }).then((res) => {
-                    return res.json()
-                }).then((result) => {
-                    // console.log(result)
-                    location.assign('/home')
-                })
+                    await fetch("/comment", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ pid, uid, username, profile, commentfield }),
+                    }).then((res) => {
+                        return res.json()
+                    }).then((result) => {
+                        // console.log(result)
+                        location.assign('/home')
+                    })
+                }
 
             }
 
