@@ -223,7 +223,7 @@ span a {
 }
 
 .tweetImg {
-    width: 90%;
+    width: 70%;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
 }
@@ -522,13 +522,14 @@ hr {
 }
 
 .retweetImg {
-    width: 30%;
-    margin-top: 0.5rem;
+    width: 50%;
+    margin-top: 0.2rem;
     margin-bottom: 1rem;
+    margin-left: 8%;
 }
 
 .repost__headerDescription {
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
 

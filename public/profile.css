@@ -368,7 +368,7 @@ hr {
 
 
 .tweetImg{
-    width: 30%;
+    width: 50%;
 }
 
 .btn-container{
@@ -551,9 +551,10 @@ hr {
 }
 
 .retweetImg{
-    width: 20%;
+    width: 40%;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
+    margin-left: 8%;
 }
 .repost__headerDescription{
     margin-top: 3rem;
@@ -565,7 +566,6 @@ hr {
     padding-left: 1rem;
 }
 .post12{
-    /* background-color: rgba(0, 0, 0, 0.091); */
     border: 0.5px solid;
     border-radius: 2rem;
     border-color: rgba(3, 3, 3,0.2);
@@ -573,6 +573,7 @@ hr {
     width: 40vw;
     margin-top: 5rem;
     margin-bottom: 2rem;
+    margin-left: 2rem;
 }
 
 

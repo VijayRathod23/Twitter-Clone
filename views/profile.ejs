@@ -16,13 +16,6 @@
 </head>
 
 <body>
-    <div class="loader" id="loader">
-        <div class="test">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
 
     <div class="container" id="main">
         <div class="screen">
@@ -515,12 +508,6 @@
 
 
             <script>
-
-                document.getElementById("main").style.visibility = "hidden";
-                setTimeout(function () {
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("main").style.visibility = "visible";
-                }, 500);
 
                 function back() {
                     location.assign("/home");
