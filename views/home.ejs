@@ -368,8 +368,7 @@
                                                                                                             </div>
                                                                                                             <%}%>
                                                                                                                 <%if(flag_rewteet[i]==0){%>
-                                                                                                                    <div
-                                                                                                                        class="twt-toggle-retwt-black">
+                                                                                                                    <div class="twt-toggle-retwt-black">
                                                                                                                         <a id="retweet_icon<%=tweets[i].id%>"
                                                                                                                             onclick="increment_count('<%= tweets[i].id %>')">
                                                                                                                             <i
@@ -483,6 +482,15 @@
             </div>
         </div>
         <script>
+
+            function retweeticon(){
+                if(document.getElementById('retweeticon').style.display="none"){
+                    document.getElementById('retweeticon').style.display="block"
+                }
+                else{
+                    document.getElementById('retweeticon').style.display="none"
+                }
+            }
 
             function tweet(){
                 var tweetsec=document.getElementById('tweetformcontent').value;
