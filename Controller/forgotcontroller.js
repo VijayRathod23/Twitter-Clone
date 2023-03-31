@@ -36,14 +36,14 @@ const forget_pass = asyncHandler( (req, res) => {
 })
 const get_otp = asyncHandler(async (req, res) => {
     const email = req.query.email;
-    console.log(email);
+    // console.log(email);
     const sql = `select * from users where email = '${email}' `;
     const result = await getdata(sql);
-    console.log(result[0]);
+    // console.log(result[0]);
     // Generate a random 4-digit number
     var randomNum = Math.floor(Math.random() * 10000);
     var otp = ("000" + randomNum).slice(-4);
-    console.log(otp); // Prints a random 4-digit number, e.g. "1234"
+    // console.log(otp); // Prints a random 4-digit number, e.g. "1234"
     var otpsql = `update users set otp='${otp}' where email = '${email}'`;
 
     if (result[0]) {
@@ -73,10 +73,10 @@ const otpscreen = asyncHandler((req, res) => {
 })
 const verify_otp = asyncHandler(async (req, res) => {
     const userOtp = req.query.otp;
-    console.log(userOtp);
+    // console.log(userOtp);
     const emailToken = req.cookies.email;
     const emailData = jwt.verify(emailToken, "email");
-    console.log("email", emailData);
+    // console.log("email", emailData);
     var sql = `select otp from users where email = '${emailData}'`;
     var otp = await getdata(sql);
     const varifyOtp = otp[0].otp;
@@ -95,13 +95,13 @@ const change_pass = asyncHandler((req, res) => {
 const save_pass = asyncHandler(async (req, res) => {
     const newpass = req.body.newpass;
     const newhash = await bcrypt.hash(newpass, 10);
-    console.log(newpass);
-    console.log(newhash);
+    // console.log(newpass);
+    // console.log(newhash);
     const emailToken = req.cookies.email;
     const emailData = jwt.verify(emailToken, "email");
     const sql = `update users set password = '${newhash}' where email = '${emailData}'`;
     const result = await getdata(sql);
-    console.log('pass change');
+    // console.log('pass change');
     if (result.changedRows == 1) {
         res.clearCookie("email");
         res.redirect('/login')
