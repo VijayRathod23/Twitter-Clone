@@ -141,6 +141,10 @@ span a {
     display: flex;
 }
 
+#tweeterror{
+    color: #03a9f4;
+}
+
 .tweetform img {
     width: 3rem;
     height: 3rem;

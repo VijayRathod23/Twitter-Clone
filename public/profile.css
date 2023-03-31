@@ -492,6 +492,13 @@ hr {
     border: none;
 }
 
+#commenterror{
+    margin-top: 1rem;
+    margin-left: 1rem;
+    color: gray;
+    float: left;
+}
+
 .profile1 {
     display: flex;
     height: 25%;
