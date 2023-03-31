@@ -354,10 +354,10 @@ const like = asyncHandler(async (req, res) => {
     const jwtToken = req.session.user;
     const tokenData = req.session.user;
     const uid = tokenData.id;
-    console.log(pid)
-    console.log(uid)
+    // console.log(pid)
+    // console.log(uid)
 
-    console.log("logged in user", uid);
+    // console.log("logged in user", uid);
     //selecting either user has already likes or not
     var select = `select * from likes where uid='${uid}' and pid='${pid}'`;
     var data = await getdata(select);
@@ -370,7 +370,7 @@ const like = asyncHandler(async (req, res) => {
         var i = await getdata(insert);
         var sql = `update tweets set likes = likes + 1  where id = '${pid}' and user_id='${user_id}'`;
         var result = await getdata(sql);
-        console.log("inserted")
+        // console.log("inserted")
         var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'union select liked from likes where pid='${pid}' and uid='${uid}';`;
         var query = await getdata(q);
         console.log(query)
@@ -379,13 +379,13 @@ const like = asyncHandler(async (req, res) => {
     }
     //update likes status in db
     else {
-        console.log("found")
+        // console.log("found")
         var f = `select * from likes where pid='${pid}' and uid='${uid}'`;
         var u = await getdata(f);
         // console.log("result data", u[0].liked)
         console.log("result data", u[0].liked)
         if (u[0].liked == 0) {
-            console.log("like")
+            // console.log("like")
             var sql = `update tweets set likes = likes + 1 where id = '${pid}' and user_id='${user_id}'`;
             var result = await getdata(sql);
             var minus = `update likes set liked = 1 where pid='${pid}' and uid='${uid}'`;
@@ -393,8 +393,8 @@ const like = asyncHandler(async (req, res) => {
             console.log("liked")
             var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'union select liked from likes where pid='${pid}' and uid='${uid}';`;
             var query = await getdata(q);
-            console.log(query)
-            console.log(query[0].likes);
+            // console.log(query)
+            // console.log(query[0].likes);
             res.json(query)
             //   res.redirect("/home");
         }
@@ -406,7 +406,7 @@ const like = asyncHandler(async (req, res) => {
             var done = await getdata(minus);
             var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'union select liked from likes where pid='${pid}' and uid='${uid}';`;
             var query = await getdata(q);
-            console.log(query);
+            // console.log(query);
             res.json(query);
         }
     }
@@ -421,7 +421,7 @@ const comment_display= asyncHandler(async (req, res) => {
     const sql = `select profile_pic,comments,username from comment where pid='${pid}'`;
     var query = await getdata(sql);
     res.json(query)
-    console.log(query);
+    // console.log(query);
 
 
 }) 
@@ -437,7 +437,7 @@ const comment= asyncHandler(async (req, res) => {
 
 
     const { uid, pid, username, profile, commentfield } = req.body;
-    console.log('comment', req.body);
+    // console.log('comment', req.body);
 
     const sql = `INSERT INTO comment (uid, pid,profile_pic,comments,username,inserted_at)VALUES ('${uid}', '${pid}', '${profile}','${commentfield}',  '${username}', NOW())`;
     var query = await getdata(sql);
