@@ -372,7 +372,7 @@ const like = asyncHandler(async (req, res) => {
 
     //if empty then user does not has liked before so insert user values in database
     if (data == '') {
-        console.log("not found")
+        // console.log("not found")
         var insert = `insert into likes (pid,uid,liked) values('${pid}','${uid}','1');`
         var i = await getdata(insert);
         var sql = `update tweets set likes = likes + 1  where id = '${pid}' and user_id='${user_id}'`;
@@ -380,8 +380,8 @@ const like = asyncHandler(async (req, res) => {
         // console.log("inserted")
         var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'union select liked from likes where pid='${pid}' and uid='${uid}';`;
         var query = await getdata(q);
-        console.log(query)
-        console.log(query[0].likes);
+        // console.log(query)
+        // console.log(query[0].likes);
         res.json(query)
     }
     //update likes status in db
@@ -390,14 +390,14 @@ const like = asyncHandler(async (req, res) => {
         var f = `select * from likes where pid='${pid}' and uid='${uid}'`;
         var u = await getdata(f);
         // console.log("result data", u[0].liked)
-        console.log("result data", u[0].liked)
+        // console.log("result data", u[0].liked)
         if (u[0].liked == 0) {
             // console.log("like")
             var sql = `update tweets set likes = likes + 1 where id = '${pid}' and user_id='${user_id}'`;
             var result = await getdata(sql);
             var minus = `update likes set liked = 1 where pid='${pid}' and uid='${uid}'`;
             var done = await getdata(minus);
-            console.log("liked")
+            // console.log("liked")
             var q = `select likes from tweets where user_id='${user_id}' and id='${pid}'union select liked from likes where pid='${pid}' and uid='${uid}';`;
             var query = await getdata(q);
             // console.log(query)
@@ -406,7 +406,7 @@ const like = asyncHandler(async (req, res) => {
             //   res.redirect("/home");
         }
         if (u[0].liked == 1) {
-            console.log("dislike")
+            // console.log("dislike")
             var sql = `update tweets set likes = likes - 1  where id = '${pid}' and user_id='${user_id}'`;
             var result = await getdata(sql);
             var minus = `update likes set liked = 0 where pid='${pid}' and uid='${uid}'`;

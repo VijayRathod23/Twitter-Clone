@@ -77,7 +77,7 @@ const profile = asyncHandler(async (req, res) => {
             var total = result1[0].cnt;
             rtwt_count.push(total);
     }
-console.log("count retweet::::" + rtwt_count)
+// console.log("count retweet::::" + rtwt_count)
     //..............if any retweet found for particular user
 
 

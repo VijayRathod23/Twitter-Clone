@@ -49,7 +49,7 @@
                         <span>Home</span>
                     </div>
 
-                    <div class="navrow profile" onclick="profile()">
+                    <div class="navrow profile2" onclick="profile()">
                         <i class="fa-regular fa-user fa-2x"></i>
                         <span>Profile</span>
                     </div>
@@ -735,7 +735,7 @@
                 // console.log('profile', profile)
                 // console.log('profile', commentfield)
                 
-                if(commentfield ==""){
+                if(commentfield.trim() ==""){
                    document.getElementById('reply').disable;
                 }
                 else{

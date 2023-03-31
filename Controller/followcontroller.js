@@ -153,7 +153,7 @@ const postfollower = asyncHandler(async (req, res) => {
     const result = `SELECT * FROM follow where (f_id = '${id}' and rm_follower ='1');`
     const resultdata = await getdata(result)
 
-    console.log(resultdata)
+    // console.log(resultdata)
 
     res.json(resultdata)
 

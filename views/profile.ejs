@@ -836,7 +836,7 @@
 
                     var commentfield = document.getElementById('commentfield' + pid).value
 
-                    if(commentfield == ''){
+                    if(commentfield.trim() == ''){
                         document.getElementById('reply').disable;
                     }else{
                     // console.log('pid', pid)
