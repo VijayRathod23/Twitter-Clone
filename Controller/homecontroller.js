@@ -339,7 +339,7 @@ const search_profile = asyncHandler(async (req, res) => {
         res.render("search_profile", { tokenData, selectData, tweets, tweet_data, count, followerdata, followdata,likes,flag })
     }
     else {
-        res.render("search_profile", { tokenData, selectData, tweets, tweet_data: 0, followerdata, followdata,likes,flag })
+        res.render("search_profile", { tokenData, selectData, tweets, tweet_data: 0,count, followerdata, followdata,likes,flag })
 
     }
 
