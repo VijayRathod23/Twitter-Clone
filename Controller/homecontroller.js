@@ -310,7 +310,7 @@ const search_profile = asyncHandler(async (req, res) => {
 
     var count = new Array();
     var tweet_data = new Array();
-    console.log("..................//////////////////////............",retweet_data[0])
+    // console.log("..................//////////////////////............",retweet_data[0])
     if (retweet_data[0]) {
 
         for (var i = 0; i < retweet_data.length; i++) {
