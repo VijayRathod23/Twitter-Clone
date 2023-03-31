@@ -147,14 +147,37 @@
                                             </div>
                                         </div>
 
-                                        <!-- if content found -->
-                                        <%if(tweets[i].retweet_text){%>
+                                        
+                                        
+                                    </div>
+                                    <!-- if content found -->
+                                    <%if(tweets[i].retweet_text){%>
 
+                                        <div class="repost__headerDescription">
+                                            <p>
+                                                <%=tweets[i].retweet_text%>
+                                            </p>
+
+                                            <!-- uploading images and video -->
+                                            <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; const
+                                                array_of_allowed_videos=['mp4','gif']; %>
+                                                <%if(tweets[i].retweet_media){%>
+                                                    <% const
+                                                        file_extension=tweets[i].retweet_media.slice(((tweets[i].retweet_media.lastIndexOf('.')
+                                                        - 1)>>> 0) + 2); %>
+                                                        <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                            <img src="<%=tweets[i].retweet_media%>" alt="img"
+                                                                class="retweetImg" />
+                                                            <%}else{%>
+                                                                <video src="<%=tweets[i].retweet_media%>"
+                                                                    width="300px" autoplay controls></video>
+                                                                <%}}%>
+                                        </div>
+
+
+                                        <%}else{%>
                                             <div class="repost__headerDescription">
-                                                <p>
-                                                    <%=tweets[i].retweet_text%>
-                                                </p>
-
+                                                <!-- if media found -->
                                                 <!-- uploading images and video -->
                                                 <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; const
                                                     array_of_allowed_videos=['mp4','gif']; %>
@@ -172,30 +195,7 @@
                                             </div>
 
 
-                                            <%}else{%>
-                                                <div class="repost__headerDescription">
-                                                    <!-- if media found -->
-                                                    <!-- uploading images and video -->
-                                                    <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; const
-                                                        array_of_allowed_videos=['mp4','gif']; %>
-                                                        <%if(tweets[i].retweet_media){%>
-                                                            <% const
-                                                                file_extension=tweets[i].retweet_media.slice(((tweets[i].retweet_media.lastIndexOf('.')
-                                                                - 1)>>> 0) + 2); %>
-                                                                <%if(array_of_allowed_files.includes(file_extension)){%>
-                                                                    <img src="<%=tweets[i].retweet_media%>" alt="img"
-                                                                        class="retweetImg" />
-                                                                    <%}else{%>
-                                                                        <video src="<%=tweets[i].retweet_media%>"
-                                                                            width="300px" autoplay controls></video>
-                                                                        <%}}%>
-                                                </div>
-
-
-                                                <%}%>
-
-
-                                    </div>
+                                            <%}%>
                                     <!-- original tweet -->
                                     <div class="tweets retweet_tweet">
                                         <div class="post">
