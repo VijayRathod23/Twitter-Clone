@@ -299,7 +299,14 @@ const search_profile = asyncHandler(async (req, res) => {
 
     // res.render("profile", { tokenData, selectData, followerdata, followdata })
 
-
+ // ..........................for tweet section  to display retweet count
+ var rtwt_count = new Array();
+ for (var i = 0; i < tweets.length; i++) {
+         var cnt_sql = `select count(id) as cnt from retweets where tweet_id='${tweets[i].id}'`;
+         var result1 = await getdata(cnt_sql);
+         var total = result1[0].cnt;
+         rtwt_count.push(total);
+ }
 
     //..........select retweeted
     const select_retweet = `select * from retweets where user_id = ${sid}`;
@@ -336,10 +343,10 @@ const search_profile = asyncHandler(async (req, res) => {
 
 
 
-        res.render("search_profile", { tokenData, selectData, tweets, tweet_data, count, followerdata, followdata,likes,flag })
+        res.render("search_profile", { tokenData, selectData, tweets, tweet_data, count,rtwt_count, followerdata, followdata,likes,flag })
     }
     else {
-        res.render("search_profile", { tokenData, selectData, tweets, tweet_data: 0,count, followerdata, followdata,likes,flag })
+        res.render("search_profile", { tokenData, selectData, tweets, tweet_data: 0,count,rtwt_count, followerdata, followdata,likes,flag })
 
     }
 
