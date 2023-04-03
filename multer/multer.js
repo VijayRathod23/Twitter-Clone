@@ -19,7 +19,7 @@ const profile_storage = multer.diskStorage({
         cb(null, './public/profiles')
     },
     filename: (req, file, cb) => {
-        console.log(file);
+        // console.log(file);
         cb(null, Date.now() + path.extname(file.originalname));
 
     }

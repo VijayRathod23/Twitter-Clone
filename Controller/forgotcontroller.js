@@ -43,7 +43,7 @@ const get_otp = asyncHandler(async (req, res) => {
     // Generate a random 4-digit number
     var randomNum = Math.floor(Math.random() * 10000);
     var otp = ("000" + randomNum).slice(-4);
-    console.log(otp); // Prints a random 4-digit number, e.g. "1234"
+    // console.log(otp); // Prints a random 4-digit number, e.g. "1234"
     var otpsql = `update users set otp='${otp}' where email = '${email}'`;
 
     if (result[0]) {

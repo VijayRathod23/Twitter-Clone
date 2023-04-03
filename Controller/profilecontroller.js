@@ -36,7 +36,7 @@ const profile = asyncHandler(async (req, res) => {
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
     var created_date = String(selectData[0].created_at);
-    var cr_date=created_date.slice(3,16);
+    var cr_date = created_date.slice(3, 16);
     // console.log(".........................",cr_date);
 
     const sql2 = `select liked,pid,uid from likes where uid='${tokenData.id}'`
@@ -72,18 +72,18 @@ const profile = asyncHandler(async (req, res) => {
     // ..........................for tweet section  to display retweet count
     var rtwt_count = new Array();
     for (var i = 0; i < tweets.length; i++) {
-            var cnt_sql = `select count(id) as cnt from retweets where tweet_id='${tweets[i].id}'`;
-            var result1 = await getdata(cnt_sql);
-            var total = result1[0].cnt;
-            rtwt_count.push(total);
+        var cnt_sql = `select count(id) as cnt from retweets where tweet_id='${tweets[i].id}'`;
+        var result1 = await getdata(cnt_sql);
+        var total = result1[0].cnt;
+        rtwt_count.push(total);
     }
-// console.log("count retweet::::" + rtwt_count)
+
     //..............if any retweet found for particular user
 
 
     var count = new Array();
     var tweet_data = new Array();
-    // console.log("..................//////////////////////............",retweet_data[0])
+    // console.log("..................//////////////////////............", retweet_data[0])
     if (retweet_data[0]) {
 
         for (var i = 0; i < retweet_data.length; i++) {
@@ -94,7 +94,7 @@ const profile = asyncHandler(async (req, res) => {
             var tweet_select = `select * from tweets where id = '${retweeted_tweet_id}'`;
 
             var tweet_data_1 = await getdata(tweet_select);
-// console.log("..................",tweet_data_1[0])
+            // console.log("..................", tweet_data_1[0])
 
             tweet_data.push(tweet_data_1[0]);
 
@@ -109,11 +109,11 @@ const profile = asyncHandler(async (req, res) => {
 
 
 
-        res.render("profile", { tokenData, selectData, tweets, tweet_data,retweet_data, count, rtwt_count,followerdata, followdata,likes,flag ,cr_date})
+        res.render("profile", { tokenData, selectData, tweets, tweet_data, retweet_data, count, rtwt_count, followerdata, followdata, likes, flag, cr_date })
     }
     else {
-        
-        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0,rtwt_count,count,  followerdata, followdata,likes,flag ,cr_date})
+
+        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0, rtwt_count, count, followerdata, followdata, likes, flag, cr_date })
 
     }
 
@@ -123,7 +123,7 @@ const profile = asyncHandler(async (req, res) => {
 
 // Edit Profile get
 
-const edit_profile= asyncHandler(async (req, res) => {
+const edit_profile = asyncHandler(async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
         return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
@@ -139,7 +139,7 @@ const edit_profile= asyncHandler(async (req, res) => {
 
 // Edit Profile post
 
-const edit_profile_post= asyncHandler(async (req, res) => {
+const edit_profile_post = asyncHandler(async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
         return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
@@ -166,7 +166,7 @@ const edit_profile_post= asyncHandler(async (req, res) => {
     } else {
         var sql = `update users set username='${username}',dob='${dob}',bio='${bio}',location='${location}' where id='${tokenData.id}'`
         var result = await getdata(sql);
-        
+
         var sql1 = `update tweets set username='${username}' where user_id='${tokenData.id}'`
         var result1 = await getdata(sql1);
 
@@ -191,4 +191,4 @@ const edit_profile_post= asyncHandler(async (req, res) => {
 
 
 
-module.exports = { edit_profile,profile,edit_profile_post}
+module.exports = { edit_profile, profile, edit_profile_post }

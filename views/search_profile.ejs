@@ -271,9 +271,7 @@
                                                             </div>
                                                         <%}%>                                                       
                                                         <div class="twt-toggle">
-                                                                            <a
-                                                                                onclick="increment_count('<%= tweets[i].id %>')"><i
-                                                                                    class="fa-solid fa-retweet"></i></a>
+                                                                            <a><i class="fa-solid fa-retweet"></i></a>
                                                                             <p id="retwt<%=tweets[i].id%>">
                                                                                 <%=rtwt_count[i]%>
                                                                             </p>
@@ -356,7 +354,12 @@
                                                                                 <%=tweet_data[i].likes%>
                                                                             </p>
                                                                         </div>
-                                                                        
+                                                                        <div class="twt-toggle">
+                                                                            <a><i class="fa-solid fa-retweet"></i></a>
+                                                                            <p id="retwt<%=tweet_data[i].id%>">
+                                                                                <%=count[i]%>
+                                                                            </p>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                     </div>

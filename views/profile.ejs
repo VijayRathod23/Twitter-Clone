@@ -16,13 +16,6 @@
 </head>
 
 <body>
-    <div class="loader" id="loader">
-        <div class="test">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </div>
 
     <div class="container" id="main">
         <div class="screen">
@@ -307,9 +300,7 @@
                                                                                                                     <%}%>
                                                                                                                         <div
                                                                                                                             class="twt-toggle">
-                                                                                                                            <a
-                                                                                                                                onclick="increment_count('<%= tweets[i].id %>')"><i
-                                                                                                                                    class="fa-solid fa-retweet"></i></a>
+                                                                                                                            <a><i class="fa-solid fa-retweet"></i></a>
                                                                                                                             <span
                                                                                                                                 id="retwt<%=tweets[i].id%>">
                                                                                                                                  <%=rtwt_count[i]%>
@@ -330,6 +321,7 @@
 
                                                 </div>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -423,7 +415,7 @@
 
 
                                                             <%}%>
-                                                            </div>
+                                                            
 
                                                                 <div class="tweets12">
                                                                     <div class="post12">
@@ -431,11 +423,6 @@
                                                                         <div class="post__avatar">
                                                                             <img src="<%=tweet_data[i].profile_pic%>"
                                                                                 alt="img" class="post__avatar1" />
-                                                                        </div>
-
-
-                                                                        <div class="post__body">
-                                                                            <div class="post__header">
                                                                                 <div class="post__headerText">
                                                                                     <h3>
                                                                                         <%=tweet_data[i].username%>
@@ -445,6 +432,11 @@
                                                                                                     <!-- </span>@<%=selectData[0].email%></span> -->
                                                                                     </h3>
                                                                                 </div>
+                                                                        </div>
+
+
+                                                                        <div class="post__body">
+                                                                            <div class="post__header">
                                                                                 <div class="post__headerDescription">
                                                                                     <p>
                                                                                         <%=tweet_data[i].tweet_text%>
@@ -492,7 +484,7 @@
                                                                 </div>
 
                                                 
-                                                
+                                                </div>
                                             </div>
                                             
                                         </div>
@@ -517,12 +509,6 @@
 
 
             <script>
-
-                document.getElementById("main").style.visibility = "hidden";
-                setTimeout(function () {
-                    document.getElementById("loader").style.display = "none";
-                    document.getElementById("main").style.visibility = "visible";
-                }, 500);
 
                 function back() {
                     location.assign("/home");
@@ -838,6 +824,7 @@
 
                     if(commentfield.trim() == ''){
                         document.getElementById('reply').disable;
+                        
                     }else{
                     // console.log('pid', pid)
                     // console.log('uid', uid)
