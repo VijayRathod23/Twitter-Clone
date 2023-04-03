@@ -76,7 +76,7 @@ app.get("/loader",(req, res) => {
 app.get('*', function(req, res){
     res.render("404")
   });
-app.listen(process.env.PORT || 3000, (req, res) => {
+app.listen(process.env.PORT, (req, res) => {
 
     console.log('server is running on port ' + process.env.PORT);
 });
