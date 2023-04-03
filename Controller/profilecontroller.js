@@ -6,6 +6,7 @@ const con = require('../Connection/connection')
 const asyncHandler = require("express-async-handler");
 const multer = require('multer');
 const path = require('path');
+const { log } = require('console');
 
 
 
@@ -35,14 +36,14 @@ const profile = asyncHandler(async (req, res) => {
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
     var created_date = String(selectData[0].created_at);
-    var cr_date=created_date.slice(3,16);
-    console.log(".........................",cr_date);
+    var cr_date = created_date.slice(3, 16);
+    // console.log(".........................",cr_date);
 
     const sql2 = `select liked,pid,uid from likes where uid='${tokenData.id}'`
     const likes = await getdata(sql2);
     // var like_flag = likes[0].liked;
     var flag = [];
-    console.log(likes);
+    // console.log(likes);
     //res.render("profile", { tokenData, selectData,tweets})
 
 
@@ -57,7 +58,7 @@ const profile = asyncHandler(async (req, res) => {
     var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = '${tokenData.id}' and flag ='1');`)
     const followdata = await getdata(result1)
 
-    console.log("followerrrrrrrrr", followdata[0].follow)
+    // console.log("followerrrrrrrrr", followdata[0].follow)
 
     // res.render("profile", { tokenData, selectData, followerdata, followdata })
 
@@ -67,23 +68,33 @@ const profile = asyncHandler(async (req, res) => {
     const select_retweet = `select * from retweets where user_id = '${tokenData.id}' order by created_at desc`;
     const retweet_data = await getdata(select_retweet);
 
+
+    // ..........................for tweet section  to display retweet count
+    var rtwt_count = new Array();
+    for (var i = 0; i < tweets.length; i++) {
+        var cnt_sql = `select count(id) as cnt from retweets where tweet_id='${tweets[i].id}'`;
+        var result1 = await getdata(cnt_sql);
+        var total = result1[0].cnt;
+        rtwt_count.push(total);
+    }
+
     //..............if any retweet found for particular user
 
 
     var count = new Array();
     var tweet_data = new Array();
-
+    // console.log("..................//////////////////////............", retweet_data[0])
     if (retweet_data[0]) {
 
         for (var i = 0; i < retweet_data.length; i++) {
 
             var retweeted_tweet_id = retweet_data[i].tweet_id;
-            console.log(retweeted_tweet_id);
+            // console.log(retweeted_tweet_id);
 
             var tweet_select = `select * from tweets where id = '${retweeted_tweet_id}'`;
 
             var tweet_data_1 = await getdata(tweet_select);
-
+            // console.log("..................", tweet_data_1[0])
 
             tweet_data.push(tweet_data_1[0]);
 
@@ -98,11 +109,11 @@ const profile = asyncHandler(async (req, res) => {
 
 
 
-        res.render("profile", { tokenData, selectData, tweets, tweet_data,retweet_data, count, followerdata, followdata,likes,flag ,cr_date})
+        res.render("profile", { tokenData, selectData, tweets, tweet_data, retweet_data, count, rtwt_count, followerdata, followdata, likes, flag, cr_date })
     }
     else {
-        
-        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0,count,  followerdata, followdata,likes,flag ,cr_date})
+
+        res.render("profile", { tokenData, selectData, tweets, tweet_data: 0, rtwt_count, count, followerdata, followdata, likes, flag, cr_date })
 
     }
 
@@ -112,7 +123,7 @@ const profile = asyncHandler(async (req, res) => {
 
 // Edit Profile get
 
-const edit_profile= asyncHandler(async (req, res) => {
+const edit_profile = asyncHandler(async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
         return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
@@ -128,7 +139,7 @@ const edit_profile= asyncHandler(async (req, res) => {
 
 // Edit Profile post
 
-const edit_profile_post= asyncHandler(async (req, res) => {
+const edit_profile_post = asyncHandler(async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
         return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
@@ -148,16 +159,22 @@ const edit_profile_post= asyncHandler(async (req, res) => {
         var sql2 = `update comment set username='${username}',profile_pic='${profileurl}' where uid='${tokenData.id}'`
         var result2 = await getdata(sql2);
 
-        console.log(result)
+        var sql3 = `update follow set username='${username}',u_profile_pic='${profileurl}' where user_id='${tokenData.id}'`
+        var result3 = await getdata(sql3);
+
+        // console.log(result)
     } else {
         var sql = `update users set username='${username}',dob='${dob}',bio='${bio}',location='${location}' where id='${tokenData.id}'`
         var result = await getdata(sql);
-        
+
         var sql1 = `update tweets set username='${username}' where user_id='${tokenData.id}'`
         var result1 = await getdata(sql1);
 
         var sql2 = `update comment set username='${username}' where uid='${tokenData.id}'`
         var result2 = await getdata(sql2);
+
+        var sql3 = `update follow set username='${username}' where user_id='${tokenData.id}'`
+        var result3 = await getdata(sql3);
     }
     const select = `select * from users where id = '${tokenData.id}'`;
     const selectData = await getdata(select);
@@ -174,4 +191,4 @@ const edit_profile_post= asyncHandler(async (req, res) => {
 
 
 
-module.exports = { edit_profile,profile,edit_profile_post}
+module.exports = { edit_profile, profile, edit_profile_post }

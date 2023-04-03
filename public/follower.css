@@ -67,34 +67,50 @@
 }
 
 
-.profile1{
+.profile1 {
     display: flex;
-    height: 25%;
+    /* height: 25%; */
 }
 
-.profileimg1{
-    width: 25%;
+.profile1:hover{
+    
+    background-color: #1da0f215;
+    border-radius: 25px;
+    padding: 0.25rem;
+    padding: 0.25rem;
 }
 
-.profileimg1 img{
+
+.profileimg1 {
+    width: 20%;
+}
+
+.profileimg1 img {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50px;
 }
 
-.profileinfo1{
+.profileinfo1 {
     width: 60%;
-}
-
-.name1 span{
-    font-weight: 600;
-}
-
-.username1 span{
-    color: grey;
+    margin-top: 1rem;
 }
 
 span a{
     text-decoration: none;
     color: black;
 }
+
+.navigation{
+    height: 63%;
+}
+
+
+
+
+
+
+
+
+
+

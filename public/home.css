@@ -141,6 +141,10 @@ span a {
     display: flex;
 }
 
+#tweeterror{
+    color: #03a9f4;
+}
+
 .tweetform img {
     width: 3rem;
     height: 3rem;
@@ -223,7 +227,7 @@ span a {
 }
 
 .tweetImg {
-    width: 90%;
+    width: 70%;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
 }
@@ -369,8 +373,6 @@ span a {
 .searchbar input {
     border: none;
     outline: none;
-
-
 }
 
 .searchbar span i {
@@ -409,7 +411,6 @@ span a {
 #searchprofilebar .searchprofile .profileinfo .name {
     width: 90%;
     overflow-wrap: break-word;
-
 }
 
 
@@ -525,13 +526,14 @@ hr {
 }
 
 .retweetImg {
-    width: 30%;
-    margin-top: 0.5rem;
+    width: 50%;
+    margin-top: 0.2rem;
     margin-bottom: 1rem;
+    margin-left: 8%;
 }
 
 .repost__headerDescription {
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
 
