@@ -286,12 +286,12 @@ const search_profile = asyncHandler(async (req, res) => {
 
     //--follower count
 
-    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = ${sid} and rm_follower ='1');`
+    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = ${sid} and rm_follower ='1' and flag = '1');`
     const followerdata = await getdata(result)
 
 
     //--follow count
-    var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = ${sid} and flag ='1');`)
+    var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = ${sid} and rm_follower ='1' and flag ='1');`)
     const followdata = await getdata(result1)
 
     // console.log("followerrrrrrrrr", followdata[0].follow)
@@ -428,6 +428,7 @@ const comment_display = asyncHandler(async (req, res) => {
     const tokenData = req.session.user;
 
     const { uid, pid, commentfield, profile, username } = req.body;
+    // const uid = req.body.uid;
     const sql = `select profile_pic,comments,username from comment where pid='${pid}'`;
     var query = await getdata(sql);
     res.json(query)
