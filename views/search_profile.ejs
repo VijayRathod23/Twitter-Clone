@@ -74,7 +74,7 @@
                             </span>
                         </div>
                     </div>
-                   
+
                 </div>
 
             </div>
@@ -215,67 +215,84 @@
                                                 <div class="btn-container">
                                                     <input type="hidden" value="<%=tweets[i].id%>" name="tweetid">
                                                     <div class="twt-toggle"
-                                                    onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')">
-                                                    <i class="fa-regular fa-comment"></i>
-                                                    comments</div>
-                                                        <%for (let j=0;j<tweets.length;j++){%>
+                                                        onclick="comment('<%=tweets[i].id%>','<%=tweets[i].user_id%>')">
+                                                        <i class="fa-regular fa-comment"></i>
+                                                        comments
+                                                    </div>
+                                                    <%for (let j=0;j<tweets.length;j++){%>
 
-                                                            <%for (let k=0;k<likes.length;k++){%>
+                                                        <%for (let k=0;k<likes.length;k++){%>
 
 
-                                                                <%if(tweets[j].id==likes[k].pid &&
-                                                                    tokenData.id==likes[k].uid && likes[k].liked==1){%>
+                                                            <%if(tweets[j].id==likes[k].pid &&
+                                                                tokenData.id==likes[k].uid && likes[k].liked==1){%>
 
-                                                                    <%flag[j]=1%>
+                                                                <%flag[j]=1%>
 
-                                                                <%}%>
-                                                                <%if(tweets[j].id==likes[k].pid &&
-                                                                        tokenData.id==likes[k].uid &&
-                                                                        likes[k].liked==0){%>
+                                                                    <%}%>
+                                                                        <%if(tweets[j].id==likes[k].pid &&
+                                                                            tokenData.id==likes[k].uid &&
+                                                                            likes[k].liked==0){%>
 
-                                                                    <%flag[j]=0%>
+                                                                            <%flag[j]=0%>
 
-                                                                <%}%>
+                                                                                <%}%>
 
-                                                            <%}%>
-                                                        <%}%>
-                                                        <%if(flag[i]==1){%>
-                                                            
-                                                            <div class="twt-toggle-like-blue">
-                                                            <i class="fa-solid fa-heart" id="twt-tg<%=tweets[i].id%>" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                                                    <%}%>
+                                                                                        <%}%>
+                                                                                            <%if(flag[i]==1){%>
 
-                                                            <span id="twt<%=tweets[i].id%>">
-                                                            <%=tweets[i].likes%>
-                                                            </span>
+                                                                                                <div
+                                                                                                    class="twt-toggle-like-blue">
+                                                                                                    <i class="fa-solid fa-heart"
+                                                                                                        id="twt-tg<%=tweets[i].id%>"
+                                                                                                        onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
 
-                                                            </div>
+                                                                                                    <span
+                                                                                                        id="twt<%=tweets[i].id%>">
+                                                                                                        <%=tweets[i].likes%>
+                                                                                                    </span>
 
-                                                        <%}else if(flag[i]==0){%>
-                                                           
-                                                            <div class="twt-toggle-like-black">
-                                                            <i class="fa-solid fa-heart" id="twt-tg<%=tweets[i].id%>" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
-                                                            <span id="twt<%=tweets[i].id%>">
-                                                                <%=tweets[i].likes%>
-                                                            </span>
+                                                                                                </div>
 
-                                                            </div>
+                                                                                                <%}else
+                                                                                                    if(flag[i]==0){%>
 
-                                                        <%}else{%>
-                                                            
-                                                            <div class="twt-toggle-like-black">
-                                                                <i class="fa-solid fa-heart" id="twt-tg<%=tweets[i].id%>" onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
-                                                                <span id="twt<%=tweets[i].id%>">
-                                                                    <%=tweets[i].likes%>
-                                                                </span>
+                                                                                                    <div
+                                                                                                        class="twt-toggle-like-black">
+                                                                                                        <i class="fa-solid fa-heart"
+                                                                                                            id="twt-tg<%=tweets[i].id%>"
+                                                                                                            onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                                                                        <span
+                                                                                                            id="twt<%=tweets[i].id%>">
+                                                                                                            <%=tweets[i].likes%>
+                                                                                                        </span>
 
-                                                            </div>
-                                                        <%}%>                                                       
-                                                        <div class="twt-toggle">
-                                                                            <a><i class="fa-solid fa-retweet"></i></a>
-                                                                            <p id="retwt<%=tweets[i].id%>">
-                                                                                <%=count[i]%>
-                                                                            </p>
-                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <%}else{%>
+
+                                                                                                        <div
+                                                                                                            class="twt-toggle-like-black">
+                                                                                                            <i class="fa-solid fa-heart"
+                                                                                                                id="twt-tg<%=tweets[i].id%>"
+                                                                                                                onclick="like('<%=tweets[i].id%>','<%=tweets[i].user_id%>')"></i>
+                                                                                                            <span
+                                                                                                                id="twt<%=tweets[i].id%>">
+                                                                                                                <%=tweets[i].likes%>
+                                                                                                            </span>
+
+                                                                                                        </div>
+                                                                                                        <%}%>
+                                                                                                            <div
+                                                                                                                class="twt-toggle">
+                                                                                                                <a><i
+                                                                                                                        class="fa-solid fa-retweet"></i></a>
+                                                                                                                <p
+                                                                                                                    id="retwt<%=tweets[i].id%>">
+                                                                                                                    <%=count[i]%>
+                                                                                                                </p>
+                                                                                                            </div>
                                                 </div>
                                                 <div id="commentsection<%=tweets[i].id%>" class="commentsection">
 
@@ -295,8 +312,8 @@
                                     </div>
                                 </div>
                                 <%}%>
-                                   
-                                        <!-- post ends -->
+
+                                    <!-- post ends -->
                     </div>
                     <div id="retweetseccontent">
 
@@ -371,7 +388,7 @@
                                                 <!-- post ends -->
                             </div>
                             <%}%>
-                            <%}%>
+                                <%}%>
 
                     </div>
                 </div>
@@ -385,7 +402,7 @@
 
 
     <script>
-        
+
 
 
         function more() {
@@ -413,7 +430,7 @@
 
             // console.log("follow func")
 
-            var listed = document.getElementById(`follow${ id }`);
+            var listed = document.getElementById(`follow${id}`);
 
             if (listed.innerText == "Follow") {
 
@@ -458,13 +475,13 @@
 
 
 
-}
+                        }
 
                     })
 
 
 
-}
+            }
             else {
                 swal({
                     title: "Are you sure?",
@@ -482,7 +499,7 @@
                             // console.log('${ id }')
                             // console.log("hiii", id, profile_pic, email, username)
 
-                            var listed = document.getElementById(`follow${ id }`);
+                            var listed = document.getElementById(`follow${id}`);
                             // var followcount = document.getElementById("followcount");
                             var s = "";
                             fetch(`/post_Unfollow?id=${id}&profile_pic=${profile_pic}&f_email=${email}&username=${username}`)
@@ -781,67 +798,77 @@
             })
         }
 
-    // Comment post Section
-    async function commentdata(pid, uid, username, profile) {
-                    var commentfield = document.getElementById('commentfield' + pid).value
-                    // console.log('pid', pid)
-                    // console.log('uid', uid)
-                    // console.log('username', username)
-                    // console.log('profile', profile)
-                    // console.log('profile', commentfield)
-                    await fetch("/comment", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ pid, uid, username, profile, commentfield }),
-                    }).then((res) => {
-                        return res.json()
-                    }).then((result) => {
-                        // console.log(result)
-                        location.assign('/home')
-                    })
-                }
-                // Comment get Section
-                let classcomment = document.querySelectorAll(".comment");
-                classcomment.forEach(e => {
-                    e.style.display = "none";
+        // Comment post Section
+        async function commentdata(pid, uid, username, profile) {
+
+            var commentfield = document.getElementById('commentfield' + pid).value
+            // console.log('pid', pid)
+            // console.log('uid', uid)
+            // console.log('username', username)
+            // console.log('profile', profile)
+            // console.log('profile', commentfield)
+
+            if (commentfield.trim() == '') {
+                document.getElementById('reply').disable;
+            }
+            else {
+
+                await fetch("/comment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ pid, uid, username, profile, commentfield }),
+                }).then((res) => {
+                    return res.json()
+                }).then((result) => {
+                    // console.log(result)
+                    location.assign('/home')
                 })
-                let commentsection = document.querySelectorAll(".commentsection");
-                commentsection.forEach(e => {
-                    e.style.display = "none";
-                })
-                
-                // classcomment.forEach()
-                // console.log(classcomment)
-                async function comment(pid, uid) {
-                    var commentsection = document.getElementById('commentsection' + pid);
-                    // commentsection.style.display = "none";
-                    var comment = document.getElementById("comment" + pid);
-                    //  comment.style.display = "none";
-                    // console.log(comment)
-                    // commentsection.innerHTML = "";
-                    commentstr = ''
-                    // console.log('pid', pid)
-                    // console.log('uid', uid)
-                    // console.log(commentsection)
-                    classcomment.forEach(i => {
-                    })
-                    if (commentsection.style.display == "none") {
-                        commentsection.style.display = "block";
-                        comment.style.display = "block";
-                        await fetch("/comment_display", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({ pid, uid }),
-                        }).then((res) => {
-                            return res.json()
-                        }).then((result) => {
-                            // console.log(result)
-                            for (i = 0; i < result.length; i++) {
-                                commentstr += `<div class="profile1">
+            }
+
+
+        }
+        // Comment get Section
+        let classcomment = document.querySelectorAll(".comment");
+        classcomment.forEach(e => {
+            e.style.display = "none";
+        })
+        let commentsection = document.querySelectorAll(".commentsection");
+        commentsection.forEach(e => {
+            e.style.display = "none";
+        })
+
+        // classcomment.forEach()
+        // console.log(classcomment)
+        async function comment(pid, uid) {
+            var commentsection = document.getElementById('commentsection' + pid);
+            // commentsection.style.display = "none";
+            var comment = document.getElementById("comment" + pid);
+            //  comment.style.display = "none";
+            // console.log(comment)
+            // commentsection.innerHTML = "";
+            commentstr = ''
+            // console.log('pid', pid)
+            // console.log('uid', uid)
+            // console.log(commentsection)
+            classcomment.forEach(i => {
+            })
+            if (commentsection.style.display == "none") {
+                commentsection.style.display = "block";
+                comment.style.display = "block";
+                await fetch("/comment_display", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ pid, uid }),
+                }).then((res) => {
+                    return res.json()
+                }).then((result) => {
+                    // console.log(result)
+                    for (i = 0; i < result.length; i++) {
+                        commentstr += `<div class="profile1">
                                    
                     <div class="profileimg1">
                         <img src="${result[i].profile_pic}" alt="">
@@ -859,15 +886,15 @@
                         </div>
                     </div>
                 </div>`
-                            }
-                            commentsection.innerHTML = commentstr;
-                        })
                     }
-                    else {
-                        commentsection.style.display = "none";
-                        comment.style.display = "none";
-                    }
-                }
+                    commentsection.innerHTML = commentstr;
+                })
+            }
+            else {
+                commentsection.style.display = "none";
+                comment.style.display = "none";
+            }
+        }
 
     </script>
 
