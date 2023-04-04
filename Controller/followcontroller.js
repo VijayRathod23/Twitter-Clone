@@ -180,7 +180,7 @@ const post_Unfollow = asyncHandler(async (req, res) => {
 
     //var 
     var result = (`  UPDATE follow
-    SET flag = '0'
+    SET flag = '0' and remove_follower = '0'
     WHERE  (f_id= '${id}' and user_id ='${user_id}');`)
     const resultdata = await getdata(result)
     //    console.log("here------",result)
