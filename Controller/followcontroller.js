@@ -35,12 +35,12 @@ const newfollow = asyncHandler(async (req, res) => {
 
     //--follower count
 
-    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = '${tokenData.id}' and rm_follower ='1');`
+    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = '${tokenData.id}' and rm_follower ='1' and flag = '1');`
     const followerdata = await getdata(result)
 
 
     //--follow count
-    var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = '${tokenData.id}' and flag ='1');`)
+    var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = '${tokenData.id}' and flag ='1'  and rm_follower ='1');`)
     const followdata = await getdata(result1)
 
     // console.log("followerrrrrrrrr", followdata[0].follow)
@@ -61,13 +61,20 @@ const follow_search = asyncHandler(async (req, res) => {
 
     //--follower count
 
-    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = ${sid} and rm_follower ='1');`
+    const result = `SELECT COUNT(user_id) AS follower FROM follow where  (f_id = ${sid} and rm_follower ='1' and flag = '1');`
+
+    
+    
     const followerdata = await getdata(result)
 
 
     //--follow count
-    var result1 = (`SELECT COUNT(f_id) AS follow FROM follow where  (user_id = ${sid} and flag ='1');`)
+    var result1 = `SELECT COUNT(f_id) AS follow FROM follow where  (user_id = ${sid} and flag ='1' and rm_follower ='1');`
+
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",result)
     const followdata = await getdata(result1)
+    console.log("******************************************************",followerdata);
+    console.log("******************************************************",followerdata[0].follower);
 
     // console.log("followerrrrrrrrr", followdata[0].follow)
     res.render("follow", { tokenData, selectData, followerdata, followdata })
@@ -80,7 +87,7 @@ const follow = asyncHandler(async (req, res) => {
 
     var id = req.query.id;
 
-    var result = (`SELECT * FROM follow where (user_id = '${id}'and flag = '1');`)
+    var result = (`SELECT * FROM follow where (user_id = '${id}'and flag = '1' and rm_follower ='1');`)
     const resultdata = await getdata(result)
 
     // console.log('follow listig', resultdata)
@@ -100,7 +107,7 @@ const search_follow = asyncHandler(async (req, res) => {
     var id = req.query.id;
     // console.log(user_id,id)
 
-    var result = (`SELECT * FROM follow where (f_id = '${id}'and flag = '1' and user_id = '${user_id}');`)
+    var result = (`SELECT * FROM follow where (f_id = '${id}'and flag = '1' and user_id = '${user_id}' and rm_follower = '1');`)
     const resultdata = await getdata(result)
 
     // console.log('searchdata*****************************************************', resultdata)
@@ -150,7 +157,7 @@ const postfollower = asyncHandler(async (req, res) => {
 
     //   console.log('insertid',id,profile_pic)
 
-    const result = `SELECT * FROM follow where (f_id = '${id}' and rm_follower ='1');`
+    const result = `SELECT * FROM follow where (f_id = '${id}' and rm_follower ='1' and flag="1");`
     const resultdata = await getdata(result)
 
     // console.log(resultdata)
@@ -180,7 +187,7 @@ const post_Unfollow = asyncHandler(async (req, res) => {
 
     //var 
     var result = (`  UPDATE follow
-    SET flag = '0' and remove_follower = '0'
+    SET flag = '0' and rm_follower = "0"
     WHERE  (f_id= '${id}' and user_id ='${user_id}');`)
     const resultdata = await getdata(result)
     //    console.log("here------",result)
@@ -208,7 +215,7 @@ const post_rm_follower = asyncHandler(async (req, res) => {
 
 
     var result = (`  UPDATE follow
-   SET rm_follower = '0'
+   SET rm_follower = '0' and flag = '0'
    WHERE  ((f_id= '${id}' and user_id ='${user_id}' ) or (f_id ='${user_id}' and user_id ='${id}' ));`)
     const resultdata = await getdata(result)
     //    console.log("here------",result)
