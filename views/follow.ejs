@@ -98,53 +98,6 @@
 
                 </div>
 
-
-                <!-- ...............................................Back img portion without any img............................... -->
-                <!-- <div class="back_blank_space">
-                </div> -->
-
-                <!-- ...............................................Profile pic and edit profile btn main div......................... -->
-                <!-- <div class="profile_pic_edit_btn"> -->
-                <!-- ................................Profile pic...................... -->
-                <!-- <div class="profile_pic">
-                        <img src="<%=selectData[0].profile_pic%>" alt="Name">
-
-                    </div> -->
-
-                <!-- .......................................Edit profile btn................... -->
-
-                <!-- <div class="edit_profile">
-                        <a href="/edit_profile">Edit profile</a>
-                    </div>
-                    <div class="edit_profile">
-                        <a href="/logout">Logout</a>
-                    </div>
-                </div> -->
-
-                <!--.............................................Content that display after profile pic main div..................... -->
-                <!-- <div class="content_after_pic"> -->
-                <!-- <p><strong>HarshPatel002</strong></p>
-                    <p>@emailid</p>
-                    <p><img src="/images/date_picker.png" width="15px" height="15px"> joined March 2023</p>
-                     -->
-
-                <!-- <div class="name_email"> -->
-
-                <!-- <span class="profile_name">
-                            <%=selectData[0].username%>
-                        </span>
-                        <span class="profile_email">
-                            <%=selectData[0].email%>
-                        </span>
-                    </div>
-
-                    <div class="home_join_date">
-                        <i class="fa-regular fa-calendar"></i>
-                        <span>Joined March 2023</span>
-
-                    </div> -->
-
-
                 <!-- kinjal -->
 
                 <div class="follows">
@@ -165,13 +118,12 @@
                 function home() {
                     location.assign(`/home`);
                 }
-                function userprofile(id){
-                    // location.assign(`/userprofile`);
-                }
+               
 
                 function profile() {
                     location.assign(`/profile`);
                 }
+                //follow list
 
                 function follow(id) {
 
@@ -285,7 +237,7 @@
 
 
                 }
-
+                //follow and unfollow 
                 function Unfollow(id, profile_pic, email, username) {
                     var listed = document.getElementById(`follow${id}`)
                     if (listed.innerText == "Following") {

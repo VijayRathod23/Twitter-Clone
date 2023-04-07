@@ -18,6 +18,8 @@ const activate= asyncHandler(async (req, res) => {
     sql = `update users set activated = 1 where activation_token = "${actKey}"`;
     var result = await getdata(sql);
     var json = JSON.stringify(result);
+
+    
     // console.log("activate result " + json)
     var arr = JSON.parse(json);
     if (arr.affectedRows == 0) {

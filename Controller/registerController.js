@@ -20,6 +20,7 @@ async function getdata(sql) {
         con.query(sql, (err, data) => {
             if (err) throw err;
             res(data);
+            //rej();
         })
     })
 }
