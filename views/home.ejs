@@ -152,8 +152,8 @@
                                             </p>
 
                                             <!-- uploading images and video -->
-                                            <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; const
-                                                array_of_allowed_videos=['mp4','gif']; %>
+                                            <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; 
+                                            const array_of_allowed_videos=['mp4','gif']; %>
                                                 <%if(tweets[i].retweet_media){%>
                                                     <% const
                                                         file_extension=tweets[i].retweet_media.slice(((tweets[i].retweet_media.lastIndexOf('.')
@@ -477,7 +477,6 @@
                             <%}%>
                     </div>
 
-
                 </div>
             </div>
         </div>
@@ -497,6 +496,7 @@
                 var file_input=document.getElementById('file_input').value;
                 console.log('********************',file_input);
                 if(tweetsec.trim() == '' && file_input==""){
+                    console.log("harsh")
                     document.getElementById('tweetsubmit1').disable;
                     document.getElementById('tweeterror').innerHTML="*Please enter some text or media"
                     return false
