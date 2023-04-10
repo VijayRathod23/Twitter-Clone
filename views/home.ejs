@@ -98,13 +98,18 @@
                         <input type="text" name="tweet_text" id="tweetformcontent" placeholder="What's Happening?">
                     </div>
                     <p id="tweeterror"></p>
+                    <img id="preview">
                     <div class="tweetsubmit">
-                        <label for="file_input">
-                            <!-- <img src="" alt="" srcset=""> -->
-                            <i class="fa-regular fa-image "></i>
-                        </label>
-                        <input type="file" id="file_input" name="media">
 
+
+                        <div class="icgg">
+                            <label for="file_input">
+                                <i class="fa-regular fa-image "></i>
+                            </label>
+                            <input type="file" id="file_input" name="media" onchange="previewImage(event)">
+
+                    
+                        </div>
 
                         <div class="emojiicon" onclick="abc()">
                             <i class="fa-regular fa-face-smile"></i>
@@ -140,8 +145,8 @@
                                             </div>
                                         </div>
 
-                                        
-                                        
+
+
                                     </div>
                                     <!-- if content found -->
                                     <%if(tweets[i].retweet_text){%>
@@ -152,8 +157,8 @@
                                             </p>
 
                                             <!-- uploading images and video -->
-                                            <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; 
-                                            const array_of_allowed_videos=['mp4','gif']; %>
+                                            <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; const
+                                                array_of_allowed_videos=['mp4','gif']; %>
                                                 <%if(tweets[i].retweet_media){%>
                                                     <% const
                                                         file_extension=tweets[i].retweet_media.slice(((tweets[i].retweet_media.lastIndexOf('.')
@@ -162,8 +167,8 @@
                                                             <img src="<%=tweets[i].retweet_media%>" alt="img"
                                                                 class="retweetImg" />
                                                             <%}else{%>
-                                                                <video src="<%=tweets[i].retweet_media%>"
-                                                                    width="300px" autoplay controls></video>
+                                                                <video src="<%=tweets[i].retweet_media%>" width="300px"
+                                                                    autoplay controls></video>
                                                                 <%}}%>
                                         </div>
 
@@ -189,45 +194,49 @@
 
 
                                             <%}%>
-                                    <!-- original tweet -->
-                                    <div class="tweets retweet_tweet">
-                                        <div class="post">
-                                            <div class="post__avatar">
-                                                <img src="<%=tweets[i].profile_pic%>" alt="img" class="post__avatar1" />
-                                                <div class="post__header">
-                                                    <div class="post__headerText">
-                                                        <h3>
-                                                            <%=tweets[i].username%>
-                                                                <span class="post__headerSpecial"><span
-                                                                        class="material-icons post__badge">
-                                                                        <!-- </span>@<%=selectData[0].email%></span> -->
-                                                        </h3>
-                                                    </div>
-                                                    <div class="post__headerDescription">
-                                                        <p>
-                                                            <%=tweets[i].tweet_text%>
-                                                        </p>
-                                                        <!-- uploading images and video -->
-                                                        <% const array_of_allowed_files=['png', 'jpeg' , 'jpg' ]; const
-                                                            array_of_allowed_videos=['mp4','gif']; %>
-                                                            <%if(tweets[i].media){%>
-                                                                <% const
-                                                                    file_extension=tweets[i].media.slice(((tweets[i].media.lastIndexOf('.')
-                                                                    - 1)>>> 0) + 2); %>
-                                                                    <%if(array_of_allowed_files.includes(file_extension)){%>
-                                                                        <img src="<%=tweets[i].media%>"
-                                                                            class="tweetImg" />
-                                                                        <%}else{%>
-                                                                            <video src="<%=tweets[i].media%>"
-                                                                                width="300px" autoplay controls></video>
-                                                                            <%}}%>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="post__body">
+                                                <!-- original tweet -->
+                                                <div class="tweets retweet_tweet">
+                                                    <div class="post">
+                                                        <div class="post__avatar">
+                                                            <img src="<%=tweets[i].profile_pic%>" alt="img"
+                                                                class="post__avatar1" />
+                                                            <div class="post__header">
+                                                                <div class="post__headerText">
+                                                                    <h3>
+                                                                        <%=tweets[i].username%>
+                                                                            <span class="post__headerSpecial"><span
+                                                                                    class="material-icons post__badge">
+                                                                                    <!-- </span>@<%=selectData[0].email%></span> -->
+                                                                    </h3>
+                                                                </div>
+                                                                <div class="post__headerDescription">
+                                                                    <p>
+                                                                        <%=tweets[i].tweet_text%>
+                                                                    </p>
+                                                                    <!-- uploading images and video -->
+                                                                    <% const array_of_allowed_files=['png', 'jpeg'
+                                                                        , 'jpg' ]; const
+                                                                        array_of_allowed_videos=['mp4','gif']; %>
+                                                                        <%if(tweets[i].media){%>
+                                                                            <% const
+                                                                                file_extension=tweets[i].media.slice(((tweets[i].media.lastIndexOf('.')
+                                                                                - 1)>>> 0) + 2); %>
+                                                                                <%if(array_of_allowed_files.includes(file_extension)){%>
+                                                                                    <img src="<%=tweets[i].media%>"
+                                                                                        class="tweetImg" />
+                                                                                    <%}else{%>
+                                                                                        <video
+                                                                                            src="<%=tweets[i].media%>"
+                                                                                            width="300px" autoplay
+                                                                                            controls></video>
+                                                                                        <%}}%>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="post__body">
 
 
-                                                <!-- <div>
+                                                            <!-- <div>
                                                 <form action="/tweets/<%= tweets[i].id %>/like" method="POST">
                                                     <button type="submit">Like</button>
                                                   </form>
@@ -235,9 +244,9 @@
                                             </div> -->
 
 
-                                            </div>
-                                        </div>
-                                    </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                 </div>
                                 <hr>
@@ -368,7 +377,8 @@
                                                                                                             </div>
                                                                                                             <%}%>
                                                                                                                 <%if(flag_rewteet[i]==0){%>
-                                                                                                                    <div class="twt-toggle-retwt-black">
+                                                                                                                    <div
+                                                                                                                        class="twt-toggle-retwt-black">
                                                                                                                         <a id="retweet_icon<%=tweets[i].id%>"
                                                                                                                             onclick="increment_count('<%= tweets[i].id %>')">
                                                                                                                             <i
@@ -440,7 +450,7 @@
                         <span>
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </span>
-                        <input type="text" name="search" id="search" placeholder="Search Here" onkeydown="search()"
+                        <input type="text" name="search" id="search" placeholder="Search Here" onkeyup="search()"
                             onclick="hidesearch()">
                     </div>
 
@@ -481,24 +491,60 @@
             </div>
         </div>
         <script>
-
-            function retweeticon(){
-                if(document.getElementById('retweeticon').style.display="none"){
-                    document.getElementById('retweeticon').style.display="block"
+            const previewImage = (event) => {
+                /**
+                * Get the selected files.
+                */
+                const imageFiles = event.target.files;
+                /**
+                * Count the number of files selected.
+                */
+                const imageFilesLength = imageFiles.length;
+                /**
+                * If at least one image is selected, then proceed to display the preview.
+                */
+                if (imageFilesLength > 0) {
+                    /**
+                    * Get the image path.
+                    */
+                    const imageSrc = URL.createObjectURL(imageFiles[0]);
+                    /**
+                    * Select the image preview element.
+                    */
+                    const imagePreviewElement = document.querySelector("#preview");
+                    /**
+                    * Assign the path to the image preview element.
+                    */
+                    imagePreviewElement.src = imageSrc;
+                    /**
+                    * Show the element by changing the display value to "block".
+                    */
+                    imagePreviewElement.style.display = "block";
                 }
-                else{
-                    document.getElementById('retweeticon').style.display="none"
+            };
+
+            function retweeticon() {
+                if (document.getElementById('retweeticon').style.display = "none") {
+                    document.getElementById('retweeticon').style.display = "block"
+                }
+                else {
+                    document.getElementById('retweeticon').style.display = "none"
                 }
             }
 
-            function tweet(){
-                var tweetsec=document.getElementById('tweetformcontent').value;
-                var file_input=document.getElementById('file_input').value;
-                console.log('********************',file_input);
-                if(tweetsec.trim() == '' && file_input==""){
+            function tweet() {
+                var tweetsec = document.getElementById('tweetformcontent').value;
+                var file_input = document.getElementById('file_input').value;
+                console.log('********************', file_input);
+                if (tweetsec.trim() == '' && file_input == "") {
                     console.log("harsh")
                     document.getElementById('tweetsubmit1').disable;
-                    document.getElementById('tweeterror').innerHTML="*Please enter some text or media"
+                    document.getElementById('tweeterror').innerHTML = "*Please enter some text or media"
+                    return false
+                }
+                if (tweetsec.length >= 100) {
+                    document.getElementById('tweetsubmit1').disable;
+                    document.getElementById('tweeterror').innerHTML = "*Please enter text of length less than 100";
                     return false
                 }
             }
@@ -563,10 +609,15 @@
                 var search = document.getElementById('search').value;
                 var s = "";
 
-                await fetch(`/search?search=${search}`)
+                if(search.length==''){
+                    document.getElementById('searchresult').innerHTML = '';
+                }
+                else{
+                    await fetch(`/search?search=${search}`)
                     .then(res => res.json())
                     .then((search_data) => {
                         // console.log(':::::::::::::::::::::::::::data at',search_data)
+                        
                         for (i = 0; i < search_data.length; i++) {
                             // console.log("at", i, '', search_data[i].id)
                             s += `
@@ -593,6 +644,10 @@
                         document.getElementById('searchresult').innerHTML = s;
 
                     })
+
+                }
+
+                
             }
 
 
@@ -744,7 +799,7 @@
                 if (commentfield.trim() == '') {
                     document.getElementById('reply').disable;
                 }
-                else{
+                else {
 
                     await fetch("/comment", {
                         method: "POST",
@@ -907,12 +962,18 @@
  <div class="tweetform"> <img src="<%=selectData[0].profile_pic%>" alt="">  <input type="text" name="tweet_text" id="tweetformcontent" placeholder="Add a comment..">
  </div>
  <p id="tweeterror"></p>
+ <img id="preview">
  <div class="tweetsubmit">
-     <label for="file_input">
-         <!-- <img src="" alt="" srcset=""> -->
-         <i class="fa-regular fa-image "></i>
-     </label>
-     <input type="file" id="file_input" name="media">        
+
+    <div class="icgg">
+        <label for="file_input">
+            <i class="fa-regular fa-image "></i>
+        </label>
+        <input type="file" id="file_input" name="media" onchange="previewImage(event)">
+
+                    
+    </div>
+         
 
      <!-- <i class="fa-regular fa-image "><input type="file" name="file"></i> -->
      <input type="submit" value="ReTweet" class="tweet" id="tweetsubmit1">

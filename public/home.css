@@ -187,7 +187,14 @@ span a {
     margin-right: 4rem;
 }
 
-.tweetsubmit>#file_input {
+#preview{
+    width:100px; 
+    height: 100px; 
+    display: none;
+    margin-left: 1rem;
+}
+
+.icgg>#file_input {
     display: none;
 }
 
