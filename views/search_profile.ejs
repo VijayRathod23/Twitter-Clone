@@ -94,7 +94,6 @@
                         <span class="name_user">
                             <%=selectData[0].username%>
                         </span>
-                        <span>1 Tweets</span>
                     </div>
 
                 </div>
@@ -808,9 +807,10 @@
             // console.log('profile', profile)
             // console.log('profile', commentfield)
 
-            if (commentfield.trim() == '') {
+            if (commentfield.trim() == '' || commentfield.length >= 100) {
                 document.getElementById('reply').disable;
             }
+
             else {
 
                 await fetch("/comment", {

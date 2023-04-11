@@ -66,13 +66,17 @@
                     </div>
                     <div class="profileinfo">
                         <div class="name">
-                            <span><%=selectData[0].username%></span>
+                            <span>
+                                <%=selectData[0].username%>
+                            </span>
                         </div>
                         <div class="username">
-                            <span><%=selectData[0].email%></span>
+                            <span>
+                                <%=selectData[0].email%>
+                            </span>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -80,28 +84,39 @@
 
             <div class="contentsection">
 
-                <form action="/edit_profile" method="post" enctype="multipart/form-data">
+                <form action="/edit_profile" method="post" enctype="multipart/form-data" onsubmit="return img_size()">
                     <table>
                         <tr>
                             <td>
                                 <div class="tweetsubmit">
-                                    
-                                    <label for="file_input">
-                                        <img src="<%=selectData[0].profile_pic%>" alt="profile_pic">
-                                    </label>
-                                    <input type="file" id="file_input" name="profile">
 
+                                    <div class="icgg">
+
+                                        <label for="file_input">
+                                            <img src="<%=selectData[0].profile_pic%>" alt="profile_pic" id="preview">
+                                        </label>
+                                        <input type="file" id="file_input" name="profile"
+                                            onchange="previewImage(event),img_size()">
+                                    </div>
                                 </div>
-                            </td>
-                        </tr>   
-                        <tr>
-                            <td>
-                                <input type="text" name="username" id="username" placeholder="Username" value="<%=selectData[0].username%>">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="date" name="dob" id="dob" placeholder="Date of Birth" value="<%=selectData[0].dob%>">
+
+                                <p id="profile_pic_error"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" name="username" id="username" placeholder="Username"
+                                    value="<%=selectData[0].username%>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="date" name="dob" id="dob" placeholder="Date of Birth"
+                                    value="<%=selectData[0].dob%>">
                             </td>
                         </tr>
                         <tr>
@@ -111,12 +126,13 @@
                         </tr>
                         <tr>
                             <td>
-                                <input type="text" name="location" id="location" placeholder="Location" value="<%=selectData[0].location%>">
+                                <input type="text" name="location" id="location" placeholder="Location"
+                                    value="<%=selectData[0].location%>">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="submit" value="SAVE" class="editbtn">
+                                <input type="submit" value="SAVE" class="editbtn" id="submit1">
                             </td>
                         </tr>
                     </table>
@@ -132,13 +148,58 @@
 
     <script>
 
+        const previewImage = (event) => {
+            /**
+            * Get the selected files.
+            */
+            const imageFiles = event.target.files;
+            /**
+            * Count the number of files selected.
+            */
+            const imageFilesLength = imageFiles.length;
+            /**
+            * If at least one image is selected, then proceed to display the preview.
+            */
+            if (imageFilesLength > 0) {
+                /**
+                * Get the image path.
+                */
+                const imageSrc = URL.createObjectURL(imageFiles[0]);
+                /**
+                * Select the image preview element.
+                */
+                const imagePreviewElement = document.querySelector("#preview");
+                /**
+                * Assign the path to the image preview element.
+                */
+                imagePreviewElement.src = imageSrc;
+                /**
+                * Show the element by changing the display value to "block".
+                */
+                imagePreviewElement.style.display = "block";
+            }
+            
+        };
+
+        function img_size() {
+            var file_input = document.getElementById('file_input');
+            var img_size = Math.round(file_input.files[0].size / 1048576);
+            if (img_size > 2) {
+                console.log("size");
+                document.getElementById('submit1').disable;
+                document.getElementById('profile_pic_error').innerHTML = "*Please upload image of size less than 2MB";
+                return false
+
+            }
+        }
+
         function home() {
             location.assign(`/home`);
         }
         function profile() {
             location.assign(`/profile`);
         }
-      
+
         function more() {
             var more = document.getElementById("more_options");
             // console.log("i m by default none");

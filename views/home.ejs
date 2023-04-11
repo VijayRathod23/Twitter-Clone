@@ -450,7 +450,7 @@
                         <span>
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </span>
-                        <input type="text" name="search" id="search" placeholder="Search Here" onkeyup="search()"
+                        <input type="text" name="search" id="search" placeholder="Search Here"
                             onclick="hidesearch()">
                     </div>
 
@@ -616,8 +616,17 @@
                 })
             }
 
-            async function search() {
-                var search = document.getElementById('search').value;
+            var timer=0;
+            document.getElementById('search').addEventListener("keyup",async(e)=>{
+                document.getElementById('searchresult').innerHTML='Loading...'
+                if(e.target.value==''){
+                    return;
+                }
+                clearTimeout(timer)
+                timer=setTimeout(()=> search(e.target.value.trim()),1000);
+            })
+            async function search(search) {
+                
                 var s = "";
 
                 if(search.length==''){
@@ -801,15 +810,17 @@
             async function commentdata(pid, uid, username, profile) {
 
                 var commentfield = document.getElementById('commentfield' + pid).value
+
                 // console.log('pid', pid)
                 // console.log('uid', uid)
                 // console.log('username', username)
                 // console.log('profile', profile)
                 // console.log('profile', commentfield)
-
-                if (commentfield.trim() == '') {
+                
+                if (commentfield.trim() == '' ||commentfield.length >= 100) {
                     document.getElementById('reply').disable;
                 }
+                
                 else {
 
                     await fetch("/comment", {

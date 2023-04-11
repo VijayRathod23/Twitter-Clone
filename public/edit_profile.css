@@ -141,6 +141,10 @@ table{
     background-color: whitesmoke;
 }
 
+#profile_pic_error{
+    color: #03a9f4;
+}
+
 table input{
     width: 80%;
     border-radius: 10px;
@@ -165,7 +169,7 @@ table input{
     width: 84%;
 }
 
-.tweetsubmit>#file_input{
+.icgg>#file_input{
     display: none;
 }
 /* 
