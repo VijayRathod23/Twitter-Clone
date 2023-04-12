@@ -21,15 +21,35 @@ async function getdata(sql) {
     })
 }
 
+const delete_tweet=asyncHandler(async(req,res)=>{
+    const tokenData = req.session.user;
+    
+    // Harsh 12-April,2023
+    const id=req.query.id;
+    console.log('*********************id',id)
+
+    const retweet_delete=`Delete from retweets where tweet_id=${id}`;
+    const delete_retweet1 = await getdata(retweet_delete);
+    const delete_tweet=`Update tweets set delete_tweet=1 where id=${id} and user_id = '${tokenData.id}';`
+    const delete_tweet1 = await getdata(delete_tweet);
+
+    // res.send();
+    res.json('true');
+    
+})
+
 // Profile Page
 const profile = asyncHandler(async (req, res) => {
     const jwtToken = req.session.user;
     if (!jwtToken) {
         return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
+    
     const tokenData = req.session.user;
+    
+    
     // **************21march*************
-    const sql = `SELECT * FROM tweets where user_id = '${tokenData.id}' ORDER BY created_at DESC`;
+    const sql = `SELECT * FROM tweets where user_id = '${tokenData.id}' and delete_tweet is NULL ORDER BY created_at DESC`;
     const tweets = await getdata(sql);
 
     // *************************
@@ -191,4 +211,4 @@ const edit_profile_post = asyncHandler(async (req, res) => {
 
 
 
-module.exports = { edit_profile, profile, edit_profile_post }
+module.exports = { edit_profile, profile, edit_profile_post,delete_tweet}

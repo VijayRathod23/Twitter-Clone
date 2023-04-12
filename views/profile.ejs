@@ -306,6 +306,11 @@
                                                                                                                     <%=rtwt_count[i]%>
                                                                                                                 </span>
                                                                                                             </div>
+                                                                                                            <div class="delete_tweet twt-toggle">
+                                                                                                                <a onclick="delete_tweet('<%=tweets[i].id%>')"><i class="fa-solid fa-trash"></i></a>
+                                                                                                            </div>
+
+                                                                                                            
                                                 </div>
                                                 <div id="commentsection<%=tweets[i].id%>" class="commentsection">
 
@@ -511,6 +516,19 @@
 
 
         <script>
+
+            function delete_tweet(id){
+                console.log('**************************',id);
+                fetch(`/delete_tweet?id=${id}`)
+                .then((res) => {
+                    return res.json()
+                }).then((result) => {
+
+                    location.reload()
+
+                })
+
+            }
 
             function back() {
                 location.assign("/home");

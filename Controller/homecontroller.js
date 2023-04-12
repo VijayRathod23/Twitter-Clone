@@ -34,7 +34,7 @@ const home = asyncHandler(async (req, res) => {
     if (!jwtToken) {
         return res.send(`Session Expired! please login again <a href="/login">Login</a>`);
     }
-    const sql = `SELECT * FROM tweets ORDER BY created_at DESC`;
+    const sql = `SELECT * FROM tweets where delete_tweet is NULL ORDER BY created_at DESC`;
     const tweet = await getdata(sql);
     const tokenData = req.session.user;
     const select = `select * from users where id = '${tokenData.id}'`;
@@ -112,7 +112,7 @@ const home = asyncHandler(async (req, res) => {
         var formatedate = date + ' ' + time;
         //  console.log("formate date" + formatedate);
 
-        var tweet_res = await getdata(`select * from tweets where created_at = '${formatedate}'`);
+        var tweet_res = await getdata(`select * from tweets where delete_tweet is NULL and created_at = '${formatedate}'`);
         var retweet_res = await getdata(`select tweets.user_id as id, tweets.tweet_text as tweet_text , tweets.media as media, tweets.likes as likes , tweets.username as username ,tweets.profile_pic as profile_pic , retweets.user_id as retweet_user_id , retweets.retweet_text as retweet_text , retweets.retweet_media as retweet_media from tweets join retweets on tweets.id = retweets.tweet_id where retweets.created_at = '${formatedate}'`);
 
 
@@ -268,7 +268,7 @@ const search_profile = asyncHandler(async (req, res) => {
     const tokenData = req.session.user;
     var sid = req.query.sid;
 
-    const sql = `SELECT * FROM tweets where user_id = ${sid} ORDER BY created_at DESC`;
+    const sql = `SELECT * FROM tweets where user_id = ${sid} and delete_tweet is NULL ORDER BY created_at DESC`;
     const tweets = await getdata(sql);
 
     // *************************
