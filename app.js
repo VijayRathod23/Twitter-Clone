@@ -1,5 +1,5 @@
 var express = require('express');
-const connect = require('http2'); 
+const connect = require('http2');
 var app = express();
 var mysql = require('mysql2');
 const { query, response } = require('express');
@@ -23,7 +23,7 @@ const { log } = require('console');
 // const { comment } = require('./Controller/commentcontroller');
 // const { home } = require('./Controller/homecontroller');
 require("dotenv").config();
-const user = process.env.user; 
+const user = process.env.user;
 
 
 
@@ -42,40 +42,40 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 
-const register=require('./Routes/register')
-app.use('/',register);
+const register = require('./Routes/register')
+app.use('/', register);
 
-const login=require('./Routes/login')
-app.use('/',login);
+const login = require('./Routes/login')
+app.use('/', login);
 
-const home=require('./Routes/home')
-app.use('/',home);
+const home = require('./Routes/home')
+app.use('/', home);
 
-const profile=require('./Routes/profile')
-app.use('/',profile);
+const profile = require('./Routes/profile')
+app.use('/', profile);
 
-const retweet=require('./Routes/retweet')
-app.use('/',retweet);
+const retweet = require('./Routes/retweet')
+app.use('/', retweet);
 
-const follow=require('./Routes/follow')
-app.use('/',follow);
+const follow = require('./Routes/follow')
+app.use('/', follow);
 
-const forgot=require('./Routes/forgot')
-app.use('/',forgot);
+const forgot = require('./Routes/forgot')
+app.use('/', forgot);
 
 //LogOut API
 app.get("/logout", (req, res) => {
-    req.session.destroy(session);
+    req.session.destroy();
     res.redirect("/login")
 });
 
-app.get("/loader",(req, res) => {
+app.get("/loader", (req, res) => {
     res.render("loader")
 })
 
-app.get('*', function(req, res){
+app.get('*', function (req, res) {
     res.render("404")
-  });
+});
 app.listen(process.env.PORT, (req, res) => {
 
     console.log('server is running on port ' + process.env.PORT);
